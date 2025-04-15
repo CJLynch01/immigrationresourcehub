@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "Chris Lynch",
-  "email": "chris@example.com",
+  "email": "chris@immigrationpathwaysconsulting.com",
   "password": "secure123"
 }
 
@@ -15,7 +15,7 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "chris@example.com",
+  "email": "chris@immigrationpathwaysconsulting.com",
   "password": "secure123"
 }
 
