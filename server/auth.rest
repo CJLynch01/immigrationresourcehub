@@ -24,3 +24,17 @@ Content-Type: application/json
 ### Test Protected Route (add token manually in Authorization header)
 GET http://localhost:3000/api/protected
 Authorization: Bearer <PASTE_YOUR_JWT_HERE>
+
+###
+
+### Test user dashboard (JWT required)
+GET http://localhost:3000/api/protected/user-dashboard
+Authorization: Bearer <paste_your_token_here>
+
+###
+
+### Test admin-only route
+GET http://localhost:3000/api/protected/admin-only
+Authorization: Bearer <paste_your_token_here>
+
+###
