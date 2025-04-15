@@ -4,6 +4,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const protectedRoutes = require("./routes/protected");
 const postRoutes = require("./routes/posts");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 connectDB();
 app.use(express.json());
+app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/protected", protectedRoutes);
 app.use("/api/posts", postRoutes);
