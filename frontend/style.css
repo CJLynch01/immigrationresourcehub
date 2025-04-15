@@ -39,6 +39,18 @@ body {
     border-radius: 6px;
   }
   
+  button {
+    background-color: #f5c518;
+    color: #121212;
+    font-weight: bold;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+
   a.button {
     display: inline-block;
     margin-top: 1rem;
