@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Admin Dashboard - Immigration Pathways</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="scripts/admin.js"></script>
 </head>
 <body>
   <header>
@@ -18,7 +17,7 @@
     <a href="about.html">About</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
-    <a href="login.html">Logout</a>
+    <a href="login.html" onclick="localStorage.clear()">Logout</a>
   </nav>
 
   <main>
@@ -44,6 +43,6 @@
     <p>© 2025 Immigration Pathways Consulting LLC</p>
   </footer>
 
-  <script src="scripts/app.js"></script>
+  <script src="scripts/admin.js"></script>
 </body>
 </html>
