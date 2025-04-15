@@ -29,12 +29,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzN
 
 ### Test user dashboard (JWT required)
 GET http://localhost:3000/api/protected/user-dashboard
-Authorization: Bearer <paste_your_token_here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzNGI5NTFkYWQ2NDZmMWNlNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NDQ3MzM3OTYsImV4cCI6MTc0NDgyMDE5Nn0.AQfA9rRywy8lyagk39Fw7Ne2hOS--raF5uAdiknMO6c
 
 ###
 
 ### Test admin-only route
 GET http://localhost:3000/api/protected/admin-only
-Authorization: Bearer <paste_your_token_here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzNGI5NTFkYWQ2NDZmMWNlNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NDQ3MzM3OTYsImV4cCI6MTc0NDgyMDE5Nn0.AQfA9rRywy8lyagk39Fw7Ne2hOS--raF5uAdiknMO6c
 
 ###
