@@ -38,3 +38,38 @@ GET http://localhost:3000/api/protected/admin-only
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzNGI5NTFkYWQ2NDZmMWNlNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NDQ3MzM3OTYsImV4cCI6MTc0NDgyMDE5Nn0.AQfA9rRywy8lyagk39Fw7Ne2hOS--raF5uAdiknMO6c
 
 ###
+
+### Create New Blog Post (Admin Only)
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzNGI5NTFkYWQ2NDZmMWNlNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NDQ3MzM3OTYsImV4cCI6MTc0NDgyMDE5Nn0.AQfA9rRywy8lyagk39Fw7Ne2hOS--raF5uAdiknMO6c
+
+{
+  "title": "How to Apply for Asylum",
+  "content": "Step-by-step guide to the asylum process in the U.S.",
+  "category": "Asylum"
+}
+
+###
+
+### Get All Blog Posts (Public)
+GET http://localhost:3000/api/posts
+
+###
+
+### Update Blog Post by ID (Admin Only)
+PUT http://localhost:3000/api/posts/{{postId}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzNGI5NTFkYWQ2NDZmMWNlNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NDQ3MzM3OTYsImV4cCI6MTc0NDgyMDE5Nn0.AQfA9rRywy8lyagk39Fw7Ne2hOS--raF5uAdiknMO6c
+
+{
+  "title": "Updated Blog Title",
+  "content": "Updated content for the post",
+  "category": "General"
+}
+
+###
+
+### Delete Blog Post by ID (Admin Only)
+DELETE http://localhost:3000/api/posts/{{postId}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzNGI5NTFkYWQ2NDZmMWNlNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NDQ3MzM3OTYsImV4cCI6MTc0NDgyMDE5Nn0.AQfA9rRywy8lyagk39Fw7Ne2hOS--raF5uAdiknMO6c
