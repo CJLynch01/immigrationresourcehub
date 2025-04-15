@@ -2,34 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Immigration Pathways Resource Hub</title>
+  <title>Login - Immigration Pathways</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="scripts/login.js"></script>
 </head>
 <body>
   <header>
-    <h1>Immigration Pathways Consulting</h1>
-    <p>Your trusted guide through the U.S. immigration process</p>
+    <h1>Admin Login</h1>
+    <p>Sign in to manage your site</p>
   </header>
 
   <nav>
-    <a href="#">Home</a>
+    <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="about.html">About</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
-    <a href="#">Login</a>
   </nav>
 
   <main>
-    <h2>Let Us Handle the Paperwork</h2>
-    <p>
-      Navigating the U.S. immigration system can be overwhelming. That’s where we come in. At Immigration Pathways Consulting, we don’t just give you information — we guide you every step of the way with personalized, professional support.
-    </p>
-    <a href="services.html" class="button">Explore Our Services</a>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
   </main>
 
   <footer>
     <p>© 2025 Immigration Pathways Consulting LLC</p>
   </footer>
+
+  <script src="scripts/app.js"></script>
 </body>
 </html>
