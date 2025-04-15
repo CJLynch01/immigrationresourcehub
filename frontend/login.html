@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Login - Immigration Pathways</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="scripts/app.js"></script>
+  <script src="scripts/login.js"></script>
 </head>
 <body>
   <header>
@@ -22,8 +22,8 @@
 
   <main>
     <form id="login-form">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="Email" required />
+      <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
   </main>
