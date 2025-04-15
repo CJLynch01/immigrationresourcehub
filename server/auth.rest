@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ### Test Protected Route (add token manually in Authorization header)
 GET http://localhost:3000/api/protected
-Authorization: Bearer <PASTE_YOUR_JWT_HERE>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU4MDEzNGI5NTFkYWQ2NDZmMWNlNyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NDQ3MzM3OTYsImV4cCI6MTc0NDgyMDE5Nn0.AQfA9rRywy8lyagk39Fw7Ne2hOS--raF5uAdiknMO6c
 
 ###
 

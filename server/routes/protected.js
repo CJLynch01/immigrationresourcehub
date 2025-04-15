@@ -13,4 +13,9 @@ router.get("/admin-only", verifyToken, requireAdmin, (req, res) => {
   res.json({ msg: "Welcome Admin. You have elevated access." });
 });
 
+// Catch All
+router.get("/", verifyToken, (req, res) => {
+    res.json({ msg: "Protected route root is working." });
+  });
+
 module.exports = router;
