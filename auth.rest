@@ -3,10 +3,16 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Chris Lynch",
-  "email": "chris@immigrationpathwaysconsulting.com",
-  "password": "secure123"
+  "name": "Billy Madison",
+  "email": "sonofalynch@yahoo.com",
+  "password": "awesome123"
 }
+
+# {
+#   "name": "Chris Lynch",
+#   "email": "chris@immigrationpathwaysconsulting.com",
+#   "password": "secure123"
+# }
 
 ###
 

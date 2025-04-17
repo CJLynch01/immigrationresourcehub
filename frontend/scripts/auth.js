@@ -55,6 +55,7 @@ export function showNavByAuth() {
     const loginLink = document.getElementById("loginLink");
     const logoutLink = document.getElementById("logoutLink");
     const adminLink = document.getElementById("adminLink");
+    const clientLink = document.getElementById("clientLink")
   
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
@@ -71,6 +72,10 @@ export function showNavByAuth() {
       // ✅ Show admin link only if role is admin
       if (adminLink) {
         adminLink.style.display = payload.role === "admin" ? "inline" : "none";
+      }
+
+      if (clientLink){
+        clientLink.style.display = payload.role === "client" ? "inline" : "none";
       }
     } else {
       if (loginLink) loginLink.style.display = "inline";
