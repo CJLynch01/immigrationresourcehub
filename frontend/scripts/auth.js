@@ -26,4 +26,24 @@ export function getToken() {
   export function logout(redirectTo = "login.html") {
     localStorage.removeItem("token");
     window.location.href = redirectTo;
+}
+
+export function showNavByAuth() {
+    const token = getToken();
+    const loginLink = document.getElementById("loginLink");
+    const logoutLink = document.getElementById("logoutLink");
+  
+    if (token) {
+      if (loginLink) loginLink.style.display = "none";
+      if (logoutLink) {
+        logoutLink.style.display = "inline";
+        logoutLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          logout();
+        });
+      }
+    } else {
+      if (loginLink) loginLink.style.display = "inline";
+      if (logoutLink) logoutLink.style.display = "none";
+    }
   }

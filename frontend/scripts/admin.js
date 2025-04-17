@@ -1,4 +1,4 @@
-import { requireRole, logout, getToken } from "./auth.js";
+import { requireRole, logout, getToken, showNavByAuth } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const payload = requireRole("admin");
