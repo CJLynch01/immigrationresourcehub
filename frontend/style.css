@@ -239,6 +239,69 @@ body {
   color: var(--accent-color);
 }
 
+.blog-sort {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 0.5rem;
+}
+
+.blog-sort label {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.blog-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.blog-card {
+  background-color: #2a2a2d;
+  border-left: 4px solid var(--accent-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.blog-card .meta {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+}
+
+.blog-card .preview {
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.read-more {
+  color: var(--accent-color);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* Markdown-generated links */
+.blog-post a,
+.post a {
+  color: var(--accent-color); /* Your gold */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.blog-post a:hover,
+.post a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
 /* Contact Page */
 
 .contact-page {
