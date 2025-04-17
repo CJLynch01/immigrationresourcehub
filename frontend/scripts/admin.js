@@ -2,6 +2,13 @@ import { requireRole, logout, getToken, showNavByAuth } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const payload = requireRole("admin");
+  showNavByAuth();
+
+
+  const welcome = document.getElementById("welcomeMessage");
+  if (payload && welcome) {
+    welcome.textContent = `Welcome, Admin (${payload.email})`;
+  }
 
   // Toggle nav links
   const loginLink = document.getElementById("loginLink");
