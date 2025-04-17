@@ -278,6 +278,44 @@ body {
   line-height: 1.6;
 }
 
+.blog-card h3,
+.blog-full h2 {
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.blog-posts strong,
+.blog-posts b,
+.blog-full strong,
+.blog-full b {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.blog-page strong,
+.blog-page b {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.admin-dashboard .post strong,
+.admin-dashboard .post b {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.blog-page h3,
+.blog-card h3,
+#single-post h2,
+#single-post h3 {
+  color: var(--accent-color);
+}
+
+#admin-posts .post h3 {
+  color: var(--accent-color);
+}
+
 .read-more {
   color: var(--accent-color);
   font-weight: bold;

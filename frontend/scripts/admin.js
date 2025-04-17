@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const postForm = document.getElementById("post-form");
   const postsContainer = document.getElementById("admin-posts");
+  const uploadsContainer = document.getElementById("admin-documents");
 
   // ✅ Format buttons (insert markdown)
   const contentField = document.getElementById("content");
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const category = document.getElementById("category").value;
     const content = contentField.value;
     const postDate = document.getElementById("postDate").value;
-    
+
     console.log("📅 Date being sent:", postDate);
 
     try {
@@ -82,14 +83,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       postsContainer.innerHTML = posts.length
         ? posts.map(post => `
-          <div class="post">
-            <h3>${post.title}</h3>
-            <p><strong>Date:</strong> ${post.date || "N/A"}</p>
-            <p><strong>Category:</strong> ${post.category}</p>
-            <div>${marked.parse(post.content)}</div>
+          <div class="post" id="post-${post._id}">
+            <h3 contenteditable="false" class="editable-title">${post.title}</h3>
+            <p><strong>Date:</strong> <span contenteditable="false" class="editable-date">${post.date || "N/A"}</span></p>
+            <p><strong>Category:</strong> <span contenteditable="false" class="editable-category">${post.category}</span></p>
+            <div class="editable-content" contenteditable="false">${marked.parse(post.content)}</div>
+            <button onclick="editPost('${post._id}')">✏️ Edit</button>
             <button onclick="deletePost('${post._id}')">🗑 Delete</button>
+            <button onclick="savePost('${post._id}')" style="display:none;" id="save-${post._id}">💾 Save</button>
           </div>
-          `).join("")
+        `).join("")
         : "<p>No blog posts yet.</p>";
     } catch (err) {
       console.error("Error loading posts:", err);
@@ -118,5 +121,94 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  async function loadUploads() {
+    try {
+      const res = await fetch("http://localhost:3000/api/uploads", {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+  
+      const docs = await res.json();
+  
+      uploadsContainer.innerHTML = docs.length
+        ? docs.map(doc => `
+            <div class="doc-card">
+              <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
+              <p><strong>Type:</strong> ${doc.docType}</p>
+              <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
+              <a href="${doc.s3Url}" target="_blank" download>📥 Download</a>
+              &nbsp;|&nbsp;
+              <a href="${doc.s3Url}" target="_blank">📂 View Document</a>
+              ${!doc.reviewed
+                ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
+                : `<span style="color:green;">Reviewed</span>`}
+            </div>
+          `).join("")
+        : "<p>No uploaded documents yet.</p>";
+    } catch (err) {
+      console.error("Error loading uploads:", err);
+      uploadsContainer.innerHTML = "<p>Failed to load documents.</p>";
+    }
+  };
+
+  window.markReviewed = async (docId) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/uploads/${docId}/review`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`
+        }
+      });
+  
+      if (res.ok) {
+        alert("Marked as reviewed.");
+        loadUploads();
+      } else {
+        alert("Failed to mark as reviewed.");
+      }
+    } catch (err) {
+      console.error("Review error:", err);
+    }
+  };
+
+  window.editPost = (id) => {
+    const postEl = document.getElementById(`post-${id}`);
+    postEl.querySelectorAll("[contenteditable]").forEach(el => el.contentEditable = true);
+    postEl.querySelector(`#save-${id}`).style.display = "inline";
+  };
+  
+  window.savePost = async (id) => {
+    const postEl = document.getElementById(`post-${id}`);
+    const title = postEl.querySelector(".editable-title").innerText.trim();
+    const date = postEl.querySelector(".editable-date").innerText.trim();
+    const category = postEl.querySelector(".editable-category").innerText.trim();
+    const content = postEl.querySelector(".editable-content").innerText.trim();
+  
+    try {
+      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify({ title, content, category, date })
+      });
+  
+      if (res.ok) {
+        alert("Post updated.");
+        postEl.querySelectorAll("[contenteditable]").forEach(el => el.contentEditable = false);
+        postEl.querySelector(`#save-${id}`).style.display = "none";
+        loadPosts();
+      } else {
+        alert("Update failed.");
+      }
+    } catch (err) {
+      console.error("Edit error:", err);
+      alert("Error updating post.");
+    }
+  };
+
+
+  loadUploads();
   loadPosts();
 });
