@@ -1,3 +1,5 @@
+console.log("🛠 admin.js loaded");
+
 import { requireRole, logout, getToken, showNavByAuth } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
