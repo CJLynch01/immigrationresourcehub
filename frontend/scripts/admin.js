@@ -16,23 +16,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const welcome = document.getElementById("welcomeMessage");
-  if (welcome && payload?.email) {
-    welcome.textContent = `Welcome, Admin (${payload.email})`;
-  }
-
   const postForm = document.getElementById("post-form");
   const postsContainer = document.getElementById("admin-posts");
-  const uploadsContainer = document.getElementById("admin-uploads");
-  const adminSendForm = document.getElementById("admin-send-form");
 
-  // ✅ Create a blog post
+  // ✅ Format buttons (insert markdown)
+  const contentField = document.getElementById("content");
+  const insert = (tag, wrap = false) => {
+    const start = contentField.selectionStart;
+    const end = contentField.selectionEnd;
+    const selected = contentField.value.slice(start, end);
+    const formatted = wrap ? `${tag}${selected}${tag}` : `${tag} ${selected}`;
+    contentField.setRangeText(formatted, start, end, "end");
+    contentField.focus();
+  };
+
+  document.querySelectorAll("[data-md]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tag = btn.dataset.md;
+      const wrap = tag.length === 2; // like ** or _ or ~
+      insert(tag, wrap);
+    });
+  });
+
+  // ✅ Create blog post
   postForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const title = document.getElementById("title").value;
-    const content = document.getElementById("content").value;
     const category = document.getElementById("category").value;
+    const content = contentField.value;
+    const postDate = document.getElementById("postDate").value;
 
     try {
       const res = await fetch("http://localhost:3000/api/posts", {
@@ -41,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ title, content, category })
+        body: JSON.stringify({ title, content, category, date: postDate })
       });
 
       const data = await res.json();
@@ -67,10 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       postsContainer.innerHTML = posts.length
         ? posts.map(post => `
-            <div class="post" style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+            <div class="post">
               <h3>${post.title}</h3>
               <p><strong>Category:</strong> ${post.category}</p>
-              <p>${post.content}</p>
+              <div>${marked.parse(post.content)}</div>
               <button onclick="deletePost('${post._id}')">🗑 Delete</button>
             </div>
           `).join("")
@@ -81,70 +94,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ✅ Load all client uploads
-  async function loadUploads() {
-    try {
-      const res = await fetch("http://localhost:3000/api/uploads", {
-        headers: { Authorization: `Bearer ${getToken()}` }
-      });
-
-      const docs = await res.json();
-
-      uploadsContainer.innerHTML = docs.length
-        ? docs.map(doc => `
-            <div class="upload" style="border:1px solid #666; padding:10px; margin-bottom:10px;">
-              <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
-              <p><strong>Type:</strong> ${doc.docType}</p>
-              <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
-              <a href="${doc.s3Url}" target="_blank">📂 View</a>
-              ${!doc.reviewed
-                ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
-                : `<span style="color:green;">Reviewed</span>`}
-            </div>
-          `).join("")
-        : "<p>No uploaded documents.</p>";
-    } catch (err) {
-      console.error("Error loading uploads:", err);
-      uploadsContainer.innerHTML = "<p>Failed to load uploads.</p>";
-    }
-  }
-
-  // ✅ Send document to dashboard or email
-  adminSendForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(adminSendForm);
-    const token = getToken();
-    const deliveryMethod = document.getElementById("deliveryMethod").value;
-    formData.append("deliveryMethod", deliveryMethod);
-
-    try {
-      const res = await fetch("http://localhost:3000/api/uploads/admin-send", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert(`Document successfully sent via ${deliveryMethod}`);
-        adminSendForm.reset();
-      } else {
-        alert(data.error || "Failed to send document.");
-      }
-    } catch (err) {
-      console.error("Send error:", err);
-      alert("Error sending document.");
-    }
-  });
-
-  // ✅ Delete blog post
-  window.deletePost = async (postId) => {
+  // ✅ Delete post
+  window.deletePost = async (id) => {
     if (!confirm("Delete this post?")) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${getToken()}` }
       });
@@ -153,36 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Post deleted.");
         loadPosts();
       } else {
-        alert("Failed to delete post.");
+        alert("Failed to delete.");
       }
     } catch (err) {
       console.error("Delete error:", err);
     }
   };
 
-  // ✅ Mark a document as reviewed
-  window.markReviewed = async (docId) => {
-    try {
-      const res = await fetch(`http://localhost:3000/api/uploads/${docId}/review`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        }
-      });
-
-      if (res.ok) {
-        alert("Marked as reviewed.");
-        loadUploads();
-      } else {
-        alert("Failed to mark as reviewed.");
-      }
-    } catch (err) {
-      console.error("Review error:", err);
-    }
-  };
-
-  // 🔄 Initial load
   loadPosts();
-  loadUploads();
 });

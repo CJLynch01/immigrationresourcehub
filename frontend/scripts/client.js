@@ -25,14 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const posts = await res.json();
 
       postsContainer.innerHTML = posts.length
-        ? posts.map(post => `
-            <div class="post">
-              <h3>${post.title}</h3>
-              <p><strong>Category:</strong> ${post.category}</p>
-              <p>${post.content}</p>
-            </div>
-          `).join("")
-        : "<p>No blog posts available.</p>";
+  ? posts.map(post => `
+      <div class="post">
+        <h3>${post.title}</h3>
+        <p><strong>Category:</strong> ${post.category}</p>
+        <div>${marked.parse(post.content)}</div>
+      </div>
+    `).join("")
+  : "<p>No blog posts available.</p>";
     } catch (err) {
       console.error("Error loading posts:", err);
       postsContainer.innerHTML = "<p>Failed to load blog posts.</p>";

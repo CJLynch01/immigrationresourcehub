@@ -1,4 +1,3 @@
-// blog.js — fetch and display blog posts
 document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("blog-posts");
 
@@ -15,8 +14,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       .map(post => `
         <div class="blog-post">
           <h3>${post.title}</h3>
+          <p><strong>Date:</strong> ${post.date}</p>
           <p><strong>Category:</strong> ${post.category}</p>
-          <p>${post.content}</p>
+          <div class="blog-body">${marked.parse(post.content)}</div>
         </div>
       `)
       .join("");

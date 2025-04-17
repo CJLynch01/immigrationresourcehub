@@ -230,6 +230,15 @@ body {
   line-height: 1.6;
 }
 
+.blog-body p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.blog-body strong {
+  color: var(--accent-color);
+}
+
 /* Contact Page */
 
 .contact-page {
@@ -368,6 +377,39 @@ body {
   border-radius: 5px;
   margin-bottom: 1rem;
 }
+
+/* Markdown Toolbar in Admin Page */
+
+.markdown-toolbar {
+  display: flex;
+  flex-wrap: nowrap; /* Don't allow buttons to wrap */
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto; /* Scroll if it overflows */
+  padding-bottom: 0.5rem;
+}
+
+.markdown-toolbar button {
+  background: #333;
+  color: #f8f8f8;
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.markdown-toolbar button:hover {
+  background: var(--accent-color);
+  color: #1c1c1e;
+}
+
+.markdown-toolbar button i {
+  pointer-events: none;
+}
+
+
 
 /* Privacy/Terms Page */
 .legal-page {
