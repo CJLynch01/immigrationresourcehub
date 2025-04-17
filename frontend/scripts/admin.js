@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const category = document.getElementById("category").value;
     const content = contentField.value;
     const postDate = document.getElementById("postDate").value;
+    
+    console.log("📅 Date being sent:", postDate);
 
     try {
       const res = await fetch("http://localhost:3000/api/posts", {

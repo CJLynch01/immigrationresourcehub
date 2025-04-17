@@ -7,11 +7,12 @@ const router = express.Router();
 // Create a new post (Admin only)
 router.post("/", isAdmin, async (req, res) => {
   try {
-    const { title, content, category } = req.body;
+    const { title, content, category, date } = req.body;
     const post = new Post({
       title,
       content,
       category,
+      date,
       author: req.user.id,
     });
     await post.save();
