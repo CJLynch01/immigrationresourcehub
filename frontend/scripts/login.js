@@ -1,38 +1,43 @@
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("loginForm");
+    if (!loginForm) return;
   
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
   
-    try {
-      const res = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
   
-      const data = await res.json();
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
   
-      if (!res.ok || !data.token) {
-        alert(data.msg || "Login failed");
-        return;
+        const data = await res.json();
+  
+        if (!res.ok || !data.token) {
+          alert(data.msg || "Login failed");
+          return;
+        }
+  
+        // Save JWT
+        localStorage.setItem("token", data.token);
+  
+        // Decode role from token
+        const payload = JSON.parse(atob(data.token.split(".")[1]));
+  
+        // Redirect based on role
+        if (payload.role === "admin") {
+          window.location.href = "admin.html";
+        } else {
+          window.location.href = "client.html";
+        }
+  
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("Something went wrong. Please try again.");
       }
-  
-      // Save JWT
-      localStorage.setItem("token", data.token);
-  
-      // Decode role from token
-      const payload = JSON.parse(atob(data.token.split(".")[1]));
-  
-      // Redirect based on role
-      if (payload.role === "admin") {
-        window.location.href = "admin.html";
-      } else {
-        window.location.href = "client.html"; // or index.html if preferred
-      }
-  
-    } catch (err) {
-      console.error("Login error:", err);
-      alert("Something went wrong. Please try again.");
-    }
-  });
+    });
+});
