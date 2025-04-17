@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ? posts.map(post => `
       <div class="post">
         <h3>${post.title}</h3>
+        <p><strong>Date:</strong> ${post.date || "N/A"}</p>
         <p><strong>Category:</strong> ${post.category}</p>
         <div>${marked.parse(post.content)}</div>
       </div>
