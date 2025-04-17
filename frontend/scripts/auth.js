@@ -54,6 +54,7 @@ export function showNavByAuth() {
     const token = localStorage.getItem("token");
     const loginLink = document.getElementById("loginLink");
     const logoutLink = document.getElementById("logoutLink");
+    const registerLink = document.getElementById("registerLink");
     const adminLink = document.getElementById("adminLink");
     const clientLink = document.getElementById("clientLink")
   
@@ -61,6 +62,7 @@ export function showNavByAuth() {
       const payload = JSON.parse(atob(token.split('.')[1]));
   
       if (loginLink) loginLink.style.display = "none";
+      if (registerLink) registerLink.style.display = "none";
       if (logoutLink) {
         logoutLink.style.display = "inline";
         logoutLink.addEventListener("click", (e) => {
@@ -79,7 +81,9 @@ export function showNavByAuth() {
       }
     } else {
       if (loginLink) loginLink.style.display = "inline";
+      if (registerLink) registerLink.style.display = "inline";
       if (logoutLink) logoutLink.style.display = "none";
       if (adminLink) adminLink.style.display = "none";
+      if (clientLink) clientLink.style.display = "none";
     }
   }

@@ -2,39 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Immigration Pathways Resource Hub</title>
+  <title>Register - Immigration Pathways</title>
   <link rel="stylesheet" href="style.css" />
-  <script type="module" src="scripts/index.js"></script>
 </head>
 <body>
   <header>
-    <h1>Immigration Pathways Consulting</h1>
-    <p>Your trusted guide through the U.S. immigration process</p>
+    <h1>Immigration Pathways</h1>
+    <p>Create an account to access our services</p>
   </header>
 
   <nav>
-    <a href="#">Home</a>
+    <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="about.html">About</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
+    <a href="login.html" id="loginLink">Login</a>
     <a href="register.html" id="registerLink">Register</a>
     <a href="client.html" id="clientLink" style="display: none;">Client</a>
     <a href="admin.html" id="adminLink" style="display: none;">Admin</a>
-    <a href="login.html" id="loginLink">Login</a>
     <a href="#" id="logoutLink" style="display: none;">Logout</a>
   </nav>
 
   <main>
-    <h2>Let Us Handle the Paperwork</h2>
-    <p>
-      Navigating the U.S. immigration system can be overwhelming. That’s where we come in. At Immigration Pathways Consulting, we don’t just give you information — we guide you every step of the way with personalized, professional support.
-    </p>
-    <a href="services.html" class="button">Explore Our Services</a>
+    <section>
+      <h2>Register</h2>
+      <form id="registerForm">
+        <input type="text" id="name" name="name" placeholder="Full Name" required />
+        <input type="email" id="email" name="email" placeholder="Email" required />
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <button type="submit">Create Account</button>
+      </form>
+    </section>
   </main>
 
   <footer>
     <p>© 2025 Immigration Pathways Consulting LLC</p>
   </footer>
+
+  <script type="module" src="scripts/register.js"></script>
 </body>
 </html>
