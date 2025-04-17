@@ -15,8 +15,24 @@ body {
 
 .site-header {
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
   background: #111;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.site-logo {
+  width: 150px;
+  height: auto;
+  border-radius: 6px;
 }
 
 .navbar {

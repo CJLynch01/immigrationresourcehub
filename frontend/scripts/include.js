@@ -8,7 +8,6 @@ async function include(selector, url) {
   }
   
 document.addEventListener("DOMContentLoaded", () => {
-    include("#include-header", "components/header.html");
     include("#include-nav", "components/nav.html");
     include("#include-footer", "components/footer.html");
 });
