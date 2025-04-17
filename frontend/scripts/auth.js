@@ -54,8 +54,11 @@ export function showNavByAuth() {
     const token = localStorage.getItem("token");
     const loginLink = document.getElementById("loginLink");
     const logoutLink = document.getElementById("logoutLink");
+    const adminLink = document.getElementById("adminLink");
   
     if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+  
       if (loginLink) loginLink.style.display = "none";
       if (logoutLink) {
         logoutLink.style.display = "inline";
@@ -64,8 +67,14 @@ export function showNavByAuth() {
           logout();
         });
       }
+  
+      // ✅ Show admin link only if role is admin
+      if (adminLink) {
+        adminLink.style.display = payload.role === "admin" ? "inline" : "none";
+      }
     } else {
       if (loginLink) loginLink.style.display = "inline";
       if (logoutLink) logoutLink.style.display = "none";
+      if (adminLink) adminLink.style.display = "none";
     }
-}
+  }
