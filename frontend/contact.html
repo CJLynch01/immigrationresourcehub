@@ -2,55 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Contact Us - Immigration Pathways</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Immigration Pathways</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script type="module" src="scripts/index.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Contact Immigration Pathways</h1>
-    <p>We're here to help — let's get in touch</p>
+  <header class="site-header">
+    <h1>Contact Us</h1>
+    <p>We’re here to help you every step of the way</p>
   </header>
 
-  <nav>
+  <nav class="navbar">
     <a href="index.html">Home</a>
     <a href="services.html">Services</a>
     <a href="about.html">About</a>
     <a href="blog.html">Blog</a>
-    <a href="#">Contact</a>
-    <a href="register.html" id="registerLink">Register</a>
-    <a href="client.html" id="clientLink" style="display: none;">Client</a>
-    <a href="admin.html" id="adminLink" style="display: none;">Admin</a>
+    <a href="contact.html" class="active">Contact</a>
     <a href="login.html" id="loginLink">Login</a>
+    <a href="register.html" id="registerLink">Register</a>
+    <a href="admin.html" id="adminLink" style="display: none;">Admin</a>
     <a href="#" id="logoutLink" style="display: none;">Logout</a>
   </nav>
 
-  <main>
-    <section>
-      <h2>Email Us</h2>
-      <p>If you have questions or would like to request a consultation, please email us directly:</p>
-      <p><strong><a href="mailto:chris@immigrationpathwaysconsulting.com">chris@immigrationpathwaysconsulting.com</a></strong></p>
+  <main class="contact-page">
+    <section class="contact-info">
+      <p>If you have questions or would like to schedule a consultation, feel free to reach out:</p>
+
+      <p><strong>Email:</strong> <a href="mailto:chris@immigrationpathwaysconsulting.com">chris@immigrationpathwaysconsulting.com</a></p>
+      
+      <p>We typically respond within 24 hours.</p>
     </section>
 
-    <section>
-      <h2>Or Use the Form Below</h2>
-      <form action="mailto:chris@immigrationpathwaysconsulting.com" method="POST" enctype="text/plain">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="Name" required>
-
-        <label for="email">Your Email:</label>
-        <input type="email" id="email" name="Email" required>
-
-        <label for="message">Your Message:</label>
-        <textarea id="message" name="Message" rows="5" required></textarea>
-
-        <button type="submit" class="button">Send Message</button>
-      </form>
-    </section>
+    <div class="cta-banner">
+      <h3>Let’s start your immigration journey together</h3>
+      <a href="mailto:chris@immigrationpathwaysconsulting.com" class="button">Email Chris</a>
+    </div>
   </main>
 
   <footer>
     <p>© 2025 Immigration Pathways Consulting LLC</p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=61574005612583" target="_blank">
+        <i class="fab fa-facebook fa-lg"></i> Page
+      </a>
+      <a href="https://www.facebook.com/groups/994955182058038" target="_blank">
+        <i class="fas fa-users fa-lg"></i> Group
+      </a>
+    </div>
   </footer>
 </body>
 </html>
