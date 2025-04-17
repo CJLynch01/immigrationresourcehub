@@ -16,19 +16,6 @@ export function getToken() {
   }
   
   export function requireRole(role, redirectTo = "login.html") {
-    const payload = getPayload();
-    if (!payload || payload.role !== role) {
-      window.location.href = redirectTo;
-    }
-    return payload;
-  }
-  
-  export function logout(redirectTo = "login.html") {
-    localStorage.removeItem("token");
-    window.location.href = redirectTo;
-}
-
-export function requireRole(role, redirectTo = "login.html") {
     const token = localStorage.getItem("token");
     if (!token) {
       window.location.href = redirectTo;
@@ -48,8 +35,13 @@ export function requireRole(role, redirectTo = "login.html") {
       return null;
     }
   }
-
-export function showNavByAuth() {
+  
+  export function logout(redirectTo = "login.html") {
+    localStorage.removeItem("token");
+    window.location.href = redirectTo;
+  }
+  
+  export function showNavByAuth() {
     const token = localStorage.getItem("token");
     const loginLink = document.getElementById("loginLink");
     const logoutLink = document.getElementById("logoutLink");
@@ -60,8 +52,7 @@ export function showNavByAuth() {
         logoutLink.style.display = "inline";
         logoutLink.addEventListener("click", (e) => {
           e.preventDefault();
-          localStorage.removeItem("token");
-          window.location.href = "login.html"
+          logout();
         });
       }
     } else {
