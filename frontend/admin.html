@@ -28,6 +28,33 @@
     <h1 id="welcomeMessage">Admin Panel</h1>
 
     <section>
+      <h2>Client Document Uploads</h2>
+      <div id="admin-uploads"></div>
+    </section>
+
+    <section>
+      <h2>📤 Send Document to Client</h2>
+      <form id="admin-send-form" enctype="multipart/form-data">
+        <label for="targetUser">Client User ID:</label>
+        <input type="text" id="targetUser" name="userId" required />
+    
+        <label for="adminDocType">Document Type:</label>
+        <input type="text" id="adminDocType" name="docType" required />
+    
+        <label for="deliveryMethod">Send via:</label>
+        <select id="deliveryMethod" name="deliveryMethod" required>
+          <option value="dashboard">Client Dashboard</option>
+          <option value="email">Email</option>
+        </select>
+    
+        <label for="adminFile">Choose File:</label>
+        <input type="file" id="adminFile" name="file" required />
+    
+        <button type="submit">Send Document</button>
+      </form>
+    </section>
+
+    <section>
       <h2>Create a New Post</h2>
       <form id="post-form">
         <input type="text" id="title" placeholder="Title" required />

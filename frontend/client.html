@@ -23,10 +23,33 @@
   </nav>
 
   <main>
-    <h2>Latest Blog Posts</h2>
-    <div id="client-posts">
-      <!-- Posts will load here -->
-    </div>
+
+    <section>
+        <h2>Upload a Document</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+          <label for="docType">Document Type:</label>
+          <input type="text" id="docType" name="docType" required />
+          <label for="file">Choose File:</label>
+          <input type="file" id="file" name="file" required />
+          <button type="submit">Upload</button>
+        </form>
+    </section>
+      
+    <section>
+        <h2>📤 Documents You Uploaded</h2>
+        <div id="my-uploaded-docs"></div>
+      </section>
+      
+      <section>
+        <h2>📥 Documents Sent by Admin</h2>
+        <div id="admin-sent-docs"></div>
+      </section>
+
+    <section>
+        <h2>Latest Blog Posts</h2>
+        <div id="client-posts"></div>
+    </section>
+
   </main>
 
   <footer>
