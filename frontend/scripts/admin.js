@@ -80,12 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       postsContainer.innerHTML = posts.length
         ? posts.map(post => `
-            <div class="post">
-              <h3>${post.title}</h3>
-              <p><strong>Category:</strong> ${post.category}</p>
-              <div>${marked.parse(post.content)}</div>
-              <button onclick="deletePost('${post._id}')">🗑 Delete</button>
-            </div>
+          <div class="post">
+            <h3>${post.title}</h3>
+            <p><strong>Date:</strong> ${post.date || "N/A"}</p>
+            <p><strong>Category:</strong> ${post.category}</p>
+            <div>${marked.parse(post.content)}</div>
+            <button onclick="deletePost('${post._id}')">🗑 Delete</button>
+          </div>
           `).join("")
         : "<p>No blog posts yet.</p>";
     } catch (err) {
