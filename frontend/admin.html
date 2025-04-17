@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <title>Admin Dashboard - Immigration Pathways</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="scripts/admin.js"></script>
+  <script src="scripts/adminLogin.js"></script>
+
 </head>
 <body>
   <header>
@@ -17,7 +20,8 @@
     <a href="about.html">About</a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
-    <a href="login.html" onclick="localStorage.clear()">Logout</a>
+    <a href="login.html" id="loginLink">Login</a>
+    <a href="#" id="logoutLink" style="display: none;">Logout</a>
   </nav>
 
   <main>
@@ -30,8 +34,6 @@
         <button type="submit">Create Post</button>
       </form>
     </section>
-
-    <hr />
 
     <section>
       <h2>Existing Posts</h2>

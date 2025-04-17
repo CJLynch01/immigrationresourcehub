@@ -1,4 +1,5 @@
-const loginForm = document.getElementById("login-form");
+const loginForm = document.getElementById("loginLink");
+const logoutLink = document.getElementById("logoutLink");
 
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
@@ -28,5 +29,13 @@ if (loginForm) {
       alert("Login error. Please try again.");
       console.error(err);
     }
+  });
+}
+
+if (logoutLink) {
+  logoutLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
   });
 }
