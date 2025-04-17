@@ -1,25 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
 
-  // Check token presence
+  // Check token
   if (!token) {
     alert("Access denied. Please log in.");
     window.location.href = "login.html";
     return;
   }
 
-  // Decode token and check role
-  const payload = JSON.parse(atob(token.split('.')[1]));
-  if (payload.role !== 'admin') {
+  // Decode token & check role
+  let payload;
+  try {
+    payload = JSON.parse(atob(token.split('.')[1]));
+  } catch {
+    alert("Invalid token.");
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+    return;
+  }
+
+  if (payload.role !== "admin") {
     alert("Admin access only.");
     window.location.href = "login.html";
     return;
   }
 
+  // ✅ Toggle nav links
+  const loginLink = document.getElementById("loginLink");
+  const logoutLink = document.getElementById("logoutLink");
+  if (loginLink) loginLink.style.display = "none";
+  if (logoutLink) {
+    logoutLink.style.display = "inline";
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    });
+  }
+
+  // ✅ Post logic
   const postForm = document.getElementById("post-form");
   const postsContainer = document.getElementById("admin-posts");
 
-  // Create post
   postForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const title = document.getElementById("title").value;
