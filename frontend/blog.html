@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script type="module" src="scripts/blog.js"></script>
+  <script type="module" src="scripts/include.js"></script>
+
 </head>
 <body>
   <header class="site-header">
@@ -14,17 +16,7 @@
     <p>Stay informed with tips, updates, and guidance</p>
   </header>
 
-  <nav class="navbar">
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="about.html">About</a>
-    <a href="blog.html" class="active">Blog</a>
-    <a href="contact.html">Contact</a>
-    <a href="login.html" id="loginLink">Login</a>
-    <a href="register.html" id="registerLink">Register</a>
-    <a href="admin.html" id="adminLink" style="display: none;">Admin</a>
-    <a href="#" id="logoutLink" style="display: none;">Logout</a>
-  </nav>
+  <div id="include-nav"></div>
 
   <main class="blog-page">
     <div id="blog-posts" class="blog-posts">
@@ -32,16 +24,7 @@
     </div>
   </main>
 
-  <footer>
-    <p>© 2025 Immigration Pathways Consulting LLC</p>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/profile.php?id=61574005612583" target="_blank">
-        <i class="fab fa-facebook fa-lg"></i> Page
-      </a>
-      <a href="https://www.facebook.com/groups/994955182058038" target="_blank">
-        <i class="fas fa-users fa-lg"></i> Group
-      </a>
-    </div>
-  </footer>
+  <div id="include-footer"></div>
+
 </body>
 </html>
