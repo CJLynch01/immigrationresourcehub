@@ -1,31 +1,9 @@
+import { requireRole, logout, getToken } from "./auth.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("token");
+  const payload = requireRole("admin");
 
-  // Check token
-  if (!token) {
-    alert("Access denied. Please log in.");
-    window.location.href = "login.html";
-    return;
-  }
-
-  // Decode token & check role
-  let payload;
-  try {
-    payload = JSON.parse(atob(token.split('.')[1]));
-  } catch {
-    alert("Invalid token.");
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-    return;
-  }
-
-  if (payload.role !== "admin") {
-    alert("Admin access only.");
-    window.location.href = "login.html";
-    return;
-  }
-
-  // ✅ Toggle nav links
+  // Toggle nav links
   const loginLink = document.getElementById("loginLink");
   const logoutLink = document.getElementById("logoutLink");
   if (loginLink) loginLink.style.display = "none";
@@ -33,20 +11,20 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutLink.style.display = "inline";
     logoutLink.addEventListener("click", (e) => {
       e.preventDefault();
-      localStorage.removeItem("token");
-      window.location.href = "login.html";
+      logout();
     });
   }
 
-  // ✅ Post logic
   const postForm = document.getElementById("post-form");
   const postsContainer = document.getElementById("admin-posts");
 
   postForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const title = document.getElementById("title").value;
     const content = document.getElementById("content").value;
     const category = document.getElementById("category").value;
+    const token = getToken();
 
     try {
       const res = await fetch("http://localhost:3000/api/posts", {
@@ -71,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Load posts
   async function loadPosts() {
     try {
       const res = await fetch("http://localhost:3000/api/posts");
@@ -92,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Delete post
   window.deletePost = async (postId) => {
+    const token = getToken();
     if (!confirm("Delete this post?")) return;
 
     try {
