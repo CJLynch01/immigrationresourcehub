@@ -145,11 +145,14 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
   }
 });
 
-router.get("/signed-url/:key", verifyToken, async (req, res) => {
+router.get("/signed-url/*", verifyToken, async (req, res) => {
+  const key = req.params[0]; // this grabs everything after /signed-url/
+  console.log("📦 Getting signed URL for key:", key);
+
   try {
     const command = new GetObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
-      Key: req.params.key
+      Key: key
     });
 
     const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 }); // 60 seconds

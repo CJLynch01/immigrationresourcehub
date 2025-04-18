@@ -129,41 +129,49 @@ document.addEventListener("DOMContentLoaded", () => {
   
       const docs = await res.json();
   
-      uploadsContainer.innerHTML = docs.length
-        ? await Promise.all(docs.map(async (doc) => {
-            const key = extractKeyFromS3Url(doc.s3Url);
-            let signedUrl = "#";
+      const cards = await Promise.all(
+        docs.map(async (doc) => {
+          const key = extractKeyFromS3Url(doc.s3Url);
+          let signedUrl = "#";
   
-            try {
-              const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
-                headers: { Authorization: `Bearer ${getToken()}` }
-              });
-              const data = await res.json();
+          try {
+            const urlRes = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
+              headers: { Authorization: `Bearer ${getToken()}` }
+            });
+  
+            const data = await urlRes.json();
+            console.log("Signed URL for", key, "→", data);
+            if (data?.url) {
               signedUrl = data.url;
-            } catch (err) {
-              console.error("Error fetching signed URL:", err);
+            } else {
+              console.warn("No signed URL returned for:", key);
             }
+          } catch (err) {
+            console.error("Error getting signed URL:", err);
+          }
   
-            return `
-              <div class="doc-card">
-                <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
-                <p><strong>Type:</strong> ${doc.docType}</p>
-                <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
-                <a href="${signedUrl}" target="_blank" class="download-link">📥 Download</a>
-                &nbsp;|&nbsp;
-                <a href="${signedUrl}" target="_blank" class="download-link">📂 View Document</a>
-                ${!doc.reviewed
-                  ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
-                  : `<span style="color:green;">Reviewed</span>`}
-              </div>
-            `;
-          })).then(htmlArr => htmlArr.join(""))
-        : "<p>No uploaded documents yet.</p>";
+          return `
+            <div class="doc-card">
+              <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
+              <p><strong>Type:</strong> ${doc.docType}</p>
+              <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
+              <a href="${signedUrl}" target="_blank" class="download-link">📥 Download</a>
+              &nbsp;|&nbsp;
+              <a href="${signedUrl}" target="_blank" class="download-link">📂 View Document</a>
+              ${!doc.reviewed
+                ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
+                : `<span style="color:green;">Reviewed</span>`}
+            </div>
+          `;
+        })
+      );
+  
+      uploadsContainer.innerHTML = cards.join("");
     } catch (err) {
-      console.error("Error loading uploads:", err);
+      console.error("Error loading documents:", err);
       uploadsContainer.innerHTML = "<p>Failed to load documents.</p>";
     }
-  };
+  }
 
   window.markReviewed = async (docId) => {
     try {
@@ -223,28 +231,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const viewButton = document.createElement("a");
-  viewButton.textContent = "📂 View";
-  viewButton.href = "#";
-  viewButton.onclick = async (e) => {
-    e.preventDefault();
-    try {
-      const key = extractKeyFromS3Url(doc.s3Url); // helper function below
-      const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
-        headers: { Authorization: `Bearer ${getToken()}` }
-    });
-      const data = await res.json();
-      if (data.url) window.open(data.url, "_blank");
-  } catch (err) {
-    alert("Failed to open file.");
-    console.error(err);
-  }
-};
-
-// Helper
 function extractKeyFromS3Url(url) {
   const parts = url.split(".amazonaws.com/");
   return parts.length > 1 ? parts[1] : "";
+}
+
+async function getSignedUrl(key) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    });
+    const data = await res.json();
+    return data.url || "#";
+  } catch (err) {
+    console.error("Signed URL error:", err);
+    return "#";
+  }
 }
 
 
