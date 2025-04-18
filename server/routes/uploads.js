@@ -7,6 +7,8 @@ const { verifyToken, isAdmin } = require("../middleware/auth");
 const Document = require("../models/document");
 const User = require("../models/User");
 const nodemailer = require("nodemailer");
+const { GetObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 // Multer setup (in-memory storage)
 const storage = multer.memoryStorage();
@@ -140,6 +142,21 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
   } catch (err) {
     console.error("Load uploads error:", err);
     res.status(500).json({ error: "Failed to load documents" });
+  }
+});
+
+router.get("/signed-url/:key", verifyToken, async (req, res) => {
+  try {
+    const command = new GetObjectCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: req.params.key
+    });
+
+    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 }); // 60 seconds
+    res.json({ url: signedUrl });
+  } catch (err) {
+    console.error("Failed to generate signed URL:", err);
+    res.status(500).json({ error: "Could not generate signed URL" });
   }
 });
 

@@ -135,9 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
               <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
               <p><strong>Type:</strong> ${doc.docType}</p>
               <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
-              <a href="${doc.s3Url}" target="_blank" download>📥 Download</a>
+              <a href="${doc.s3Url}" target="_blank" class="download-link">📥 Download</a>
               &nbsp;|&nbsp;
-              <a href="${doc.s3Url}" target="_blank">📂 View Document</a>
+              <a href="${doc.s3Url}" target="_blank" class="download-link">📂 View Document</a>
               ${!doc.reviewed
                 ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
                 : `<span style="color:green;">Reviewed</span>`}
@@ -207,6 +207,30 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Error updating post.");
     }
   };
+
+  const viewButton = document.createElement("a");
+  viewButton.textContent = "📂 View";
+  viewButton.href = "#";
+  viewButton.onclick = async (e) => {
+    e.preventDefault();
+    try {
+      const key = extractKeyFromS3Url(doc.s3Url); // helper function below
+      const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+    });
+      const data = await res.json();
+      if (data.url) window.open(data.url, "_blank");
+  } catch (err) {
+    alert("Failed to open file.");
+    console.error(err);
+  }
+};
+
+// Helper
+function extractKeyFromS3Url(url) {
+  const parts = url.split(".amazonaws.com/");
+  return parts.length > 1 ? parts[1] : "";
+}
 
 
   loadUploads();
