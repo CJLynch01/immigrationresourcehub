@@ -33,13 +33,13 @@
       <h2>📤 Send File to Client</h2>
 
       <label for="userId">Select Client</label>
-        <select id="userId" name="userId" required>
-        <option value="">Loading clients...</option>
-        </select>
+      <select id="clientDropdown" name="userId" required>
+        <option value="">Select a client</option>
+      </select>
 
       <form id="adminSendForm" class="admin-form" enctype="multipart/form-data">
         <label for="userId">Client User ID</label>
-        <input type="text" id="userId" name="userId" placeholder="e.g. 661fa3e57b..." required />
+        <input type="text" id="userId" name="userId" readonly required />
     
         <label for="docType">Document Type</label>
         <input type="text" id="docType" name="docType" placeholder="e.g. Welcome Letter" required />

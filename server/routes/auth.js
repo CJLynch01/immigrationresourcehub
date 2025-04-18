@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { verifyToken, isAdmin } = require("../middleware/auth");
+
 
 // Mock user DB or real MongoDB User model
 const User = require("../models/User"); // if using Mongoose
@@ -33,15 +35,13 @@ router.post("/register", async (req, res) => {
   res.status(201).json({ msg: "User registered" });
 });
 
-const { isAdmin } = require("../middleware/auth");
-
 router.get("/clients", verifyToken, isAdmin, async (req, res) => {
   try {
     const clients = await User.find({ role: "client" }).select("name email");
     res.json(clients);
   } catch (err) {
-    console.error("Error fetching clients:", err);
-    res.status(500).json({ error: "Failed to fetch clients" });
+    console.error("Failed to fetch clients:", err);
+    res.status(500).json({ error: "Could not load client list" });
   }
 });
 

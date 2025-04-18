@@ -281,38 +281,31 @@ async function getSignedUrl(key) {
 }
 
 async function populateClientDropdown() {
-  const dropdown = document.getElementById("userId");
   try {
     const res = await fetch("http://localhost:3000/api/auth/clients", {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
+      headers: { Authorization: `Bearer ${getToken()}` }
     });
     const clients = await res.json();
 
-    if (clients.length) {
-      dropdown.innerHTML = `<option value="">-- Select a Client --</option>`;
-      clients.forEach(client => {
-        const option = document.createElement("option");
-        option.value = client._id;
-        option.textContent = `${client.name} (${client.email})`;
-        dropdown.appendChild(option);
-      });
-    } else {
-      dropdown.innerHTML = `<option value="">No clients found</option>`;
-    }
+    const dropdown = document.getElementById("clientDropdown");
+    const userIdField = document.getElementById("userId");
+
+    dropdown.innerHTML =
+      '<option value="">-- Choose a client --</option>' +
+      clients.map(c => `<option value="${c._id}">${c.name} (${c.email})</option>`).join("");
+
+    // ✅ Update userId field when a client is selected
+    dropdown.addEventListener("change", () => {
+      userIdField.value = dropdown.value;
+    });
+
   } catch (err) {
     console.error("Failed to load clients:", err);
-    dropdown.innerHTML = `<option value="">Error loading clients</option>`;
   }
 }
 
-// Call it when DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
+
   populateClientDropdown();
-});
-
-
   loadUploads();
   loadPosts();
 });
