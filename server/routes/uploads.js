@@ -104,9 +104,9 @@ router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (r
     }
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      secure: process.env.SMTP_SECURE === "true", // true for port 465
+      host: process.env.SMTP_HOST, // smtp.hostinger.com
+      port: Number(process.env.SMTP_PORT), // must be a number
+      secure: process.env.SMTP_SECURE === "true", // boolean for TLS
       auth: {
         user: process.env.EMAIL_FROM,
         pass: process.env.EMAIL_PASSWORD
