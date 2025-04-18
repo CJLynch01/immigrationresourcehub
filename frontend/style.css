@@ -438,6 +438,31 @@ body {
   margin-bottom: 1rem;
 }
 
+.upload {
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.upload:hover {
+  transform: scale(1.01);
+}
+
+.upload a {
+  color: gold;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.upload a:hover {
+  text-decoration: underline;
+}
+
 /* Admin Page */
 .admin-dashboard {
   max-width: 1000px;
@@ -495,6 +520,46 @@ a.download-link:hover {
   color: var(--button-text);
 }
 
+/* Send File to Client in Admin Page */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #444;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+}
+
+.admin-form label {
+  font-weight: bold;
+  color: gold;
+}
+
+.admin-form input,
+.admin-form select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  background-color: #2c2c2c;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.admin-form button.button {
+  background-color: gold;
+  color: #000;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-form button.button:hover {
+  background-color: #d4af37;
+}
+
 /* Markdown Toolbar in Admin Page */
 
 .markdown-toolbar {
@@ -526,7 +591,22 @@ a.download-link:hover {
   pointer-events: none;
 }
 
+button.delete-button {
+  background-color: #a80000;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-top: 5px;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
+}
 
+button.delete-button:hover {
+  background-color: #cc0000;
+}
 
 /* Privacy/Terms Page */
 .legal-page {

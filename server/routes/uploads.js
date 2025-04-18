@@ -147,17 +147,15 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
 });
 
 router.get("/signed-url/*", verifyToken, async (req, res) => {
-  const key = req.params[0]; // this grabs everything after /signed-url/
-  console.log("📦 Getting signed URL for key:", key);
-
+  const key = req.params[0]; // This will capture the full path
   try {
     const command = new GetObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
-      Key: req.params.key,
-      ResponseContentDisposition: "inline"  // <-- 👈 This forces the browser to open
+      Key: key,
+      ResponseContentDisposition: "inline"
     });
 
-    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 }); // 60 seconds
+    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 });
     res.json({ url: signedUrl });
   } catch (err) {
     console.error("Failed to generate signed URL:", err);
@@ -178,16 +176,30 @@ router.get("/my-uploads", verifyToken, async (req, res) => {
   }
 });
 
-/**
- * ✅ Admin marks document as reviewed
- */
-router.patch("/:id/review", verifyToken, isAdmin, async (req, res) => {
+const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
+
+router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
-    await Document.findByIdAndUpdate(req.params.id, { reviewed: true });
-    res.json({ msg: "Marked as reviewed" });
+    const doc = await Document.findById(req.params.id);
+    if (!doc) return res.status(404).json({ error: "Document not found" });
+
+    // Extract key from S3 URL
+    const s3Key = doc.s3Url.split(".amazonaws.com/")[1];
+
+    // Delete from S3
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: s3Key
+    });
+    await s3.send(command);
+
+    // Delete from MongoDB
+    await Document.findByIdAndDelete(req.params.id);
+
+    res.json({ msg: "Document deleted from S3 and database." });
   } catch (err) {
-    console.error("Review update failed:", err);
-    res.status(500).json({ error: "Could not update document" });
+    console.error("Error deleting document:", err);
+    res.status(500).json({ error: "Failed to delete document" });
   }
 });
 

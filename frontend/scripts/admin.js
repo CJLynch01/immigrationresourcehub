@@ -158,9 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <a href="${signedUrl}" download target="_blank" class="download-link">📥 Download</a>
               &nbsp;|&nbsp;
               <a href="${signedUrl}" target="_blank" rel="noopener noreferrer" class="download-link">📂 View Document</a>
-              ${!doc.reviewed
-                ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
-                : `<span style="color:green;">Reviewed</span>`}
+              <button class="delete-button" onclick="deleteDocument('${doc._id}')">🗑 Delete</button>
             </div>
           `;
         })
@@ -173,24 +171,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  window.markReviewed = async (docId) => {
+  const sendForm = document.getElementById("adminSendForm");
+
+  sendForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(sendForm);
+    const token = getToken();
+
     try {
-      const res = await fetch(`http://localhost:3000/api/uploads/${docId}/review`, {
-        method: "PATCH",
+      const res = await fetch("http://localhost:3000/api/uploads/admin-send", {
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert(`File sent via ${formData.get("deliveryMethod")}.`);
+        sendForm.reset();
+      } else {
+        alert(data.error || "Failed to send file.");
+      }
+  } catch (err) {
+    console.error("Send file error:", err);
+    alert("Something went wrong.");
+  }
+});
+
+  window.deleteDocument = async (docId) => {
+    if (!confirm("Are you sure you want to delete this document?")) return;
+  
+    try {
+      const res = await fetch(`http://localhost:3000/api/uploads/${docId}`, {
+        method: "DELETE",
+        headers: {
           Authorization: `Bearer ${getToken()}`
         }
       });
   
       if (res.ok) {
-        alert("Marked as reviewed.");
+        alert("Document deleted.");
         loadUploads();
       } else {
-        alert("Failed to mark as reviewed.");
+        alert("Failed to delete document.");
       }
     } catch (err) {
-      console.error("Review error:", err);
+      console.error("Delete error:", err);
+      alert("Error deleting document.");
     }
   };
 
@@ -248,6 +279,38 @@ async function getSignedUrl(key) {
     return "#";
   }
 }
+
+async function populateClientDropdown() {
+  const dropdown = document.getElementById("userId");
+  try {
+    const res = await fetch("http://localhost:3000/api/auth/clients", {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    const clients = await res.json();
+
+    if (clients.length) {
+      dropdown.innerHTML = `<option value="">-- Select a Client --</option>`;
+      clients.forEach(client => {
+        const option = document.createElement("option");
+        option.value = client._id;
+        option.textContent = `${client.name} (${client.email})`;
+        dropdown.appendChild(option);
+      });
+    } else {
+      dropdown.innerHTML = `<option value="">No clients found</option>`;
+    }
+  } catch (err) {
+    console.error("Failed to load clients:", err);
+    dropdown.innerHTML = `<option value="">Error loading clients</option>`;
+  }
+}
+
+// Call it when DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  populateClientDropdown();
+});
 
 
   loadUploads();

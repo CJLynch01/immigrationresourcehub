@@ -33,4 +33,16 @@ router.post("/register", async (req, res) => {
   res.status(201).json({ msg: "User registered" });
 });
 
+const { isAdmin } = require("../middleware/auth");
+
+router.get("/clients", verifyToken, isAdmin, async (req, res) => {
+  try {
+    const clients = await User.find({ role: "client" }).select("name email");
+    res.json(clients);
+  } catch (err) {
+    console.error("Error fetching clients:", err);
+    res.status(500).json({ error: "Failed to fetch clients" });
+  }
+});
+
 module.exports = router;

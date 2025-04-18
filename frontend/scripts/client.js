@@ -16,30 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✅ Load blog posts
-  const postsContainer = document.getElementById("client-posts");
-
-  async function loadPosts() {
-    try {
-      const res = await fetch("http://localhost:3000/api/posts");
-      const posts = await res.json();
-
-      postsContainer.innerHTML = posts.length
-  ? posts.map(post => `
-      <div class="post">
-        <h3>${post.title}</h3>
-        <p><strong>Date:</strong> ${post.date || "N/A"}</p>
-        <p><strong>Category:</strong> ${post.category}</p>
-        <div>${marked.parse(post.content)}</div>
-      </div>
-    `).join("")
-  : "<p>No blog posts available.</p>";
-    } catch (err) {
-      console.error("Error loading posts:", err);
-      postsContainer.innerHTML = "<p>Failed to load blog posts.</p>";
-    }
-  }
-
   // ✅ Upload a document
   const uploadForm = document.getElementById("uploadForm");
 
@@ -50,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = getToken();
 
     try {
-      const res = await fetch("http://localhost:3000/api/uploads", {
+      const res = await fetch("http://localhost:3000/api/uploads/my-uploads", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`
@@ -82,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!myUploads || !adminUploads) return;
   
     try {
-      const res = await fetch("http://localhost:3000/api/my-uploads", {
+      const res = await fetch("http://localhost:3000/api/uploads/my-uploads", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -146,6 +122,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  loadPosts();
   loadMyUploads();
 });
