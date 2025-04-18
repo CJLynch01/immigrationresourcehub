@@ -30,7 +30,8 @@ router.post("/", verifyToken, upload.single("file"), async (req, res) => {
     Key: fileKey,
     Body: file.buffer,
     ContentType: file.mimetype,
-    ACL: "private"
+    ACL: "private",
+    ContentDisposition: "inline"
   };
 
   try {
@@ -152,7 +153,8 @@ router.get("/signed-url/*", verifyToken, async (req, res) => {
   try {
     const command = new GetObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
-      Key: key
+      Key: req.params.key,
+      ResponseContentDisposition: "inline"  // <-- 👈 This forces the browser to open
     });
 
     const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 }); // 60 seconds

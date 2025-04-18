@@ -155,9 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
               <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
               <p><strong>Type:</strong> ${doc.docType}</p>
               <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
-              <a href="${signedUrl}" target="_blank" class="download-link">📥 Download</a>
+              <a href="${signedUrl}" download target="_blank" class="download-link">📥 Download</a>
               &nbsp;|&nbsp;
-              <a href="${signedUrl}" target="_blank" class="download-link">📂 View Document</a>
+              <a href="${signedUrl}" target="_blank" rel="noopener noreferrer" class="download-link">📂 View Document</a>
               ${!doc.reviewed
                 ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
                 : `<span style="color:green;">Reviewed</span>`}
