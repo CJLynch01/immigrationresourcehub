@@ -130,19 +130,34 @@ document.addEventListener("DOMContentLoaded", () => {
       const docs = await res.json();
   
       uploadsContainer.innerHTML = docs.length
-        ? docs.map(doc => `
-            <div class="doc-card">
-              <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
-              <p><strong>Type:</strong> ${doc.docType}</p>
-              <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
-              <a href="${doc.s3Url}" target="_blank" class="download-link">📥 Download</a>
-              &nbsp;|&nbsp;
-              <a href="${doc.s3Url}" target="_blank" class="download-link">📂 View Document</a>
-              ${!doc.reviewed
-                ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
-                : `<span style="color:green;">Reviewed</span>`}
-            </div>
-          `).join("")
+        ? await Promise.all(docs.map(async (doc) => {
+            const key = extractKeyFromS3Url(doc.s3Url);
+            let signedUrl = "#";
+  
+            try {
+              const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
+                headers: { Authorization: `Bearer ${getToken()}` }
+              });
+              const data = await res.json();
+              signedUrl = data.url;
+            } catch (err) {
+              console.error("Error fetching signed URL:", err);
+            }
+  
+            return `
+              <div class="doc-card">
+                <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
+                <p><strong>Type:</strong> ${doc.docType}</p>
+                <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
+                <a href="${signedUrl}" target="_blank" class="download-link">📥 Download</a>
+                &nbsp;|&nbsp;
+                <a href="${signedUrl}" target="_blank" class="download-link">📂 View Document</a>
+                ${!doc.reviewed
+                  ? `<button onclick="markReviewed('${doc._id}')">✅ Mark Reviewed</button>`
+                  : `<span style="color:green;">Reviewed</span>`}
+              </div>
+            `;
+          })).then(htmlArr => htmlArr.join(""))
         : "<p>No uploaded documents yet.</p>";
     } catch (err) {
       console.error("Error loading uploads:", err);
