@@ -11,8 +11,18 @@ const { GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 // Multer setup (in-memory storage)
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const allowedTypes = ['application/pdf'];
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true); // Accept file
+    } else {
+      cb(new Error('Only PDF files are allowed.'));
+    }
+  }
+});
 
 /**
  * ✅ Client uploads a document
