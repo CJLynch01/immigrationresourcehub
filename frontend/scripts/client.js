@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = getToken();
 
     try {
-      const res = await fetch("http://localhost:3000/api/uploads/my-uploads", {
+      const res = await fetch("http://localhost:3000/api/uploads", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`

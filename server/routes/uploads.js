@@ -140,7 +140,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
   try {
     const docs = await Document.find()
       .sort({ uploadedAt: -1 })
-      .populate("userId", "email");
+      .populate("userId", "name email");
     res.json(docs);
   } catch (err) {
     console.error("Load uploads error:", err);

@@ -128,48 +128,60 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   
       const docs = await res.json();
+      const clientDocsContainer = document.getElementById("client-documents");
+      const adminDocsContainer = document.getElementById("admin-documents");
   
-      const cards = await Promise.all(
-        docs.map(async (doc) => {
-          const key = extractKeyFromS3Url(doc.s3Url);
-          let signedUrl = "#";
+      const clientDocs = docs.filter(doc => !doc.sentByAdmin);
+      const adminDocs = docs.filter(doc => doc.sentByAdmin);
   
-          try {
-            const urlRes = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
-              headers: { Authorization: `Bearer ${getToken()}` }
-            });
+      // 🔁 Process each client doc with async/await inside Promise.all
+      const clientHTML = await Promise.all(clientDocs.map(async (doc) => {
+        const url = await getSignedUrlFromS3(doc.s3Url);
+        return `
+          <div class="doc-card">
+            <p><strong>Client:</strong> ${doc.userId?.name || "Unknown"}</p>
+            <p><strong>Email:</strong> ${doc.userId?.email || "N/A"}</p>
+            <p><strong>Type:</strong> ${doc.docType}</p>
+            <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
+            <a href="${url}" target="_blank" class="download-link">📂 View</a>
+            <a href="${url}" download class="download-link">📥 Download</a>
+            <button class="delete-button" onclick="deleteDocument('${doc._id}')">🗑 Delete</button>
+          </div>
+        `;
+      }));
   
-            const data = await urlRes.json();
-            console.log("Signed URL for", key, "→", data);
-            if (data?.url) {
-              signedUrl = data.url;
-            } else {
-              console.warn("No signed URL returned for:", key);
-            }
-          } catch (err) {
-            console.error("Error getting signed URL:", err);
-          }
+      const adminHTML = await Promise.all(adminDocs.map(async (doc) => {
+        const url = await getSignedUrlFromS3(doc.s3Url);
+        return `
+          <div class="doc-card">
+            <p><strong>Client:</strong> ${doc.userId?.name || "Unknown"}</p>
+            <p><strong>Email:</strong> ${doc.userId?.email || "N/A"}</p>
+            <p><strong>Type:</strong> ${doc.docType}</p>
+            <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
+            <a href="${url}" target="_blank" class="download-link">📂 View</a>
+            <a href="${url}" download class="download-link">📥 Download</a>
+            <button class="delete-button" onclick="deleteDocument('${doc._id}')">🗑 Delete</button>
+          </div>
+        `;
+      }));
   
-          return `
-            <div class="doc-card">
-              <p><strong>Client:</strong> ${doc.userId?.email || "Unknown"}</p>
-              <p><strong>Type:</strong> ${doc.docType}</p>
-              <p><strong>Uploaded:</strong> ${new Date(doc.uploadedAt).toLocaleString()}</p>
-              <a href="${signedUrl}" download target="_blank" class="download-link">📥 Download</a>
-              &nbsp;|&nbsp;
-              <a href="${signedUrl}" target="_blank" rel="noopener noreferrer" class="download-link">📂 View Document</a>
-              <button class="delete-button" onclick="deleteDocument('${doc._id}')">🗑 Delete</button>
-            </div>
-          `;
-        })
-      );
+      clientDocsContainer.innerHTML = clientHTML.join("");
+      adminDocsContainer.innerHTML = adminHTML.join("");
   
-      uploadsContainer.innerHTML = cards.join("");
     } catch (err) {
-      console.error("Error loading documents:", err);
-      uploadsContainer.innerHTML = "<p>Failed to load documents.</p>";
+      console.error("Error loading uploads:", err);
     }
   }
+  
+  async function getSignedUrlFromS3(s3Url) {
+    const key = s3Url.split(".amazonaws.com/")[1];
+    const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    });
+    const data = await res.json();
+    return data.url;
+  }
+  
 
   const sendForm = document.getElementById("adminSendForm");
 
