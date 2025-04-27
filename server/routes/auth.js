@@ -6,7 +6,7 @@ const { verifyToken, isAdmin } = require("../middleware/auth");
 
 
 // Mock user DB or real MongoDB User model
-const User = require("../models/User"); // if using Mongoose
+const User = require("../models/user"); // if using Mongoose
 
 // Login
 router.post("/login", async (req, res) => {
