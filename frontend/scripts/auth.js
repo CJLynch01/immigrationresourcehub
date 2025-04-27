@@ -55,9 +55,8 @@ export function showNavByAuth() {
   const loginLink = document.getElementById("loginLink");
   const logoutLink = document.getElementById("logoutLink");
   const registerLink = document.getElementById("registerLink");
-  const adminLink = document.getElementById("adminLink");
   const clientLink = document.getElementById("clientLink");
-  const adminPostsLink = document.getElementById("adminPostsLink");
+  const adminDropdown = document.getElementById("adminDropdown");
 
   if (token) {
     const payload = parseJwt(token);
@@ -67,20 +66,17 @@ export function showNavByAuth() {
     logoutLink.style.display = "inline";
 
     if (payload.role === "admin") {
-      adminLink.style.display = "inline";
-      adminPostsLink.style.display = "inline";
+      adminDropdown.style.display = "inline-block";
       clientLink.style.display = "none";
     } else if (payload.role === "client") {
       clientLink.style.display = "inline";
-      adminLink.style.display = "none";
-      adminPostsLink.style.display = "none";
+      adminDropdown.style.display = "none";
     }
   } else {
     loginLink.style.display = "inline";
     registerLink.style.display = "inline";
     logoutLink.style.display = "none";
-    adminLink.style.display = "none";
+    adminDropdown.style.display = "none";
     clientLink.style.display = "none";
-    adminPostsLink.style.display = "none";
   }
 }
