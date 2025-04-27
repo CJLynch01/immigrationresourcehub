@@ -55,9 +55,10 @@ export function showNavByAuth() {
   const loginLink = document.getElementById('loginLink');
   const registerLink = document.getElementById('registerLink');
   const logoutLink = document.getElementById('logoutLink');
-  const clientLink = document.getElementById('clientLink');
+  const clientLink = document.getElementById('clientDropdown');
   const adminDropdown = document.getElementById('adminDropdown');
   const messagesDropdown = document.getElementById('messagesDropdown'); // NEW LINE
+
 
   if (logoutLink) {
     logoutLink.addEventListener("click", (e) => {
@@ -72,7 +73,7 @@ export function showNavByAuth() {
       if (adminDropdown) adminDropdown.style.display = "inline-block";
       if (clientLink) clientLink.style.display = "none";
     } else if (payload?.role === "client") {
-      if (clientLink) clientLink.style.display = "inline-block";
+      if (clientDropdown) clientDropdown.style.display = "inline-block";
       if (adminDropdown) adminDropdown.style.display = "none";
     }
 
@@ -84,7 +85,7 @@ export function showNavByAuth() {
   } else {
     if (loginLink) loginLink.style.display = "inline";
     if (registerLink) registerLink.style.display = "inline";
-    if (clientLink) clientLink.style.display = "none";
+    if (clientDropdown) clientDropdown.style.display = "none";
     if (adminDropdown) adminDropdown.style.display = "none";
     if (messagesDropdown) messagesDropdown.style.display = "none";
     if (logoutLink) logoutLink.style.display = "none";
