@@ -1,57 +1,62 @@
 export function getToken() {
-    return localStorage.getItem("token");
+  return localStorage.getItem("token");
 }
-  
+
 export function decodeToken(token) {
-    try {
-      return JSON.parse(atob(token.split('.')[1]));
-    } catch {
-      return null;
-    }
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch {
+    return null;
+  }
 }
-  
+
 export function getPayload() {
-    const token = getToken();
-    return token ? decodeToken(token) : null;
+  const token = getToken();
+  return token ? decodeToken(token) : null;
 }
-  
+
 export function requireRole(role, redirectTo = "login.html") {
-    const token = localStorage.getItem("token");
-    console.log("🔑 Token found:", token);
-  
-    if (!token) {
-      console.log("❌ No token found. Redirecting...");
+  const token = getToken();
+  console.log("🔑 Token found:", token);
+
+  if (!token) {
+    console.log("❌ No token found. Redirecting...");
+    window.location.href = redirectTo;
+    return null;
+  }
+
+  try {
+    const payload = decodeToken(token);
+    console.log("📦 Decoded token payload:", payload);
+
+    if (payload.role !== role) {
+      console.log(`❌ Role mismatch: needed ${role}, but got ${payload.role}`);
       window.location.href = redirectTo;
       return null;
     }
-  
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log("📦 Decoded token payload:", payload);
-  
-      if (payload.role !== role) {
-        console.log(`❌ Role mismatch: needed ${role}, but got ${payload.role}`);
-        window.location.href = redirectTo;
-        return null;
-      }
-  
-      console.log("✅ Access granted for:", payload.role);
-      return payload;
-    } catch (err) {
-      console.log("❌ Error decoding token:", err);
-      localStorage.removeItem("token");
-      window.location.href = redirectTo;
-      return null;
-    }
+
+    console.log("✅ Access granted for:", payload.role);
+    return payload;
+  } catch (err) {
+    console.log("❌ Error decoding token:", err);
+    localStorage.removeItem("token");
+    window.location.href = redirectTo;
+    return null;
+  }
 }
-  
+
+export function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+
 export function showNavByAuth() {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   const loginLink = document.getElementById('loginLink');
   const registerLink = document.getElementById('registerLink');
   const logoutLink = document.getElementById('logoutLink');
   const clientLink = document.getElementById('clientLink');
-  const adminDropdown = document.getElementById('adminDropdown');
+  const adminDropdown = document.getElementById('adminDropdown'); // ✅ this is the outer <div>
 
   if (logoutLink) {
     logoutLink.addEventListener("click", (e) => {
@@ -61,22 +66,22 @@ export function showNavByAuth() {
   }
 
   if (token) {
-    const payload = parseJwt(token);
-    if (payload.role === "admin") {
-      adminDropdown.style.display = "inline-block";
-      clientLink.style.display = "none";
-    } else if (payload.role === "client") {
-      clientLink.style.display = "inline-block";
-      adminDropdown.style.display = "none";
+    const payload = decodeToken(token);
+    if (payload?.role === "admin") {
+      if (adminDropdown) adminDropdown.style.display = "inline-block";
+      if (clientLink) clientLink.style.display = "none";
+    } else if (payload?.role === "client") {
+      if (clientLink) clientLink.style.display = "inline-block";
+      if (adminDropdown) adminDropdown.style.display = "none";
     }
-    loginLink.style.display = "none";
-    registerLink.style.display = "none";
-    logoutLink.style.display = "inline";
+    if (loginLink) loginLink.style.display = "none";
+    if (registerLink) registerLink.style.display = "none";
+    if (logoutLink) logoutLink.style.display = "inline";
   } else {
-    loginLink.style.display = "inline";
-    registerLink.style.display = "inline";
-    clientLink.style.display = "none";
-    adminDropdown.style.display = "none";
-    logoutLink.style.display = "none";
+    if (loginLink) loginLink.style.display = "inline";
+    if (registerLink) registerLink.style.display = "inline";
+    if (clientLink) clientLink.style.display = "none";
+    if (adminDropdown) adminDropdown.style.display = "none";
+    if (logoutLink) logoutLink.style.display = "none";
   }
 }

@@ -13,10 +13,10 @@ async function include(selector, url, callback) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  include("#include-nav", "components/nav.html", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  await include("#include-nav", "components/nav.html", () => {
     showNavByAuth(); // ✅ Now runs after nav is loaded
   });
 
-  include("#include-footer", "components/footer.html");
+  await include("#include-footer", "components/footer.html");
 });

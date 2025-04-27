@@ -20,73 +20,82 @@ document.addEventListener("DOMContentLoaded", () => {
   const postsContainer = document.getElementById("admin-posts");
   const contentField = document.getElementById("content");
 
-  const insert = (tag, wrap = false) => {
-    const start = contentField.selectionStart;
-    const end = contentField.selectionEnd;
-    const selected = contentField.value.slice(start, end);
-    const formatted = wrap ? `${tag}${selected}${tag}` : `${tag} ${selected}`;
-    contentField.setRangeText(formatted, start, end, "end");
-    contentField.focus();
-  };
+  // If the page has blog post tools, activate post management
+  if (postForm && postsContainer && contentField) {
+    const insert = (tag, wrap = false) => {
+      const start = contentField.selectionStart;
+      const end = contentField.selectionEnd;
+      const selected = contentField.value.slice(start, end);
+      const formatted = wrap ? `${tag}${selected}${tag}` : `${tag} ${selected}`;
+      contentField.setRangeText(formatted, start, end, "end");
+      contentField.focus();
+    };
 
-  document.querySelectorAll("[data-md]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const tag = btn.dataset.md;
-      const wrap = tag.length === 2;
-      insert(tag, wrap);
-    });
-  });
-
-  postForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const title = document.getElementById("title").value;
-    const category = document.getElementById("category").value;
-    const content = contentField.value;
-    const postDate = document.getElementById("postDate").value;
-
-    try {
-      const res = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
-        body: JSON.stringify({ title, content, category, date: postDate })
+    document.querySelectorAll("[data-md]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tag = btn.dataset.md;
+        const wrap = tag.length === 2;
+        insert(tag, wrap);
       });
+    });
 
-      if (res.ok) {
-        alert("Post created!");
-        postForm.reset();
-        loadPosts();
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error creating post.");
+    postForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
+      const category = document.getElementById("category").value;
+      const content = contentField.value;
+      const postDate = document.getElementById("postDate").value;
+
+      try {
+        const res = await fetch("http://localhost:3000/api/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          },
+          body: JSON.stringify({ title, content, category, date: postDate })
+        });
+
+        if (res.ok) {
+          alert("Post created!");
+          postForm.reset();
+          loadPosts();
+        } else {
+          const data = await res.json();
+          alert(data.error || "Error creating post.");
+        }
+      } catch (err) {
+        console.error("Post creation error:", err);
+        alert("Failed to create post.");
       }
-    } catch (err) {
-      console.error("Post creation error:", err);
-      alert("Failed to create post.");
-    }
-  });
+    });
+  }
 
   async function loadPosts() {
+    const postsContainer = document.getElementById("admin-posts");
+    if (!postsContainer) {
+      console.warn("🛑 No admin-posts container found on this page.");
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:3000/api/posts");
       const posts = await res.json();
 
       postsContainer.innerHTML = posts.length
         ? posts.map(post => `
-          <div class="post" id="post-${post._id}">
-            <h3 contenteditable="false" class="editable-title">${post.title}</h3>
-            <p><strong>Date:</strong> <span contenteditable="false" class="editable-date">${post.date || "N/A"}</span></p>
-            <p><strong>Category:</strong> <span contenteditable="false" class="editable-category">${post.category}</span></p>
-            <div class="editable-content" contenteditable="false">${marked.parse(post.content)}</div>
-            <button onclick="editPost('${post._id}')">✏️ Edit</button>
-            <button onclick="deletePost('${post._id}')">🗑 Delete</button>
-            <button onclick="savePost('${post._id}')" style="display:none;" id="save-${post._id}">💾 Save</button>
-          </div>
-        `).join("")
+            <div class="post" id="post-${post._id}">
+              <h3 contenteditable="false" class="editable-title">${post.title}</h3>
+              <p><strong>Date:</strong> <span contenteditable="false" class="editable-date">${post.date || "N/A"}</span></p>
+              <p><strong>Category:</strong> <span contenteditable="false" class="editable-category">${post.category}</span></p>
+              <div class="editable-content" contenteditable="false">${marked.parse(post.content)}</div>
+              <button onclick="editPost('${post._id}')">✏️ Edit</button>
+              <button onclick="deletePost('${post._id}')">🗑 Delete</button>
+              <button onclick="savePost('${post._id}')" style="display:none;" id="save-${post._id}">💾 Save</button>
+            </div>
+          `).join("")
         : "<p>No blog posts yet.</p>";
+
     } catch (err) {
       console.error("Error loading posts:", err);
       postsContainer.innerHTML = "<p>Failed to load blog posts.</p>";
@@ -150,5 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  loadPosts();
+  if (document.getElementById("admin-posts")) {
+    loadPosts();
+  }
 });
