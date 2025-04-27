@@ -1,7 +1,7 @@
 import { requireRole, logout, getToken, showNavByAuth } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const payload = requireRole("admin");
+  requireRole("admin");
   showNavByAuth();
 
   const loginLink = document.getElementById("loginLink");
@@ -16,125 +16,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const postForm = document.getElementById("post-form");
-  const postsContainer = document.getElementById("admin-posts");
-  const uploadsContainer = document.getElementById("admin-documents");
-
-  // ✅ Format buttons (insert markdown)
-  const contentField = document.getElementById("content");
-  const insert = (tag, wrap = false) => {
-    const start = contentField.selectionStart;
-    const end = contentField.selectionEnd;
-    const selected = contentField.value.slice(start, end);
-    const formatted = wrap ? `${tag}${selected}${tag}` : `${tag} ${selected}`;
-    contentField.setRangeText(formatted, start, end, "end");
-    contentField.focus();
-  };
-
-  document.querySelectorAll("[data-md]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const tag = btn.dataset.md;
-      const wrap = tag.length === 2; // like ** or _ or ~
-      insert(tag, wrap);
-    });
-  });
-
-  // ✅ Create blog post
-  postForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const title = document.getElementById("title").value;
-    const category = document.getElementById("category").value;
-    const content = contentField.value;
-    const postDate = document.getElementById("postDate").value;
-
-    console.log("📅 Date being sent:", postDate);
-
-    try {
-      const res = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
-        body: JSON.stringify({ title, content, category, date: postDate })
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("Post created!");
-        postForm.reset();
-        loadPosts();
-      } else {
-        alert(data.error || "Error creating post.");
-      }
-    } catch (err) {
-      console.error("Post error:", err);
-      alert("Failed to create post.");
-    }
-  });
-
-  // ✅ Load blog posts
-  async function loadPosts() {
-    try {
-      const res = await fetch("http://localhost:3000/api/posts");
-      const posts = await res.json();
-
-      postsContainer.innerHTML = posts.length
-        ? posts.map(post => `
-          <div class="post" id="post-${post._id}">
-            <h3 contenteditable="false" class="editable-title">${post.title}</h3>
-            <p><strong>Date:</strong> <span contenteditable="false" class="editable-date">${post.date || "N/A"}</span></p>
-            <p><strong>Category:</strong> <span contenteditable="false" class="editable-category">${post.category}</span></p>
-            <div class="editable-content" contenteditable="false">${marked.parse(post.content)}</div>
-            <button onclick="editPost('${post._id}')">✏️ Edit</button>
-            <button onclick="deletePost('${post._id}')">🗑 Delete</button>
-            <button onclick="savePost('${post._id}')" style="display:none;" id="save-${post._id}">💾 Save</button>
-          </div>
-        `).join("")
-        : "<p>No blog posts yet.</p>";
-    } catch (err) {
-      console.error("Error loading posts:", err);
-      postsContainer.innerHTML = "<p>Failed to load blog posts.</p>";
-    }
-  }
-
-  // ✅ Delete post
-  window.deletePost = async (id) => {
-    if (!confirm("Delete this post?")) return;
-
-    try {
-      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${getToken()}` }
-      });
-
-      if (res.ok) {
-        alert("Post deleted.");
-        loadPosts();
-      } else {
-        alert("Failed to delete.");
-      }
-    } catch (err) {
-      console.error("Delete error:", err);
-    }
-  };
-
   async function loadUploads() {
     try {
       const res = await fetch("http://localhost:3000/api/uploads", {
         headers: { Authorization: `Bearer ${getToken()}` }
       });
-  
+
       const docs = await res.json();
       const clientDocsContainer = document.getElementById("client-documents");
       const adminDocsContainer = document.getElementById("admin-documents");
-  
+
+      if (!clientDocsContainer || !adminDocsContainer) return;
+
       const clientDocs = docs.filter(doc => !doc.sentByAdmin);
       const adminDocs = docs.filter(doc => doc.sentByAdmin);
-  
-      // 🔁 Process each client doc with async/await inside Promise.all
+
       const clientHTML = await Promise.all(clientDocs.map(async (doc) => {
         const url = await getSignedUrlFromS3(doc.s3Url);
         return `
@@ -149,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `;
       }));
-  
+
       const adminHTML = await Promise.all(adminDocs.map(async (doc) => {
         const url = await getSignedUrlFromS3(doc.s3Url);
         return `
@@ -164,15 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `;
       }));
-  
+
       clientDocsContainer.innerHTML = clientHTML.join("");
       adminDocsContainer.innerHTML = adminHTML.join("");
-  
+
     } catch (err) {
       console.error("Error loading uploads:", err);
     }
   }
-  
+
   async function getSignedUrlFromS3(s3Url) {
     const key = s3Url.split(".amazonaws.com/")[1];
     const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
@@ -181,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = await res.json();
     return data.url;
   }
-  
 
   const sendForm = document.getElementById("adminSendForm");
 
@@ -194,37 +89,33 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch("http://localhost:3000/api/uploads/admin-send", {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        alert(`File sent via ${formData.get("deliveryMethod")}.`);
+        alert("File sent to client dashboard.");
         sendForm.reset();
       } else {
         alert(data.error || "Failed to send file.");
       }
-  } catch (err) {
-    console.error("Send file error:", err);
-    alert("Something went wrong.");
-  }
-});
+    } catch (err) {
+      console.error("Send file error:", err);
+      alert("Something went wrong.");
+    }
+  });
 
   window.deleteDocument = async (docId) => {
     if (!confirm("Are you sure you want to delete this document?")) return;
-  
+
     try {
       const res = await fetch(`http://localhost:3000/api/uploads/${docId}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${getToken()}`
-        }
+        headers: { Authorization: `Bearer ${getToken()}` }
       });
-  
+
       if (res.ok) {
         alert("Document deleted.");
         loadUploads();
@@ -237,87 +128,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  window.editPost = (id) => {
-    const postEl = document.getElementById(`post-${id}`);
-    postEl.querySelectorAll("[contenteditable]").forEach(el => el.contentEditable = true);
-    postEl.querySelector(`#save-${id}`).style.display = "inline";
-  };
-  
-  window.savePost = async (id) => {
-    const postEl = document.getElementById(`post-${id}`);
-    const title = postEl.querySelector(".editable-title").innerText.trim();
-    const date = postEl.querySelector(".editable-date").innerText.trim();
-    const category = postEl.querySelector(".editable-category").innerText.trim();
-    const content = postEl.querySelector(".editable-content").innerText.trim();
-  
+  async function populateClientDropdown() {
     try {
-      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
-        body: JSON.stringify({ title, content, category, date })
+      const res = await fetch("http://localhost:3000/api/auth/clients", {
+        headers: { Authorization: `Bearer ${getToken()}` }
       });
-  
-      if (res.ok) {
-        alert("Post updated.");
-        postEl.querySelectorAll("[contenteditable]").forEach(el => el.contentEditable = false);
-        postEl.querySelector(`#save-${id}`).style.display = "none";
-        loadPosts();
-      } else {
-        alert("Update failed.");
-      }
+      const clients = await res.json();
+
+      const dropdown = document.getElementById("clientDropdown");
+      const userIdField = document.getElementById("userId");
+
+      if (!dropdown || !userIdField) return;
+
+      dropdown.innerHTML =
+        '<option value="">-- Choose a client --</option>' +
+        clients.map(c => `<option value="${c._id}">${c.name} (${c.email})</option>`).join("");
+
+      dropdown.addEventListener("change", () => {
+        userIdField.value = dropdown.value;
+      });
+
     } catch (err) {
-      console.error("Edit error:", err);
-      alert("Error updating post.");
+      console.error("Failed to load clients:", err);
     }
-  };
-
-function extractKeyFromS3Url(url) {
-  const parts = url.split(".amazonaws.com/");
-  return parts.length > 1 ? parts[1] : "";
-}
-
-async function getSignedUrl(key) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
-      headers: { Authorization: `Bearer ${getToken()}` }
-    });
-    const data = await res.json();
-    return data.url || "#";
-  } catch (err) {
-    console.error("Signed URL error:", err);
-    return "#";
   }
-}
-
-async function populateClientDropdown() {
-  try {
-    const res = await fetch("http://localhost:3000/api/auth/clients", {
-      headers: { Authorization: `Bearer ${getToken()}` }
-    });
-    const clients = await res.json();
-
-    const dropdown = document.getElementById("clientDropdown");
-    const userIdField = document.getElementById("userId");
-
-    dropdown.innerHTML =
-      '<option value="">-- Choose a client --</option>' +
-      clients.map(c => `<option value="${c._id}">${c.name} (${c.email})</option>`).join("");
-
-    // ✅ Update userId field when a client is selected
-    dropdown.addEventListener("change", () => {
-      userIdField.value = dropdown.value;
-    });
-
-  } catch (err) {
-    console.error("Failed to load clients:", err);
-  }
-}
-
 
   populateClientDropdown();
   loadUploads();
-  loadPosts();
 });
