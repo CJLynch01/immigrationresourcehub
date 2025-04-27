@@ -51,39 +51,36 @@ export function logout(redirectTo = "login.html") {
 }
   
 export function showNavByAuth() {
-    const token = localStorage.getItem("token");
-    const loginLink = document.getElementById("loginLink");
-    const logoutLink = document.getElementById("logoutLink");
-    const registerLink = document.getElementById("registerLink");
-    const adminLink = document.getElementById("adminLink");
-    const clientLink = document.getElementById("clientLink")
-  
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-  
-      if (loginLink) loginLink.style.display = "none";
-      if (registerLink) registerLink.style.display = "none";
-      if (logoutLink) {
-        logoutLink.style.display = "inline";
-        logoutLink.addEventListener("click", (e) => {
-          e.preventDefault();
-          logout();
-        });
-      }
-  
-      // ✅ Show admin link only if role is admin
-      if (adminLink) {
-        adminLink.style.display = payload.role === "admin" ? "inline" : "none";
-      }
+  const token = getToken();
+  const loginLink = document.getElementById("loginLink");
+  const logoutLink = document.getElementById("logoutLink");
+  const registerLink = document.getElementById("registerLink");
+  const adminLink = document.getElementById("adminLink");
+  const clientLink = document.getElementById("clientLink");
+  const adminPostsLink = document.getElementById("adminPostsLink");
 
-      if (clientLink){
-        clientLink.style.display = payload.role === "client" ? "inline" : "none";
-      }
-    } else {
-      if (loginLink) loginLink.style.display = "inline";
-      if (registerLink) registerLink.style.display = "inline";
-      if (logoutLink) logoutLink.style.display = "none";
-      if (adminLink) adminLink.style.display = "none";
-      if (clientLink) clientLink.style.display = "none";
+  if (token) {
+    const payload = parseJwt(token);
+
+    loginLink.style.display = "none";
+    registerLink.style.display = "none";
+    logoutLink.style.display = "inline";
+
+    if (payload.role === "admin") {
+      adminLink.style.display = "inline";
+      adminPostsLink.style.display = "inline";
+      clientLink.style.display = "none";
+    } else if (payload.role === "client") {
+      clientLink.style.display = "inline";
+      adminLink.style.display = "none";
+      adminPostsLink.style.display = "none";
     }
+  } else {
+    loginLink.style.display = "inline";
+    registerLink.style.display = "inline";
+    logoutLink.style.display = "none";
+    adminLink.style.display = "none";
+    clientLink.style.display = "none";
+    adminPostsLink.style.display = "none";
   }
+}
