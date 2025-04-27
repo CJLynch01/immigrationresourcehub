@@ -56,7 +56,8 @@ export function showNavByAuth() {
   const registerLink = document.getElementById('registerLink');
   const logoutLink = document.getElementById('logoutLink');
   const clientLink = document.getElementById('clientLink');
-  const adminDropdown = document.getElementById('adminDropdown'); // ✅ this is the outer <div>
+  const adminDropdown = document.getElementById('adminDropdown');
+  const messagesDropdown = document.getElementById('messagesDropdown'); // NEW LINE
 
   if (logoutLink) {
     logoutLink.addEventListener("click", (e) => {
@@ -74,6 +75,9 @@ export function showNavByAuth() {
       if (clientLink) clientLink.style.display = "inline-block";
       if (adminDropdown) adminDropdown.style.display = "none";
     }
+
+    if (messagesDropdown) messagesDropdown.style.display = "inline-block";
+
     if (loginLink) loginLink.style.display = "none";
     if (registerLink) registerLink.style.display = "none";
     if (logoutLink) logoutLink.style.display = "inline";
@@ -82,6 +86,7 @@ export function showNavByAuth() {
     if (registerLink) registerLink.style.display = "inline";
     if (clientLink) clientLink.style.display = "none";
     if (adminDropdown) adminDropdown.style.display = "none";
+    if (messagesDropdown) messagesDropdown.style.display = "none";
     if (logoutLink) logoutLink.style.display = "none";
   }
 }
