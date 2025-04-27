@@ -661,23 +661,32 @@ button.delete-button:hover {
   background-color: #cc0000;
 }
 
-/* Messages Page Styling */
+/* =========================
+   Messages Page Styling - Dark Theme
+========================= */
+
 .messages-page {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  background: #1c1c1c; /* Dark background */
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); /* Gold-ish glow */
+  color: #f5f5f5;
 }
 
+/* Headings */
 .messages-page h1,
 .messages-page h2 {
   text-align: center;
-  color: #333;
+  color: #ffd700; /* Gold headings */
+  margin-bottom: 1.5rem;
 }
 
-/* New Message Form */
+/* =========================
+   New Message Form Styling
+========================= */
+
 .new-message {
   margin-bottom: 3rem;
 }
@@ -690,31 +699,45 @@ button.delete-button:hover {
 
 #newMessageForm label {
   font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 0.5rem;
 }
 
 #newMessageForm input,
+#newMessageForm select,
 #newMessageForm textarea {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #2b2b2b;
+  color: #f5f5f5;
 }
 
+#newMessageForm textarea {
+  resize: vertical;
+}
+
+/* Send Button */
 #newMessageForm .button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #ffd700; /* Gold button */
+  color: #1c1c1c;
+  font-weight: bold;
   border: none;
   padding: 12px;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.3s;
 }
 
 #newMessageForm .button:hover {
-  background-color: #45a049;
+  background-color: #e6c200;
 }
 
-/* Inbox Messages */
+/* =========================
+   Inbox Messages Styling
+========================= */
+
 .received-messages {
   margin-top: 2rem;
 }
@@ -725,21 +748,30 @@ button.delete-button:hover {
   gap: 1rem;
 }
 
+/* Individual Message Card */
 .message-item {
   padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: #fafafa;
-  transition: background 0.3s;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #2b2b2b;
+  transition: background 0.3s, border-color 0.3s;
 }
 
 .message-item:hover {
-  background: #f0f0f0;
+  background: #343434;
+  border-color: #ffd700;
 }
 
 .message-item p {
   margin: 0.5rem 0;
 }
+
+/* Highlight for unread messages (optional) */
+.unread {
+  background-color: #3a2f00; /* Darker gold background for unread */
+}
+
+
 
 
 /* Privacy/Terms Page */
