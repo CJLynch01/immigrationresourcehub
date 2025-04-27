@@ -45,4 +45,13 @@ router.get("/clients", verifyToken, isAdmin, async (req, res) => {
   }
 });
 
+router.get("/me", verifyToken, async (req, res) => {
+  try {
+    res.json(req.user);
+  } catch (err) {
+    console.error("Error in /me route", err);
+    res.status(500).json({ error: "Failed to fetch user info." });
+  }
+});
+
 module.exports = router;
