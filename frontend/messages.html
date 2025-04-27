@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Messages</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script type="module" src="scripts/index.js"></script>
   <script type="module" src="scripts/include.js"></script>
   <script type="module" src="scripts/messages.js" defer></script>
@@ -19,17 +20,23 @@
 
     <!-- Compose New Message -->
     <section class="new-message">
-      <h2>New Message</h2>
-      <form id="newMessageForm">
-        <label for="recipient">To (Admin):</label>
-        <input type="text" id="recipient" value="Admin" disabled>
-
-        <label for="content">Message:</label>
-        <textarea id="content" required></textarea>
-
-        <button type="submit" class="button">Send Message</button>
-      </form>
-    </section>
+        <h2>New Message</h2>
+        <form id="newMessageForm">
+          
+          <label for="recipientSelect">Select Client:</label>
+          <select id="recipientSelect" required>
+            <option value="">Select a client</option>
+          </select>
+      
+          <label for="subject">Subject:</label>
+          <input type="text" id="subject" required>
+      
+          <label for="content">Message:</label>
+          <textarea id="content" required></textarea>
+      
+          <button type="submit" class="button">Send Message</button>
+        </form>
+      </section>
 
     <!-- Received Messages -->
     <section class="received-messages">

@@ -661,6 +661,87 @@ button.delete-button:hover {
   background-color: #cc0000;
 }
 
+/* Messages Page Styling */
+.messages-page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.messages-page h1,
+.messages-page h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* New Message Form */
+.new-message {
+  margin-bottom: 3rem;
+}
+
+#newMessageForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#newMessageForm label {
+  font-weight: bold;
+}
+
+#newMessageForm input,
+#newMessageForm textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#newMessageForm .button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#newMessageForm .button:hover {
+  background-color: #45a049;
+}
+
+/* Inbox Messages */
+.received-messages {
+  margin-top: 2rem;
+}
+
+#messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message-item {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fafafa;
+  transition: background 0.3s;
+}
+
+.message-item:hover {
+  background: #f0f0f0;
+}
+
+.message-item p {
+  margin: 0.5rem 0;
+}
+
+
 /* Privacy/Terms Page */
 .legal-page {
   max-width: 900px;

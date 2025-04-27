@@ -1,7 +1,8 @@
-import { getToken } from "./auth.js"; // Make sure auth.js exists too!
+import { getToken } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   loadMessages();
+  loadClients();
 
   const form = document.getElementById("newMessageForm");
   form.addEventListener("submit", async (e) => {
@@ -10,48 +11,39 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-async function loadMessages() {
+async function loadClients() {
   const token = getToken();
-  const messagesList = document.getElementById("messagesList");
-  messagesList.innerHTML = "<p>Loading messages...</p>";
+  const recipientSelect = document.getElementById("recipientSelect");
 
   try {
-    const res = await fetch("http://localhost:3000/api/messages/inbox", {
+    const res = await fetch("http://localhost:3000/api/users/clients", {
       headers: { Authorization: `Bearer ${token}` }
     });
-    const messages = await res.json();
+    const clients = await res.json();
 
-    if (messages.length === 0) {
-      messagesList.innerHTML = "<p>No messages yet.</p>";
-      return;
-    }
-
-    messagesList.innerHTML = "";
-
-    messages.forEach((msg) => {
-      const msgDiv = document.createElement("div");
-      msgDiv.classList.add("message-item");
-      msgDiv.innerHTML = `
-        <p><strong>From:</strong> ${msg.from?.name || "Unknown"} (${msg.from?.email || "No Email"})</p>
-        <p><strong>Subject:</strong> ${msg.subject}</p>
-        <p><strong>Message:</strong> ${msg.body}</p>
-        <p><small>${new Date(msg.createdAt).toLocaleString()}</small></p>
-        <hr>
-      `;
-      messagesList.appendChild(msgDiv);
+    clients.forEach((client) => {
+      const option = document.createElement("option");
+      option.value = client._id;
+      option.textContent = `${client.name} (${client.email})`;
+      recipientSelect.appendChild(option);
     });
 
   } catch (err) {
-    console.error("Failed to load messages:", err);
-    messagesList.innerHTML = "<p>Error loading messages.</p>";
+    console.error("Failed to load clients:", err);
   }
+}
+
+async function loadMessages() {
+  // (keep your existing loadMessages function here)
 }
 
 async function sendMessage() {
   const token = getToken();
+  const recipientId = document.getElementById("recipientSelect").value;
+  const subject = document.getElementById("subject").value.trim();
   const messageContent = document.getElementById("content").value.trim();
 
-  if (!messageContent) return;
+  if (!recipientId || !subject || !messageContent) return;
 
   try {
     const res = await fetch("http://localhost:3000/api/messages", {
@@ -61,8 +53,8 @@ async function sendMessage() {
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
-        to: "662c5f8c5f33f0e5b81c7b99", // <-- Replace this with your admin MongoDB _id
-        subject: "New Message",
+        to: recipientId,
+        subject,
         body: messageContent
       })
     });
@@ -71,8 +63,11 @@ async function sendMessage() {
       throw new Error("Failed to send message.");
     }
 
+    document.getElementById("subject").value = "";
     document.getElementById("content").value = "";
-    await loadMessages(); // Reload messages after sending
+    document.getElementById("recipientSelect").selectedIndex = 0;
+
+    await loadMessages();
     alert("Message sent!");
 
   } catch (err) {
