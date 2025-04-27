@@ -1,6 +1,6 @@
-import express from "express";
-import Message from "../models/message.js"; // your Message model
-import { verifyToken, isAdmin } from "../middleware/auth.js"; // your middleware
+const express = require("express");
+const Message = require("../models/message.js");
+const { verifyToken, isAdmin } = require("../middleware/auth.js");
 
 const router = express.Router();
 
@@ -63,4 +63,4 @@ router.put("/:id/read", verifyToken, async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
