@@ -16,6 +16,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  async function loadUnreadMessages() {
+    const token = getToken();
+    const countSpan = document.getElementById("unreadMessagesCount");
+  
+    if (token && countSpan) {
+      try {
+        const res = await fetch("http://localhost:3000/api/messages/unread-count", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        countSpan.textContent = data.unreadCount;
+      } catch (err) {
+        console.error("Failed to load unread messages count:", err);
+      }
+    }
+  }
+  
+
   async function loadUploads() {
     try {
       const res = await fetch("http://localhost:3000/api/uploads", {
@@ -153,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  loadUnreadMessages();
   populateClientDropdown();
   loadUploads();
 });

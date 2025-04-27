@@ -4,6 +4,7 @@ const authRoutes = require("./routes/auth");
 const protectedRoutes = require("./routes/protected");
 const postRoutes = require("./routes/posts");
 const uploadRoutes = require("./routes/uploads")
+const messageRoutes = require("./routes/messages");
 const cors = require("cors");
 
 require("dotenv").config();
@@ -18,7 +19,8 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/protected", protectedRoutes);
 app.use("/api/posts", postRoutes);
-app.use("/api/uploads", uploadRoutes)
+app.use("/api/uploads", uploadRoutes);
+app.use("/api/messages", messageRoutes);
 
 app.get("/", (req, res) => {
   res.send("Immigration Resource Hub API is running");

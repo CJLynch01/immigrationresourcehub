@@ -16,88 +16,140 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const postForm = document.getElementById("post-form");
   const postsContainer = document.getElementById("admin-posts");
-  const contentField = document.getElementById("content");
+  const paginationContainer = document.getElementById("pagination");
 
-  if (!postForm || !postsContainer || !contentField) return;
-
-  const insert = (tag, wrap = false) => {
-    const start = contentField.selectionStart;
-    const end = contentField.selectionEnd;
-    const selected = contentField.value.slice(start, end);
-    const formatted = wrap ? `${tag}${selected}${tag}` : `${tag} ${selected}`;
-    contentField.setRangeText(formatted, start, end, "end");
-    contentField.focus();
-  };
-
-  document.querySelectorAll("[data-md]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const tag = btn.dataset.md;
-      const wrap = tag.length === 2;
-      insert(tag, wrap);
-    });
-  });
-
-  postForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const title = document.getElementById("title").value;
-    const category = document.getElementById("category").value;
-    const content = contentField.value;
-    const postDate = document.getElementById("postDate").value;
-
-    try {
-      const res = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
-        body: JSON.stringify({ title, content, category, date: postDate })
-      });
-
-      if (res.ok) {
-        alert("Post created!");
-        postForm.reset();
-        loadPosts();
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error creating post.");
-      }
-    } catch (err) {
-      console.error("Post creation error:", err);
-      alert("Failed to create post.");
-    }
-  });
+  let allPosts = [];
+  let currentPage = 1;
+  const postsPerPage = 5;
 
   async function loadPosts() {
-    const postsContainer = document.getElementById("admin-posts");
     if (!postsContainer) return;
 
     try {
-      const res = await fetch("http://localhost:3000/api/posts");
-      const posts = await res.json();
-
-      postsContainer.innerHTML = posts.length
-        ? posts.map(post => `
-            <div class="post" id="post-${post._id}">
-              <h3 contenteditable="false" class="editable-title">${post.title}</h3>
-              <p><strong>Date:</strong> <span contenteditable="false" class="editable-date">${post.date || "N/A"}</span></p>
-              <p><strong>Category:</strong> <span contenteditable="false" class="editable-category">${post.category}</span></p>
-              <div class="editable-content" contenteditable="false">${marked.parse(post.content)}</div>
-              <button onclick="editPost('${post._id}')">✏️ Edit</button>
-              <button onclick="deletePost('${post._id}')">🗑 Delete</button>
-              <button onclick="savePost('${post._id}')" style="display:none;" id="save-${post._id}">💾 Save</button>
-            </div>
-          `).join("")
-        : "<p>No blog posts yet.</p>";
-
+      const res = await fetch("http://localhost:3000/api/posts", {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+      allPosts = await res.json();
+      renderPosts();
+      renderPagination();
     } catch (err) {
       console.error("Error loading posts:", err);
       postsContainer.innerHTML = "<p>Failed to load blog posts.</p>";
     }
   }
+
+  function renderPosts() {
+    if (!postsContainer) return;
+
+    const start = (currentPage - 1) * postsPerPage;
+    const end = start + postsPerPage;
+    const postsToShow = allPosts.slice(start, end);
+
+    postsContainer.innerHTML = postsToShow.length
+      ? postsToShow.map(post => `
+          <div class="post" id="post-${post._id}">
+            <h3 contenteditable="false" class="editable-title">${post.title}</h3>
+            <p><strong>Date:</strong> <span contenteditable="false" class="editable-date">${post.date || "N/A"}</span></p>
+            <p><strong>Category:</strong> <span contenteditable="false" class="editable-category">${post.category}</span></p>
+            <div class="editable-content" contenteditable="false">${marked.parse(post.content)}</div>
+            <button onclick="editPost('${post._id}')">✏️ Edit</button>
+            <button onclick="deletePost('${post._id}')">🗑 Delete</button>
+            <button onclick="savePost('${post._id}')" style="display:none;" id="save-${post._id}">💾 Save</button>
+          </div>
+        `).join("")
+      : "<p>No blog posts yet.</p>";
+  }
+
+  function renderPagination() {
+    if (!paginationContainer) return;
+  
+    const totalPages = Math.ceil(allPosts.length / postsPerPage);
+    paginationContainer.innerHTML = "";
+  
+    if (totalPages <= 1) return; // No pagination needed
+  
+    // Page X of Y label
+    const pageInfo = document.createElement("div");
+    pageInfo.className = "page-info";
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    paginationContainer.appendChild(pageInfo);
+  
+    // Previous button
+    const prevButton = document.createElement("button");
+    prevButton.textContent = "Previous";
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPosts();
+        renderPagination();
+      }
+    });
+    paginationContainer.appendChild(prevButton);
+  
+    // Smart pagination with ellipsis
+    const maxPagesToShow = 5; // How many pages around current page to show
+  
+    let startPage = Math.max(1, currentPage - 1);
+    let endPage = Math.min(totalPages, currentPage + 1);
+  
+    if (currentPage === 1) endPage = Math.min(totalPages, 3);
+    if (currentPage === totalPages) startPage = Math.max(1, totalPages - 2);
+  
+    // Always show first page
+    if (startPage > 1) {
+      addPageButton(1);
+      if (startPage > 2) {
+        const dots = document.createElement("span");
+        dots.textContent = "...";
+        dots.style.margin = "0 5px";
+        paginationContainer.appendChild(dots);
+      }
+    }
+  
+    for (let page = startPage; page <= endPage; page++) {
+      addPageButton(page);
+    }
+  
+    // Always show last page
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        const dots = document.createElement("span");
+        dots.textContent = "...";
+        dots.style.margin = "0 5px";
+        paginationContainer.appendChild(dots);
+      }
+      addPageButton(totalPages);
+    }
+  
+    // Next button
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "Next";
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener("click", () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPosts();
+        renderPagination();
+      }
+    });
+    paginationContainer.appendChild(nextButton);
+  
+    function addPageButton(page) {
+      const button = document.createElement("button");
+      button.textContent = page;
+      if (page === currentPage) button.classList.add("active-page");
+      button.addEventListener("click", () => {
+        currentPage = page;
+        renderPosts();
+        renderPagination();
+      });
+      paginationContainer.appendChild(button);
+    }
+  }
+  
+  
 
   window.editPost = (id) => {
     const postEl = document.getElementById(`post-${id}`);
@@ -123,13 +175,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (res.ok) {
-        alert("Post updated!");
+        alert("Post updated.");
         loadPosts();
       } else {
         alert("Failed to update post.");
       }
     } catch (err) {
-      console.error("Error saving post:", err);
+      console.error("Update error:", err);
       alert("Error updating post.");
     }
   };

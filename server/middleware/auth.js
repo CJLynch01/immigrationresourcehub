@@ -6,7 +6,7 @@ function verifyToken(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    req.user = decoded; // Save the decoded token into req.user
     next();
   } catch (err) {
     return res.status(401).json({ msg: "Invalid or expired token" });
@@ -14,15 +14,9 @@ function verifyToken(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(403).json({ msg: "Admin access required" });
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.role !== "admin") throw new Error();
-    req.user = decoded;
+  if (req.user?.role === "admin") {
     next();
-  } catch {
+  } else {
     res.status(403).json({ msg: "Admin access required" });
   }
 }

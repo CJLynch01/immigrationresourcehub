@@ -85,3 +85,22 @@ export function showNavByAuth() {
     if (logoutLink) logoutLink.style.display = "none";
   }
 }
+
+async function updateUnreadMessages() {
+  const token = getToken();
+  const unreadSpan = document.getElementById("unreadCount");
+
+  if (token && unreadSpan) {
+    try {
+      const res = await fetch("http://localhost:3000/api/messages/unread-count", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      unreadSpan.textContent = data.unreadCount;
+    } catch (err) {
+      console.error("Failed to fetch unread messages:", err);
+    }
+  }
+}
+
+updateUnreadMessages();

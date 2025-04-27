@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Messages</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="messages.js" defer></script>
+</head>
+<body>
+  
+  <!-- Include your nav -->
+  <div id="include-nav"></div>
+
+  <main class="messages-page">
+    <h1>Messages</h1>
+
+    <!-- Compose New Message -->
+    <section class="new-message">
+      <h2>New Message</h2>
+      <form id="newMessageForm">
+        <label for="recipient">To (Admin):</label>
+        <input type="text" id="recipient" value="Admin" disabled>
+
+        <label for="content">Message:</label>
+        <textarea id="content" required></textarea>
+
+        <button type="submit" class="button">Send Message</button>
+      </form>
+    </section>
+
+    <!-- Received Messages -->
+    <section class="received-messages">
+      <h2>Inbox</h2>
+      <div id="messagesList">
+        <p>Loading messages...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Include your footer -->
+  <div id="include-footer"></div>
+
+</body>
+</html>
