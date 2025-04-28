@@ -71,7 +71,7 @@ export function showNavByAuth() {
     const payload = decodeToken(token);
     if (payload?.role === "admin") {
       if (adminDropdown) adminDropdown.style.display = "inline-block";
-      if (clientLink) clientLink.style.display = "none";
+      if (clientDropdown) clientDropdown.style.display = "none";
     } else if (payload?.role === "client") {
       if (clientDropdown) clientDropdown.style.display = "inline-block";
       if (adminDropdown) adminDropdown.style.display = "none";

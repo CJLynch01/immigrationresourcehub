@@ -1,37 +1,46 @@
 import { getToken } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadMessages();
-
   const token = getToken();
-  const res = await fetch("http://localhost:3000/api/auth/me", {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const user = await res.json();
 
-  const recipientSelect = document.getElementById("recipientSelect");
-  const recipientLabel = document.querySelector('label[for="recipientSelect"]');
-
-  if (user.role === "admin") {
-    await loadClients();
-  } else if (user.role === "client") {
-    if (recipientSelect) {
-      recipientSelect.style.display = "none";
-      recipientSelect.required = false;
-      recipientSelect.disabled = true;
-    }
-    const recipientLabel = document.querySelector('label[for="recipientSelect"]');
-    if (recipientLabel) {
-      recipientLabel.style.display = "none";
-    }
+  if (!token) {
+    window.location.href = "login.html";
+    return;
   }
 
+  try {
+    const res = await fetch("http://localhost:3000/api/auth/me", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const user = await res.json();
 
-  const form = document.getElementById("newMessageForm");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await sendMessage();
-  });
+    const recipientSelect = document.getElementById("recipientSelect");
+    const recipientLabel = document.querySelector('label[for="recipientSelect"]');
+
+    if (user.role === "admin") {
+      await loadClients();
+    } else if (user.role === "client") {
+      if (recipientSelect) {
+        recipientSelect.style.display = "none";
+        recipientSelect.required = false;
+        recipientSelect.disabled = true;
+      }
+      if (recipientLabel) {
+        recipientLabel.style.display = "none";
+      }
+    }
+
+    await loadMessages(); // ✅ NOW we load messages after user verified!
+
+    const form = document.getElementById("newMessageForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await sendMessage();
+    });
+  } catch (err) {
+    console.error("Failed to verify user:", err);
+    window.location.href = "login.html";
+  }
 });
 
 async function loadClients() {
@@ -50,7 +59,6 @@ async function loadClients() {
       option.textContent = `${client.name} (${client.email})`;
       recipientSelect.appendChild(option);
     });
-
   } catch (err) {
     console.error("Failed to load clients:", err);
   }
@@ -75,10 +83,13 @@ async function loadMessages() {
     messagesList.innerHTML = "";
 
     messages.forEach((msg) => {
+      const fromName = msg.from?.name || "Client";
+      const fromEmail = msg.from?.email || "No Email";
+
       const msgDiv = document.createElement("div");
       msgDiv.classList.add("message-item");
       msgDiv.innerHTML = `
-        <p><strong>From:</strong> ${msg.from?.name || "Unknown"} (${msg.from?.email || "No Email"})</p>
+        <p><strong>From:</strong> ${fromName} (${fromEmail})</p>
         <p><strong>Subject:</strong> ${msg.subject}</p>
         <p><strong>Message:</strong> ${msg.body}</p>
         <p><small>${new Date(msg.createdAt).toLocaleString()}</small></p>
@@ -112,7 +123,7 @@ async function sendMessage() {
     if (user.role === "admin") {
       recipientId = recipientSelect?.value;
     } else if (user.role === "client") {
-      recipientId = "662c5f8c5f33f0e5b81c7b99";
+      recipientId = "662c5f8c5f33f0e5b81c7b99"; // <-- Make sure this matches Admin's real _id
     }
 
     if (!recipientId) {
@@ -141,9 +152,8 @@ async function sendMessage() {
     document.getElementById("content").value = "";
     if (recipientSelect) recipientSelect.selectedIndex = 0;
 
-    await loadMessages();
+    await loadMessages(); // Reload inbox after sending
     alert("Message sent!");
-
   } catch (err) {
     console.error("Send message failed:", err);
     alert("Failed to send message. Try again.");
