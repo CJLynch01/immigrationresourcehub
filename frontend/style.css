@@ -771,6 +771,20 @@ button.delete-button:hover {
   background-color: #3a2f00; /* Darker gold background for unread */
 }
 
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
 
 
 

@@ -1,4 +1,5 @@
 import { requireRole, logout, getToken, showNavByAuth } from "./auth.js";
+import { updateMessageStats } from "./messages.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   requireRole("admin");
@@ -171,6 +172,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  
+  updateMessageStats();
   loadUnreadMessages();
   populateClientDropdown();
   loadUploads();

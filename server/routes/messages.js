@@ -63,4 +63,26 @@ router.put("/:id/read", verifyToken, async (req, res) => {
   }
 });
 
+// 🗑️ Delete a message
+router.delete("/:id", verifyToken, async (req, res) => {
+    try {
+      const message = await Message.findById(req.params.id);
+  
+      if (!message) {
+        return res.status(404).json({ error: "Message not found." });
+      }
+  
+      // Only allow delete if user is sender or recipient
+      if (message.from.toString() !== req.user.id && message.to.toString() !== req.user.id) {
+        return res.status(403).json({ error: "Not authorized to delete this message." });
+      }
+  
+      await message.deleteOne();
+      res.json({ msg: "Message deleted." });
+    } catch (err) {
+      console.error("Delete message error:", err);
+      res.status(500).json({ error: "Failed to delete message." });
+    }
+  });
+
 module.exports = router;
