@@ -766,9 +766,11 @@ button.delete-button:hover {
   margin: 0.5rem 0;
 }
 
-/* Highlight for unread messages (optional) */
-.unread {
-  background-color: #3a2f00; /* Darker gold background for unread */
+.message-item.unread {
+  background-color: #fff8dc; /* light yellow (cornsilk) */
+  border-left: 5px solid #f39c12; /* orange stripe */
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .delete-btn {

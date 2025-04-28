@@ -285,6 +285,10 @@ async function loadMessages() {
 
       const msgDiv = document.createElement("div");
       msgDiv.classList.add("message-item");
+      if (!msg.isRead) {
+        msgDiv.classList.add("unread");
+      }
+
       msgDiv.innerHTML = `
         <p><strong>From:</strong> ${fromName} (${fromEmail})</p>
         <p><strong>Subject:</strong> ${msg.subject}</p>
