@@ -1,5 +1,7 @@
 import { getToken } from "./auth.js";
 
+let currentUser = null;
+
 document.addEventListener("DOMContentLoaded", async () => {
   const token = getToken();
   if (!token) {
@@ -7,40 +9,63 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  let user;
   try {
     const res = await fetch("http://localhost:3000/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` }
     });
-    user = await res.json();
+    currentUser = await res.json();
 
     const recipientSelect = document.getElementById("recipientSelect");
-    const recipientWrapper = document.querySelector("recipientWrapper");
+    const recipientWrapper = document.getElementById("recipientWrapper");
 
-    if (user.role === "admin") {
-        if (recipientWrapper) recipientWrapper.style.display = "block";
-        await loadClients();
-        await updateMessageStats();
-    } else if (user.role === "client") {
-        if (recipientWrapper) {
-          recipientWrapper.style.display = "none";
-          recipientSelect.required = false;
-          recipientSelect.disabled = true;
-        }
+    if (currentUser.role === "admin") {
+      if (recipientWrapper) recipientWrapper.style.display = "block";
+      await loadClients();
+      await updateMessageStats();
+    } else {
+      if (recipientWrapper) recipientWrapper.style.display = "none";
+      if (recipientSelect) {
+        recipientSelect.required = false;
+        recipientSelect.disabled = true;
       }
+    }
 
-    await loadMessages();
+    await loadInbox();
+    await loadSent();
 
     const form = document.getElementById("newMessageForm");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      await sendMessage(user);
+      await sendMessage();
     });
+
+    setupTabs();
   } catch (err) {
     console.error("Failed to verify user:", err);
     window.location.href = "login.html";
   }
 });
+
+function setupTabs() {
+  const inboxTab = document.getElementById("inboxTab");
+  const sentTab = document.getElementById("sentTab");
+  const inboxSection = document.getElementById("messagesListSection");
+  const sentSection = document.getElementById("sentMessagesSection");
+
+  inboxTab?.addEventListener("click", () => {
+    inboxSection.style.display = "block";
+    sentSection.style.display = "none";
+    inboxTab.classList.add("active");
+    sentTab.classList.remove("active");
+  });
+
+  sentTab?.addEventListener("click", () => {
+    inboxSection.style.display = "none";
+    sentSection.style.display = "block";
+    sentTab.classList.add("active");
+    inboxTab.classList.remove("active");
+  });
+}
 
 async function loadClients() {
   const token = getToken();
@@ -63,10 +88,10 @@ async function loadClients() {
   }
 }
 
-async function loadMessages() {
+async function loadInbox() {
   const token = getToken();
-  const messagesList = document.getElementById("messagesList");
-  messagesList.innerHTML = "<p>Loading messages...</p>";
+  const list = document.getElementById("messagesList");
+  list.innerHTML = "<p>Loading inbox...</p>";
 
   try {
     const res = await fetch("http://localhost:3000/api/messages/inbox", {
@@ -74,121 +99,166 @@ async function loadMessages() {
     });
     const messages = await res.json();
 
-    if (!messages.length) {
-      messagesList.innerHTML = "<p>No messages yet.</p>";
-      return;
+    list.innerHTML = "";
+    if (messages.length === 0) {
+      list.innerHTML = "<p>No inbox messages.</p>";
     }
 
-    messagesList.innerHTML = "";
-    messages.forEach(createMessageItem);
+    messages.forEach((msg) => {
+      const div = createMessageElement(msg, true);
+      list.appendChild(div);
+    });
   } catch (err) {
-    console.error("Failed to load messages:", err);
-    messagesList.innerHTML = "<p>Error loading messages.</p>";
+    console.error("Failed to load inbox:", err);
+    list.innerHTML = "<p>Error loading messages.</p>";
   }
 }
 
-function createMessageItem(msg) {
-  const messagesList = document.getElementById("messagesList");
+async function loadSent() {
+  const token = getToken();
+  const list = document.getElementById("sentMessagesList");
+  if (!list) return;
 
-  const fromName = msg.from?.name || "Client";
-  const fromEmail = msg.from?.email || "No Email";
+  list.innerHTML = "<p>Loading sent...</p>";
 
-  const msgDiv = document.createElement("div");
-  msgDiv.classList.add("message-item");
-  if (!msg.isRead) msgDiv.classList.add("unread");
+  try {
+    const res = await fetch("http://localhost:3000/api/messages/sent", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const messages = await res.json();
 
-  msgDiv.innerHTML = `
-    <p><strong>From:</strong> ${fromName} (${fromEmail})</p>
+    list.innerHTML = "";
+    if (messages.length === 0) {
+      list.innerHTML = "<p>No sent messages.</p>";
+    }
+
+    messages.forEach((msg) => {
+      const div = createMessageElement(msg, false);
+      list.appendChild(div);
+    });
+  } catch (err) {
+    console.error("Failed to load sent:", err);
+    list.innerHTML = "<p>Error loading sent messages.</p>";
+  }
+}
+
+function createMessageElement(msg, isInbox = true) {
+  const div = document.createElement("div");
+  div.className = "message-item";
+  if (!msg.isRead && isInbox) div.classList.add("unread");
+
+  const fromName = msg.from?.name || "Unknown";
+  const toName = msg.to?.name || "Unknown";
+  const who = isInbox ? `From: ${fromName}` : `To: ${toName}`;
+  const toId = typeof msg.to === "object" ? msg.to._id : msg.to;
+
+  let content = `
+    <p><strong>${who}</strong></p>
     <p><strong>Subject:</strong> ${msg.subject}</p>
     <p><strong>Message:</strong> ${msg.body}</p>
     <p><small>${new Date(msg.createdAt).toLocaleString()}</small></p>
-    <button class="delete-btn" data-id="${msg._id}">Delete</button>
-    <hr>
   `;
 
-  messagesList.prepend(msgDiv);
+  if (!isInbox && msg.isRead) {
+    content += `<div class="read-tag" style="position:absolute; top:10px; right:10px; color:green;">✓ Read by recipient</div>`;
+  }
 
-  const deleteBtn = msgDiv.querySelector(".delete-btn");
-  deleteBtn.addEventListener("click", async () => {
-    if (confirm("Are you sure you want to delete this message?")) {
+  if (isInbox && !msg.isRead && toId === currentUser.id) {
+    content += `<button class="mark-read" data-id="${msg._id}" style="background: green; color: white;">Mark as Read</button>`;
+  }
+
+  content += `<button class="delete-btn" data-id="${msg._id}">Delete</button><hr>`;
+  div.innerHTML = content;
+  div.style.position = "relative";
+
+  div.querySelector(".delete-btn").addEventListener("click", async () => {
+    if (confirm("Delete this message?")) {
       await deleteMessage(msg._id);
     }
   });
+
+  const markReadBtn = div.querySelector(".mark-read");
+  if (markReadBtn) {
+    markReadBtn.addEventListener("click", async () => {
+      await markMessageAsRead(msg._id);
+    });
+  }
+
+  return div;
 }
 
-async function sendMessage(user) {
+async function sendMessage() {
   const token = getToken();
   const subject = document.getElementById("subject").value.trim();
-  const messageContent = document.getElementById("content").value.trim();
-  const recipientSelect = document.getElementById("recipientSelect");
+  const content = document.getElementById("content").value.trim();
+  const select = document.getElementById("recipientSelect");
 
-  if (!subject || !messageContent) return;
+  if (!subject || !content) return;
+
+  let recipientId;
+  if (currentUser.role === "admin") {
+    recipientId = select.value;
+  } else {
+    recipientId = "67fe80134b951dad646f1ce7"; // Replace with actual admin _id
+  }
+
+  if (!recipientId) {
+    alert("Please select a recipient.");
+    return;
+  }
 
   try {
-    let recipientId;
-    if (user.role === "admin") {
-      recipientId = recipientSelect?.value;
-    } else if (user.role === "client") {
-      recipientId = "67fe80134b951dad646f1ce7";
-    }
-
-    if (!recipientId) {
-      alert("Recipient not selected.");
-      return;
-    }
-
     const res = await fetch("http://localhost:3000/api/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ to: recipientId, subject, body: messageContent })
+      body: JSON.stringify({ to: recipientId, subject, body: content })
     });
 
-    if (!res.ok) throw new Error("Failed to send message.");
-
-    // Create a visual message immediately
-    const newMsg = {
-      _id: Date.now().toString(),
-      from: { name: user.name || "You", email: user.email || "" },
-      subject,
-      body: messageContent,
-      createdAt: new Date().toISOString(),
-      isRead: false
-    };
-
-    createMessageItem(newMsg);
+    if (!res.ok) throw new Error("Send failed");
 
     document.getElementById("subject").value = "";
     document.getElementById("content").value = "";
-    if (recipientSelect) recipientSelect.selectedIndex = 0;
+    if (select) select.selectedIndex = 0;
 
-    if (user.role === "admin") await updateMessageStats();
-
-    alert("Message sent!");
+    await loadInbox();
+    await loadSent();
+    await updateMessageStats();
   } catch (err) {
-    console.error("Send message failed:", err);
-    alert("Failed to send message. Try again.");
+    console.error("Send error:", err);
+    alert("Message failed to send.");
   }
 }
 
-async function deleteMessage(messageId) {
+async function deleteMessage(id) {
   const token = getToken();
   try {
-    const res = await fetch(`http://localhost:3000/api/messages/${messageId}`, {
+    await fetch(`http://localhost:3000/api/messages/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    if (!res.ok) throw new Error("Failed to delete message.");
-
-    await loadMessages();
+    await loadInbox();
+    await loadSent();
     await updateMessageStats();
-    alert("Message deleted!");
   } catch (err) {
-    console.error("Delete message failed:", err);
-    alert("Failed to delete message.");
+    console.error("Delete failed:", err);
+  }
+}
+
+async function markMessageAsRead(id) {
+  const token = getToken();
+  try {
+    await fetch(`http://localhost:3000/api/messages/${id}/read`, {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    await loadInbox();
+    await updateMessageStats();
+  } catch (err) {
+    console.error("Mark as read failed:", err);
   }
 }
 
@@ -204,10 +274,9 @@ export async function updateMessageStats() {
       headers: { Authorization: `Bearer ${token}` }
     });
     const messages = await res.json();
-
     totalSpan.textContent = messages.length;
-    unreadSpan.textContent = messages.filter((msg) => !msg.isRead).length;
+    unreadSpan.textContent = messages.filter((m) => !m.isRead).length;
   } catch (err) {
-    console.error("Failed to fetch message stats:", err);
+    console.error("Stats error:", err);
   }
 }

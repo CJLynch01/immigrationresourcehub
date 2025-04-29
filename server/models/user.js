@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }, // assuming you use hashed passwords
   role: { type: String, enum: ["client", "admin"], default: "client" },
+  mfa: {
+    enabled: { type: Boolean, default: false },
+    secret: { type: String }
+  },
   createdAt: { type: Date, default: Date.now }
 });
 

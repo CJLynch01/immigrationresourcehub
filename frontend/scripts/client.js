@@ -122,5 +122,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function checkMfaStatus() {
+    const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:3000/api/auth/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const user = await res.json();
+  
+    const mfaDiv = document.getElementById("mfaStatus");
+    if (user.mfa?.enabled) {
+      mfaDiv.textContent = "✅ MFA is enabled";
+    } else {
+      mfaDiv.innerHTML = `<button id="enableMfaBtn">Enable MFA</button>`;
+      document.getElementById("enableMfaBtn").addEventListener("click", async () => {
+        const res = await fetch("http://localhost:3000/api/auth/mfa/setup", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        mfaDiv.innerHTML = `
+          <p>Scan this QR code with your authenticator app:</p>
+          <img src="${data.qrCode}" alt="QR Code">
+        `;
+      });
+    }
+  }
+
+  checkMfaStatus();
   loadMyUploads();
 });

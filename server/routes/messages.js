@@ -52,17 +52,6 @@ router.get("/unread-count", verifyToken, isAdmin, async (req, res) => {
   }
 });
 
-// 👀 Mark a message as read
-router.put("/:id/read", verifyToken, async (req, res) => {
-  try {
-    await Message.findByIdAndUpdate(req.params.id, { isRead: true });
-    res.json({ msg: "Message marked as read." });
-  } catch (err) {
-    console.error("Mark read error:", err);
-    res.status(500).json({ error: "Failed to mark as read." });
-  }
-});
-
 // 🗑️ Delete a message
 router.delete("/:id", verifyToken, async (req, res) => {
     try {
@@ -84,5 +73,33 @@ router.delete("/:id", verifyToken, async (req, res) => {
       res.status(500).json({ error: "Failed to delete message." });
     }
   });
+
+  // Mark message as read
+router.put("/:id/read", verifyToken, async (req, res) => {
+    try {
+      await Message.findByIdAndUpdate(req.params.id, { isRead: true });
+      res.json({ msg: "Message marked as read." });
+    } catch (err) {
+      console.error("Mark read error:", err);
+      res.status(500).json({ error: "Failed to mark as read." });
+    }
+  });
+
+// 📤 Fetch sent messages
+router.get("/sent", verifyToken, async (req, res) => {
+    try {
+      const messages = await Message.find({ from: req.user.id })
+        .populate("to", "name email")
+        .sort({ createdAt: -1 });
+  
+      res.json(messages);
+    } catch (err) {
+      console.error("Fetch sent error:", err);
+      res.status(500).json({ error: "Failed to load sent messages." });
+    }
+  });  
+  
+  
+  
 
 module.exports = router;

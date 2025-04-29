@@ -771,6 +771,7 @@ button.delete-button:hover {
   border-left: 5px solid #f39c12; /* orange stripe */
   padding: 10px;
   border-radius: 5px;
+  color:#000;
 }
 
 .delete-btn {
@@ -788,6 +789,70 @@ button.delete-button:hover {
   background-color: #c0392b;
 }
 
+.mark-read-btn {
+  background-color: green;
+  color: white;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.read-by-recipient {
+  float: right;
+  font-size: 0.9em;
+  color: #28a745;
+}
+
+.mark-read-btn:hover {
+  background-color: #218838;
+}
+
+.message-tabs button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.message-tabs .active {
+  background-color: #444;
+  color: #fff;
+}
+
+.mark-read {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.unread {
+  background-color: #f0fff0;
+  border-left: 4px solid green;
+  padding: 10px;
+}
+
+.mfa-status {
+  margin-top: 10px;
+  font-weight: bold;
+  color: green;
+}
+
+#enableMfaBtn {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#enableMfaBtn:hover {
+  background-color: #0056b3;
+}
 
 
 /* Privacy/Terms Page */

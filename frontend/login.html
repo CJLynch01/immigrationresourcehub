@@ -25,6 +25,11 @@
       <label for="password">Password</label>
       <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required />
 
+      <div id="mfaField" style="display: none;">
+        <label for="mfaToken">MFA Code</label>
+        <input type="text" id="mfaToken" placeholder="123456" inputmode="numeric">
+      </div>
+
       <button type="submit" class="button">Login</button>
     </form>
   </main>
