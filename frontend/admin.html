@@ -16,6 +16,13 @@
   <header class="site-header">
     <h1>Admin Dashboard</h1>
     <div id="mfaStatus" class="mfa-status"></div>
+    <section id="mfaVerifySection" style="display: none;">
+      <h2>🔐 Verify MFA Setup</h2>
+      <p>Enter the 6-digit code from your authenticator app:</p>
+      <input type="text" id="verifyMfaToken" placeholder="123456" inputmode="numeric" />
+      <button id="verifyMfaBtn" class="button">Verify MFA</button>
+      <p id="mfaVerifyMsg"></p>
+    </section>
     <p>Manage content and client documents</p>
   </header>
 

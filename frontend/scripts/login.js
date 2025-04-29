@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-    const token = document.getElementById("mfaToken").value.trim();
+    const tokenInput = document.getElementById("mfaToken");
+    const token = tokenInput ? tokenInput.value.trim() : undefined;
 
     try {
       const res = await fetch("http://localhost:3000/api/auth/login", {
