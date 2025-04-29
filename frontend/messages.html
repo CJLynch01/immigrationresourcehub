@@ -23,10 +23,12 @@
         <h2>New Message</h2>
         <form id="newMessageForm">
           
-          <label for="recipientSelect">Select Client:</label>
-          <select id="recipientSelect" required>
-            <option value="">Select a client</option>
-          </select>
+            <div id="recipientWrapper" style="display: none;">
+                <label for="recipientSelect">Select Client:</label>
+                <select id="recipientSelect">
+                  <option value="">Select a client</option>
+                </select>
+              </div>
       
           <label for="subject">Subject:</label>
           <input type="text" id="subject" required>
