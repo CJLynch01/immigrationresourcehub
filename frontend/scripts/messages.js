@@ -15,21 +15,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     user = await res.json();
 
     const recipientSelect = document.getElementById("recipientSelect");
-    const recipientLabel = document.querySelector('label[for="recipientSelect"]');
+    const recipientWrapper = document.querySelector("recipientWrapper");
 
     if (user.role === "admin") {
-      await loadClients();
-      await updateMessageStats();
+        if (recipientWrapper) recipientWrapper.style.display = "block";
+        await loadClients();
+        await updateMessageStats();
     } else if (user.role === "client") {
-      if (recipientSelect) {
-        recipientSelect.style.display = "none";
-        recipientSelect.required = false;
-        recipientSelect.disabled = true;
+        if (recipientWrapper) {
+          recipientWrapper.style.display = "none";
+          recipientSelect.required = false;
+          recipientSelect.disabled = true;
+        }
       }
-      if (recipientLabel) {
-        recipientLabel.style.display = "none";
-      }
-    }
 
     await loadMessages();
 

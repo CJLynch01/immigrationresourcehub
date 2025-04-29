@@ -17,33 +17,34 @@ export function getPayload() {
 
 export function requireRole(role, redirectTo = "login.html") {
   const token = getToken();
-  console.log("🔑 Token found:", token);
 
   if (!token) {
-    console.log("❌ No token found. Redirecting...");
     window.location.href = redirectTo;
     return null;
   }
 
   try {
     const payload = decodeToken(token);
-    console.log("📦 Decoded token payload:", payload);
 
-    if (payload.role !== role) {
-      console.log(`❌ Role mismatch: needed ${role}, but got ${payload.role}`);
+    if (!payload) {
       window.location.href = redirectTo;
       return null;
     }
 
-    console.log("✅ Access granted for:", payload.role);
+    if (payload.role !== role) {
+      window.location.href = redirectTo;
+      return null;
+    }
+
     return payload;
   } catch (err) {
-    console.log("❌ Error decoding token:", err);
+    console.error("Error decoding token:", err);
     localStorage.removeItem("token");
     window.location.href = redirectTo;
     return null;
   }
 }
+
 
 export function logout() {
   localStorage.removeItem("token");

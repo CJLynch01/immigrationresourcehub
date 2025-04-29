@@ -1,5 +1,5 @@
 import { requireRole, logout, getToken, showNavByAuth } from "./auth.js";
-import { updateMessageStats } from "./messages.js";
+import { updateMessageStats } from "./messageStats.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   requireRole("admin");
