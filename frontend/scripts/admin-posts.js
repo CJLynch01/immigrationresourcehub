@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!postsContainer) return;
 
     try {
-      const res = await fetch("http://localhost:3000/api/posts", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/posts", {
         headers: { Authorization: `Bearer ${getToken()}` }
       });
       allPosts = await res.json();
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const content = postEl.querySelector(".editable-content").innerText.trim();
 
     try {
-      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+      const res = await fetch(`https://immigrationresourcehub.onrender.com/api/posts/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!confirm("Delete this post?")) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+      const res = await fetch(`https://immigrationresourcehub.onrender.com/api/posts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${getToken()}`

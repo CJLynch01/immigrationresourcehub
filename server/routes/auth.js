@@ -7,7 +7,7 @@ const speakeasy = require("speakeasy");
 const qrcode = require("qrcode");
 const User = require("../models/user");
 
-// 🔐 POST /api/auth/login — Login with optional MFA
+//POST /api/auth/login — Login with optional MFA
 router.post("/login", async (req, res) => {
   try {
     const { email, password, token } = req.body;
@@ -17,7 +17,7 @@ router.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
 
-    // If MFA is enabled, verify the token
+    //If MFA is enabled, verify the token
     if (user.mfa?.enabled) {
       if (!token) {
         return res.status(206).json({ mfaRequired: true, msg: "MFA code required." });
@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 👤 POST /api/auth/register — New user registration
+//POST /api/auth/register — New user registration
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -67,7 +67,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// 🔒 GET /api/auth/me — Get current user
+//GET /api/auth/me — Get current user
 router.get("/me", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -79,7 +79,7 @@ router.get("/me", verifyToken, async (req, res) => {
   }
 });
 
-// 👥 GET /api/auth/clients — Admin-only: get list of clients
+//GET /api/auth/clients — Admin-only: get list of clients
 router.get("/clients", verifyToken, isAdmin, async (req, res) => {
   try {
     const clients = await User.find({ role: "client" }).select("name email");
@@ -90,7 +90,7 @@ router.get("/clients", verifyToken, isAdmin, async (req, res) => {
   }
 });
 
-// 🧩 POST /api/auth/mfa/setup — Generate MFA secret and QR code
+//POST /api/auth/mfa/setup — Generate MFA secret and QR code
 router.post("/mfa/setup", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -99,7 +99,7 @@ router.post("/mfa/setup", verifyToken, async (req, res) => {
     const secret = speakeasy.generateSecret({ name: "Immigration Pathways" });
     user.mfa = {
       secret: secret.base32,
-      enabled: false // will be enabled after verification
+      enabled: false
     };
     await user.save();
 
@@ -113,7 +113,7 @@ router.post("/mfa/setup", verifyToken, async (req, res) => {
   }
 });
 
-// POST /api/auth/mfa/verify
+//POST /api/auth/mfa/verify
 router.post("/mfa/verify", verifyToken, async (req, res) => {
   const user = await User.findById(req.user.id);
   const { token } = req.body;

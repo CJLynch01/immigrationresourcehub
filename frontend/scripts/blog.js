@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadPosts(sortBy = "newest") {
     try {
-      const res = await fetch("http://localhost:3000/api/posts");
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/posts");
       let posts = await res.json();
 
       // Sort logic

@@ -10,23 +10,21 @@ const nodemailer = require("nodemailer");
 const { GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-// Multer setup (in-memory storage)
+//Multer setup (in-memory storage)
 const allowedTypes = ['application/pdf'];
 
 const upload = multer({
   storage: multer.memoryStorage(),
   fileFilter: (req, file, cb) => {
     if (allowedTypes.includes(file.mimetype)) {
-      cb(null, true); // Accept file
+      cb(null, true);
     } else {
       cb(new Error('Only PDF files are allowed.'));
     }
   }
 });
 
-/**
- * ✅ Client uploads a document
- */
+//Client uploads a document
 router.post("/", verifyToken, upload.single("file"), async (req, res) => {
   const file = req.file;
   const { docType } = req.body;
@@ -67,9 +65,7 @@ router.post("/", verifyToken, upload.single("file"), async (req, res) => {
   }
 });
 
-/**
- * ✅ Admin sends document to dashboard or email
- */
+//Admin sends document to dashboard or email
 router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (req, res) => {
   const { userId, docType, deliveryMethod } = req.body;
   const file = req.file;
@@ -92,7 +88,7 @@ router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (r
 
     const s3Url = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`;
 
-    // 📥 If delivery method is dashboard
+    //If delivery method is dashboard
     if (deliveryMethod === "dashboard") {
       const document = new Document({
         userId,
@@ -107,16 +103,16 @@ router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (r
       return res.status(201).json({ msg: "Sent to client dashboard", url: s3Url });
     }
 
-    // 📧 Otherwise send email
+    //Otherwise send email
     const user = await User.findById(userId);
     if (!user || !user.email) {
       return res.status(404).json({ error: "User not found or missing email" });
     }
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST, // smtp.hostinger.com
-      port: Number(process.env.SMTP_PORT), // must be a number
-      secure: process.env.SMTP_SECURE === "true", // boolean for TLS
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: process.env.SMTP_SECURE === "true",
       auth: {
         user: process.env.EMAIL_FROM,
         pass: process.env.EMAIL_PASSWORD
@@ -143,9 +139,7 @@ router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (r
   }
 });
 
-/**
- * ✅ Admin fetches all uploads (for review)
- */
+//Admin fetches all uploads (for review)
 router.get("/", verifyToken, isAdmin, async (req, res) => {
   try {
     const docs = await Document.find()
@@ -159,7 +153,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
 });
 
 router.get("/signed-url/*", verifyToken, async (req, res) => {
-  const key = req.params[0]; // This will capture the full path
+  const key = req.params[0];
   try {
     const command = new GetObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
@@ -175,9 +169,7 @@ router.get("/signed-url/*", verifyToken, async (req, res) => {
   }
 });
 
-/**
- * ✅ Client fetches their own documents
- */
+//Client fetches their own documents
 router.get("/my-uploads", verifyToken, async (req, res) => {
   try {
     const docs = await Document.find({ userId: req.user.id }).sort({ uploadedAt: -1 });
@@ -195,17 +187,17 @@ router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
     const doc = await Document.findById(req.params.id);
     if (!doc) return res.status(404).json({ error: "Document not found" });
 
-    // Extract key from S3 URL
+    //Extract key from S3 URL
     const s3Key = doc.s3Url.split(".amazonaws.com/")[1];
 
-    // Delete from S3
+    //Delete from S3
     const command = new DeleteObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
       Key: s3Key
     });
     await s3.send(command);
 
-    // Delete from MongoDB
+    //Delete from MongoDB
     await Document.findByIdAndDelete(req.params.id);
 
     res.json({ msg: "Document deleted from S3 and database." });

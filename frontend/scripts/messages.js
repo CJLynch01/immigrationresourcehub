@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const res = await fetch("http://localhost:3000/api/auth/me", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` }
     });
     currentUser = await res.json();
@@ -72,7 +72,7 @@ async function loadClients() {
   const recipientSelect = document.getElementById("recipientSelect");
 
   try {
-    const res = await fetch("http://localhost:3000/api/users/clients", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/users/clients", {
       headers: { Authorization: `Bearer ${token}` }
     });
     const clients = await res.json();
@@ -94,7 +94,7 @@ async function loadInbox() {
   list.innerHTML = "<p>Loading inbox...</p>";
 
   try {
-    const res = await fetch("http://localhost:3000/api/messages/inbox", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/messages/inbox", {
       headers: { Authorization: `Bearer ${token}` }
     });
     const messages = await res.json();
@@ -122,7 +122,7 @@ async function loadSent() {
   list.innerHTML = "<p>Loading sent...</p>";
 
   try {
-    const res = await fetch("http://localhost:3000/api/messages/sent", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/messages/sent", {
       headers: { Authorization: `Bearer ${token}` }
     });
     const messages = await res.json();
@@ -208,7 +208,7 @@ async function sendMessage() {
   }
 
   try {
-    const res = await fetch("http://localhost:3000/api/messages", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -235,7 +235,7 @@ async function sendMessage() {
 async function deleteMessage(id) {
   const token = getToken();
   try {
-    await fetch(`http://localhost:3000/api/messages/${id}`, {
+    await fetch(`https://immigrationresourcehub.onrender.com/api/messages/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -251,7 +251,7 @@ async function deleteMessage(id) {
 async function markMessageAsRead(id) {
   const token = getToken();
   try {
-    await fetch(`http://localhost:3000/api/messages/${id}/read`, {
+    await fetch(`https://immigrationresourcehub.onrender.com/api/messages/${id}/read`, {
       method: "PUT",
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -270,7 +270,7 @@ export async function updateMessageStats() {
   if (!token || !totalSpan || !unreadSpan) return;
 
   try {
-    const res = await fetch("http://localhost:3000/api/messages/inbox", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/messages/inbox", {
       headers: { Authorization: `Bearer ${token}` }
     });
     const messages = await res.json();

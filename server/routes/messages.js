@@ -4,12 +4,12 @@ const { verifyToken, isAdmin } = require("../middleware/auth.js");
 
 const router = express.Router();
 
-// ✉️ Send a new message
+//Send a new message
 router.post("/", verifyToken, async (req, res) => {
     try {
       const { subject, body } = req.body;
   
-      // Set recipient
+      //Set recipient
       let to = req.body.to;
       if (req.user.role === "client") {
         to = process.env.ADMIN_ID_MONGODB;
@@ -30,7 +30,7 @@ router.post("/", verifyToken, async (req, res) => {
     }
   });
 
-// 📬 Fetch inbox messages (received)
+//Fetch inbox messages (received)
 router.get("/inbox", verifyToken, async (req, res) => {
   try {
     const messages = await Message.find({ to: req.user.id })
@@ -45,7 +45,7 @@ router.get("/inbox", verifyToken, async (req, res) => {
   }
 });
 
-// 🔔 Count unread messages (admin only)
+//Count unread messages (admin only)
 router.get("/unread-count", verifyToken, isAdmin, async (req, res) => {
   try {
     const count = await Message.countDocuments({
@@ -59,7 +59,7 @@ router.get("/unread-count", verifyToken, isAdmin, async (req, res) => {
   }
 });
 
-// 🗑️ Delete a message
+//Delete a message
 router.delete("/:id", verifyToken, async (req, res) => {
     try {
       const message = await Message.findById(req.params.id);
@@ -68,7 +68,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
         return res.status(404).json({ error: "Message not found." });
       }
   
-      // Only allow delete if user is sender or recipient
+      //Only allow delete if user is sender or recipient
       if (message.from.toString() !== req.user.id && message.to.toString() !== req.user.id) {
         return res.status(403).json({ error: "Not authorized to delete this message." });
       }
@@ -81,7 +81,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
     }
   });
 
-  // Mark message as read
+  //Mark message as read
 router.put("/:id/read", verifyToken, async (req, res) => {
     try {
       await Message.findByIdAndUpdate(req.params.id, { isRead: true });
@@ -92,7 +92,7 @@ router.put("/:id/read", verifyToken, async (req, res) => {
     }
   });
 
-// 📤 Fetch sent messages
+//Fetch sent messages
 router.get("/sent", verifyToken, async (req, res) => {
     try {
       const messages = await Message.find({ from: req.user.id })

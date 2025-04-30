@@ -8,7 +8,7 @@ export async function updateMessageStats() {
 
   if (token && totalSpan && unreadSpan) {
     try {
-      const res = await fetch("http://localhost:3000/api/messages/inbox", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/messages/inbox", {
         headers: { Authorization: `Bearer ${token}` }
       });
       const messages = await res.json();

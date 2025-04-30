@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   enableBtn.addEventListener("click", async () => {
     const token = getToken();
 
-    const res = await fetch("http://localhost:3000/api/auth/mfa/setup", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/mfa/setup", {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!code) return alert("Please enter the 6-digit code.");
 
     const token = getToken();
-    const res = await fetch("http://localhost:3000/api/auth/mfa/verify", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/mfa/verify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

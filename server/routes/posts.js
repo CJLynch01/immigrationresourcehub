@@ -4,7 +4,7 @@ const { isAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
-// Create a new post (Admin only)
+//Create a new post (Admin only)
 router.post("/", isAdmin, async (req, res) => {
   try {
     const { title, content, category, date } = req.body;
@@ -22,7 +22,7 @@ router.post("/", isAdmin, async (req, res) => {
   }
 });
 
-// Get all posts (Public)
+//Get all posts (Public)
 router.get("/", async (req, res) => {
   try {
     const posts = await Post.find().populate("author", "name");
@@ -43,7 +43,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Update a post (Admin only)
+//Update a post (Admin only)
 router.put("/:id", isAdmin, async (req, res) => {
   try {
     const updated = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -53,7 +53,7 @@ router.put("/:id", isAdmin, async (req, res) => {
   }
 });
 
-// Delete a post (Admin only)
+//Delete a post (Admin only)
 router.delete("/:id", isAdmin, async (req, res) => {
   try {
     await Post.findByIdAndDelete(req.params.id);

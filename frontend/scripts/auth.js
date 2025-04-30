@@ -99,7 +99,7 @@ async function updateUnreadMessages() {
 
   if (token && unreadSpan) {
     try {
-      const res = await fetch("http://localhost:3000/api/messages/unread-count", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/messages/unread-count", {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

@@ -1,7 +1,7 @@
 :root {
   --bg-color: #1c1c1e;
   --text-color: #f8f8f8;
-  --accent-color: #d4af37; /* Gold */
+  --accent-color: #d4af37;
   --button-bg: #d4af37;
   --button-text: #1c1c1e;
 }
@@ -82,7 +82,7 @@ body {
 }
 
 .dropbtn:hover {
-  color: #ffffff; /* White on hover */
+  color: #ffffff;
 }
 
 .dropdown-content {
@@ -446,7 +446,7 @@ body {
 /* Markdown-generated links */
 .blog-post a,
 .post a {
-  color: var(--accent-color); /* Your gold */
+  color: var(--accent-color);
   text-decoration: none;
   font-weight: 500;
 }
@@ -681,10 +681,10 @@ a.download-link:hover {
 
 .markdown-toolbar {
   display: flex;
-  flex-wrap: nowrap; /* Don't allow buttons to wrap */
+  flex-wrap: nowrap;
   gap: 0.5rem;
   margin-bottom: 1rem;
-  overflow-x: auto; /* Scroll if it overflows */
+  overflow-x: auto;
   padding-bottom: 0.5rem;
 }
 
@@ -725,17 +725,15 @@ button.delete-button:hover {
   background-color: #cc0000;
 }
 
-/* =========================
-   Messages Page Styling - Dark Theme
-========================= */
+/* Messages Page Styling */
 
 .messages-page {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #1c1c1c; /* Dark background */
+  background: #1c1c1c;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); /* Gold-ish glow */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
   color: #f5f5f5;
 }
 
@@ -743,13 +741,11 @@ button.delete-button:hover {
 .messages-page h1,
 .messages-page h2 {
   text-align: center;
-  color: #ffd700; /* Gold headings */
+  color: #ffd700;
   margin-bottom: 1.5rem;
 }
 
-/* =========================
-   New Message Form Styling
-========================= */
+/* New Message Form Styling */
 
 .new-message {
   margin-bottom: 3rem;
@@ -784,7 +780,7 @@ button.delete-button:hover {
 
 /* Send Button */
 #newMessageForm .button {
-  background-color: #ffd700; /* Gold button */
+  background-color: #ffd700;
   color: #1c1c1c;
   font-weight: bold;
   border: none;
@@ -797,10 +793,6 @@ button.delete-button:hover {
 #newMessageForm .button:hover {
   background-color: #e6c200;
 }
-
-/* =========================
-   Inbox Messages Styling
-========================= */
 
 .received-messages {
   margin-top: 2rem;
@@ -831,8 +823,8 @@ button.delete-button:hover {
 }
 
 .message-item.unread {
-  background-color: #fff8dc; /* light yellow (cornsilk) */
-  border-left: 5px solid #f39c12; /* orange stripe */
+  background-color: #fff8dc;
+  border-left: 5px solid #f39c12;
   padding: 10px;
   border-radius: 5px;
   color:#000;

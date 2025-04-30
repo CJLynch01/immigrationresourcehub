@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countSpan = document.getElementById("unreadMessagesCount");
     if (token && countSpan) {
       try {
-        const res = await fetch("http://localhost:3000/api/messages/unread-count", {
+        const res = await fetch("https://immigrationresourcehub.onrender.com/api/messages/unread-count", {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadUploads() {
     try {
-      const res = await fetch("http://localhost:3000/api/uploads", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/uploads", {
         headers: { Authorization: `Bearer ${getToken()}` }
       });
       const docs = await res.json();
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function getSignedUrlFromS3(s3Url) {
     const key = s3Url.split(".amazonaws.com/")[1];
-    const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
+    const res = await fetch(`https://immigrationresourcehub.onrender.com/api/uploads/signed-url/${key}`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     });
     const data = await res.json();
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formData = new FormData(sendForm);
     const token = getToken();
     try {
-      const res = await fetch("http://localhost:3000/api/uploads/admin-send", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/uploads/admin-send", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.deleteDocument = async (docId) => {
     if (!confirm("Are you sure you want to delete this document?")) return;
     try {
-      const res = await fetch(`http://localhost:3000/api/uploads/${docId}`, {
+      const res = await fetch(`https://immigrationresourcehub.onrender.com/api/uploads/${docId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${getToken()}` }
       });
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function populateClientDropdown() {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/clients", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/clients", {
         headers: { Authorization: `Bearer ${getToken()}` }
       });
       const clients = await res.json();
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function checkMfaStatus() {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:3000/api/auth/me", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const user = await res.json();
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       mfaDiv.innerHTML = `<button id="enableMfaBtn">Enable MFA</button>`;
       document.getElementById("enableMfaBtn").addEventListener("click", async () => {
-        const res = await fetch("http://localhost:3000/api/auth/mfa/setup", {
+        const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/mfa/setup", {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mfaToken = document.getElementById("verifyMfaToken").value.trim();
     const msgEl = document.getElementById("mfaVerifyMsg");
     try {
-      const res = await fetch("http://localhost:3000/api/auth/mfa/verify", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/mfa/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

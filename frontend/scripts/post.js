@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   
     try {
-      const res = await fetch(`http://localhost:3000/api/posts/${postId}`);
+      const res = await fetch(`https://immigrationresourcehub.onrender.com/api/posts/${postId}`);
       const post = await res.json();
   
       container.innerHTML = `

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✅ Upload a document
+  // Upload a document
   const uploadForm = document.getElementById("uploadForm");
 
   uploadForm?.addEventListener("submit", async (e) => {
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = getToken();
 
     try {
-      const res = await fetch("http://localhost:3000/api/uploads", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/uploads", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ✅ Load and separate client vs admin documents
+  // Load and separate client vs admin documents
   async function loadMyUploads() {
     const token = getToken();
     const myUploads = document.getElementById("my-uploaded-docs");
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!myUploads || !adminUploads) return;
 
     try {
-      const res = await fetch("http://localhost:3000/api/uploads/my-uploads", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/uploads/my-uploads", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function getSignedUrl(key, token) {
     try {
-      const res = await fetch(`http://localhost:3000/api/uploads/signed-url/${key}`, {
+      const res = await fetch(`https://immigrationresourcehub.onrender.com/api/uploads/signed-url/${key}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -122,10 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ✅ MFA Status + Setup + Verification
+  // MFA Status + Setup + Verification
   async function checkMfaStatus() {
     const token = getToken();
-    const res = await fetch("http://localhost:3000/api/auth/me", {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       mfaDiv.innerHTML = `<button id="enableMfaBtn">Enable MFA</button>`;
       document.getElementById("enableMfaBtn").addEventListener("click", async () => {
-        const res = await fetch("http://localhost:3000/api/auth/mfa/setup", {
+        const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/mfa/setup", {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const msg = document.getElementById("mfaVerifyMsg");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/mfa/verify", {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/mfa/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
