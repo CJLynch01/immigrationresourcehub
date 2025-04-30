@@ -254,6 +254,25 @@ body {
   font-weight: 500;
 }
 
+.about-profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.about-photo {
+  max-width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+.about-profile div {
+  flex: 1;
+  min-width: 250px;
+}
+
 /* Blog Page */
 
 .blog-page {
