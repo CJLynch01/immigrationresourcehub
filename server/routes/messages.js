@@ -6,29 +6,35 @@ const router = express.Router();
 
 // ✉️ Send a new message
 router.post("/", verifyToken, async (req, res) => {
-  try {
-    const { to, subject, body } = req.body;
-
-    const message = new Message({
-      from: req.user.id,
-      to,
-      subject,
-      body
-    });
-
-    await message.save();
-    res.status(201).json({ msg: "Message sent!" });
-  } catch (err) {
-    console.error("Send message error:", err);
-    res.status(500).json({ error: "Failed to send message." });
-  }
-});
+    try {
+      const { subject, body } = req.body;
+  
+      // Set recipient
+      let to = req.body.to;
+      if (req.user.role === "client") {
+        to = process.env.ADMIN_ID_MONGODB;
+      }
+  
+      const message = new Message({
+        from: req.user.id,
+        to,
+        subject,
+        body,
+      });
+  
+      await message.save();
+      res.status(201).json({ msg: "Message sent!" });
+    } catch (err) {
+      console.error("Send message error:", err);
+      res.status(500).json({ error: "Failed to send message." });
+    }
+  });
 
 // 📬 Fetch inbox messages (received)
 router.get("/inbox", verifyToken, async (req, res) => {
   try {
     const messages = await Message.find({ to: req.user.id })
-      .populate("from", "name email") // show sender name/email
+      .populate("from", "name email")
       .sort({ createdAt: -1 });
 
     res.json(messages);

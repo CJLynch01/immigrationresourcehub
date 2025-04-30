@@ -58,7 +58,7 @@ export function showNavByAuth() {
   const logoutLink = document.getElementById('logoutLink');
   const clientDropdown = document.getElementById('clientDropdown');
   const adminDropdown = document.getElementById('adminDropdown');
-  const messagesDropdown = document.getElementById('messagesDropdown'); // NEW LINE
+  const messagesDropdown = document.getElementById('messagesDropdown');
 
 
   if (logoutLink) {

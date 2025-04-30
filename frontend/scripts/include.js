@@ -8,14 +8,14 @@ async function include(selector, url, callback) {
     element.innerHTML = html;
 
     if (typeof callback === "function") {
-      callback(); // Run logic *after* partial is injected
+      callback();
     }
   }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   await include("#include-nav", "components/nav.html", () => {
-    showNavByAuth(); // ✅ Now runs after nav is loaded
+    showNavByAuth();
   });
 
   await include("#include-footer", "components/footer.html");

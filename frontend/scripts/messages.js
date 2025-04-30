@@ -195,16 +195,13 @@ async function sendMessage() {
 
   if (!subject || !content) return;
 
-  let recipientId;
-  if (currentUser.role === "admin") {
-    recipientId = select.value;
-  } else {
-    recipientId = "67fe80134b951dad646f1ce7"; // Replace with actual admin _id
-  }
+  const payload = {
+    subject,
+    body: content
+  };
 
-  if (!recipientId) {
-    alert("Please select a recipient.");
-    return;
+  if (currentUser.role === "admin") {
+    payload.to = select.value;
   }
 
   try {
@@ -214,7 +211,7 @@ async function sendMessage() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ to: recipientId, subject, body: content })
+      body: JSON.stringify(payload)
     });
 
     if (!res.ok) throw new Error("Send failed");

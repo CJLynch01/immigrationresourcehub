@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalPages = Math.ceil(allPosts.length / postsPerPage);
     paginationContainer.innerHTML = "";
   
-    if (totalPages <= 1) return; // No pagination needed
+    if (totalPages <= 1) return;
   
     // Page X of Y label
     const pageInfo = document.createElement("div");
@@ -88,8 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     paginationContainer.appendChild(prevButton);
   
-    // Smart pagination with ellipsis
-    const maxPagesToShow = 5; // How many pages around current page to show
+    // Pagination with ellipsis
+    const maxPagesToShow = 5;
   
     let startPage = Math.max(1, currentPage - 1);
     let endPage = Math.min(totalPages, currentPage + 1);
