@@ -34,8 +34,9 @@ router.post("/", verifyToken, async (req, res) => {
 router.get("/inbox", verifyToken, async (req, res) => {
   try {
     const messages = await Message.find({ to: req.user.id })
-      .populate("from", "name email")
-      .sort({ createdAt: -1 });
+  .populate("from", "_id name email")
+  .populate("to", "_id name email")
+  .sort({ createdAt: -1 });
 
     res.json(messages);
   } catch (err) {

@@ -273,6 +273,51 @@ body {
   min-width: 250px;
 }
 
+.pricing-info {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pricing-info .section-title {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.pricing-description p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+.fee-note {
+  background-color: #fff3cd;
+  border-left: 5px solid #ffc107;
+  padding: 1rem;
+  border-radius: 4px;
+  color: #856404;
+}
+
+.quote-button {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #005b99;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.quote-button:hover {
+  background-color: #00457c;
+}
+
 /* Blog Page */
 
 .blog-page {
@@ -808,7 +853,7 @@ button.delete-button:hover {
   background-color: #c0392b;
 }
 
-.mark-read-btn {
+.mark-read {
   background-color: green;
   color: white;
   padding: 4px 10px;
@@ -824,8 +869,8 @@ button.delete-button:hover {
   color: #28a745;
 }
 
-.mark-read-btn:hover {
-  background-color: #218838;
+.mark-read:hover {
+  background-color: #24833e;
 }
 
 .message-tabs button {

@@ -143,49 +143,52 @@ async function loadSent() {
 }
 
 function createMessageElement(msg, isInbox = true) {
-  const div = document.createElement("div");
-  div.className = "message-item";
-  if (!msg.isRead && isInbox) div.classList.add("unread");
-
-  const fromName = msg.from?.name || "Unknown";
-  const toName = msg.to?.name || "Unknown";
-  const who = isInbox ? `From: ${fromName}` : `To: ${toName}`;
-  const toId = typeof msg.to === "object" ? msg.to._id : msg.to;
-
-  let content = `
-    <p><strong>${who}</strong></p>
-    <p><strong>Subject:</strong> ${msg.subject}</p>
-    <p><strong>Message:</strong> ${msg.body}</p>
-    <p><small>${new Date(msg.createdAt).toLocaleString()}</small></p>
-  `;
-
-  if (!isInbox && msg.isRead) {
-    content += `<div class="read-tag" style="position:absolute; top:10px; right:10px; color:green;">✓ Read by recipient</div>`;
-  }
-
-  if (isInbox && !msg.isRead && toId === currentUser.id) {
-    content += `<button class="mark-read" data-id="${msg._id}" style="background: green; color: white;">Mark as Read</button>`;
-  }
-
-  content += `<button class="delete-btn" data-id="${msg._id}">Delete</button><hr>`;
-  div.innerHTML = content;
-  div.style.position = "relative";
-
-  div.querySelector(".delete-btn").addEventListener("click", async () => {
-    if (confirm("Delete this message?")) {
-      await deleteMessage(msg._id);
+    const div = document.createElement("div");
+    div.className = "message-item";
+    if (!msg.isRead && isInbox) div.classList.add("unread");
+  
+    const fromName = msg.from?.name || "Unknown";
+    const toName = msg.to?.name || "Unknown";
+    const who = isInbox ? `From: ${fromName}` : `To: ${toName}`;
+  
+    const toId = typeof msg.to === "object" ? String(msg.to._id) : String(msg.to);
+const currentId = String(currentUser._id || currentUser.id);
+  
+    let content = `
+      <p><strong>${who}</strong></p>
+      <p><strong>Subject:</strong> ${msg.subject}</p>
+      <p><strong>Message:</strong> ${msg.body}</p>
+      <p><small>${new Date(msg.createdAt).toLocaleString()}</small></p>
+    `;
+  
+    if (!isInbox && msg.isRead) {
+      content += `<div class="read-tag" style="position:absolute; top:10px; right:10px; color:green;">✓ Read by recipient</div>`;
     }
-  });
-
-  const markReadBtn = div.querySelector(".mark-read");
-  if (markReadBtn) {
-    markReadBtn.addEventListener("click", async () => {
-      await markMessageAsRead(msg._id);
+  
+    if (isInbox && !msg.isRead && toId === currentId) {
+      content += `<button class="mark-read" data-id="${msg._id}" style="background: green; color: white;">Mark as Read</button>`;
+    }
+  
+    content += `<button class="delete-btn" data-id="${msg._id}">Delete</button><hr>`;
+    div.innerHTML = content;
+    div.style.position = "relative";
+  
+    div.querySelector(".delete-btn").addEventListener("click", async () => {
+      if (confirm("Delete this message?")) {
+        await deleteMessage(msg._id);
+      }
     });
+  
+    const markReadBtn = div.querySelector(".mark-read");
+    if (markReadBtn) {
+      markReadBtn.addEventListener("click", async () => {
+        await markMessageAsRead(msg._id);
+      });
+    }
+  
+    return div;
   }
-
-  return div;
-}
+  
 
 async function sendMessage() {
   const token = getToken();
