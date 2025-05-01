@@ -197,6 +197,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  const form = document.getElementById("changePasswordForm");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const token = getToken();
+
+    const currentPassword = document.getElementById("currentPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+
+    try {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/users/change-password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ currentPassword, newPassword })
+      });
+
+      const data = await res.json();
+      const msg = document.getElementById("passwordMessage");
+      msg.textContent = data.message || data.error;
+      msg.style.color = res.ok ? "green" : "red";
+    } catch (err) {
+      console.error("Error changing password:", err);
+    }
+  });
+
   checkMfaStatus();
   updateMessageStats();
   loadUnreadMessages();
