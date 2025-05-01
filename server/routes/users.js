@@ -18,7 +18,11 @@ router.get("/clients", verifyToken, isAdmin, async (req, res) => {
 router.put("/change-password", verifyToken, async (req, res) => {
     try {
       const { currentPassword, newPassword } = req.body;
-      console.log("🔧 Change Password Attempt:", { userId: req.user.id });
+      console.log("🔧 Change Password Attempt:", {
+        userId: req.user.id,
+        currentPassword,
+        newPassword
+      });
   
       const user = await User.findById(req.user.id);
       if (!user) {
@@ -38,10 +42,16 @@ router.put("/change-password", verifyToken, async (req, res) => {
       const hashed = await bcrypt.hash(newPassword, salt);
       user.password = hashed;
   
-      await user.save();
+      await user.save()
+        .then(() => {
+          console.log("✅ Password updated in MongoDB for:", user.email);
+          res.json({ message: "Password changed successfully." });
+        })
+        .catch((err) => {
+          console.error("❌ Failed to save updated password:", err);
+          res.status(500).json({ error: "Failed to save new password." });
+        });
   
-      console.log("✅ Password updated in DB for:", user.email);
-      res.json({ message: "Password changed successfully." });
     } catch (err) {
       console.error("❌ Error changing password:", err);
       res.status(500).json({ error: "Server error while changing password." });
