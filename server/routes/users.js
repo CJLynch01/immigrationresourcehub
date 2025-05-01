@@ -5,6 +5,10 @@ const { verifyToken, isAdmin } = require("../middleware/auth.js");
 const bcrypt = require("bcryptjs");
 
 
+router.get("/test", (req, res) => {
+    res.send("✅ /api/users is working");
+  });
+
 router.get("/clients", verifyToken, isAdmin, async (req, res) => {
   try {
     const clients = await User.find({ role: "client" }).select("_id name email");
@@ -58,5 +62,5 @@ router.put("/change-password", verifyToken, async (req, res) => {
     }
   });
 
-  
+
 module.exports = router;
