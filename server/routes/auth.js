@@ -11,15 +11,22 @@ const User = require("../models/user");
 router.post("/login", async (req, res) => {
   try {
     const { email, password, token } = req.body;
-    console.log("Login body:", { email, password, token});
-    const user = await User.findOne({ email });
+    console.log("📥 Login body:", { email, password, token });
 
-    if (!user) return res.status(400).json({ msg: "Invalid credentials." });
-      console.log("User not found for:", email);
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("❌ User not found for:", email);
+      return res.status(400).json({ msg: "Invalid credentials." });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
-      console.log("Password match:", isMatch);
-    //If MFA is enabled, verify the token
+    console.log("🔐 Password match:", isMatch);
+
+    if (!isMatch) {
+      console.log("❌ Incorrect password for:", email);
+      return res.status(400).json({ msg: "Invalid credentials." });
+    }
+
     if (user.mfa?.enabled) {
       if (!token) {
         return res.status(206).json({ mfaRequired: true, msg: "MFA code required." });
