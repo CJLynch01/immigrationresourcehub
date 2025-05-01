@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    console.log("🟢 SUBMIT HANDLER TRIGGERED");
     const token = getToken();
 
     const currentPassword = document.getElementById("currentPassword").value;
