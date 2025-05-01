@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = tokenInput ? tokenInput.value.trim() : undefined;
 
     try {
+      console.log("Sending login:", {email, password, token});
       const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
