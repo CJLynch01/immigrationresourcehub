@@ -1,4 +1,3 @@
-// scripts/messageStats.js
 import { getToken } from "./auth.js";
 
 export async function updateMessageStats() {

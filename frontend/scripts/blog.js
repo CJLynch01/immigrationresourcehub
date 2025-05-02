@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("https://immigrationresourcehub.onrender.com/api/posts");
       let posts = await res.json();
 
-      // Sort logic
       if (sortBy === "newest") {
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
       } else if (sortBy === "oldest") {
