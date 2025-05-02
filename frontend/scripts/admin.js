@@ -204,8 +204,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const token = getToken();
+      console.log("🟢 SUBMIT HANDLER TRIGGERED"); // Debug log
 
+      const token = getToken();
       const currentPassword = document.getElementById("currentPassword").value;
       const newPassword = document.getElementById("newPassword").value;
 
@@ -214,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({ currentPassword, newPassword })
         });
@@ -224,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
         msg.textContent = data.message || data.error;
         msg.style.color = res.ok ? "green" : "red";
       } catch (err) {
-        console.error("Error changing password:", err);
+        console.error("❌ Error changing password:", err);
       }
     });
   }
