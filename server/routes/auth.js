@@ -78,6 +78,7 @@ router.post("/register", async (req, res) => {
 
 //GET /api/auth/me — Get current user
 router.get("/me", verifyToken, async (req, res) => {
+  console.log("hit by user", req.user?.id);
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(404).json({ error: "User not found" });
