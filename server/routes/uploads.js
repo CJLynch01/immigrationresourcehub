@@ -88,7 +88,6 @@ router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (r
 
     const s3Url = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`;
 
-    //If delivery method is dashboard
     if (deliveryMethod === "dashboard") {
       const document = new Document({
         userId,

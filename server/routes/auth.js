@@ -11,11 +11,11 @@ const User = require("../models/user");
 router.post("/login", async (req, res) => {
   try {
     const { email, password, token } = req.body;
-    console.log("📥 Login body:", { email, password, token });
+    console.log("Login body:", { email, password, token });
 
     const user = await User.findOne({ email });
     if (!user) {
-      console.log("❌ User not found for:", email);
+      console.log("User not found for:", email);
       return res.status(400).json({ msg: "Invalid credentials." });
     }
 
@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
     console.log("🔐 Password match:", isMatch);
 
     if (!isMatch) {
-      console.log("❌ Incorrect password for:", email);
+      console.log("Incorrect password for:", email);
       return res.status(400).json({ msg: "Invalid credentials." });
     }
 

@@ -9,7 +9,6 @@ router.post("/", verifyToken, async (req, res) => {
     try {
       const { subject, body } = req.body;
   
-      //Set recipient
       let to = req.body.to;
       if (req.user.role === "client") {
         to = process.env.ADMIN_ID_MONGODB;
@@ -68,7 +67,6 @@ router.delete("/:id", verifyToken, async (req, res) => {
         return res.status(404).json({ error: "Message not found." });
       }
   
-      //Only allow delete if user is sender or recipient
       if (message.from.toString() !== req.user.id && message.to.toString() !== req.user.id) {
         return res.status(403).json({ error: "Not authorized to delete this message." });
       }

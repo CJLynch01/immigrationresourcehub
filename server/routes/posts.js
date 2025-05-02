@@ -26,11 +26,8 @@ router.post("/", isAdmin, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const posts = await Post.find().populate("author", "name");
-    console.log("✅ Posts fetched:", posts);
-    console.log("➡️ Type of posts:", typeof posts);
     res.json(posts);
   } catch (err) {
-    console.error("❌ Error in /api/posts:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
