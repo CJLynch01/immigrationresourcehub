@@ -30,7 +30,7 @@ router.put("/change-password", verifyToken, async (req, res) => {
   
       const user = await User.findById(req.user.id);
       if (!user) {
-        console.log("❌ User not found during password change");
+        console.log("❌ User not found");
         return res.status(404).json({ message: "User not found." });
       }
   
@@ -38,29 +38,23 @@ router.put("/change-password", verifyToken, async (req, res) => {
       console.log("🔐 Current password match:", isMatch);
   
       if (!isMatch) {
-        console.log("❌ Current password incorrect");
         return res.status(401).json({ message: "Current password is incorrect." });
       }
   
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(newPassword, salt);
+  
       user.password = hashed;
   
-      await user.save()
-        .then(() => {
-          console.log("✅ Password updated in MongoDB for:", user.email);
-          res.json({ message: "Password changed successfully." });
-        })
-        .catch((err) => {
-          console.error("❌ Failed to save updated password:", err);
-          res.status(500).json({ error: "Failed to save new password." });
-        });
+      await user.save(); // ✅ This must run and not be skipped
+      console.log("✅ Password updated in MongoDB for:", user.email);
   
+      res.json({ message: "Password changed successfully." });
     } catch (err) {
       console.error("❌ Error changing password:", err);
       res.status(500).json({ error: "Server error while changing password." });
     }
-  });
+});
 
 
 module.exports = router;
