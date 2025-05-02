@@ -201,9 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      console.log("🟢 SUBMIT HANDLER TRIGGERED"); // add for debug
-
       const token = getToken();
+
       const currentPassword = document.getElementById("currentPassword").value;
       const newPassword = document.getElementById("newPassword").value;
 
@@ -222,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         msg.textContent = data.message || data.error;
         msg.style.color = res.ok ? "green" : "red";
       } catch (err) {
-        console.error("❌ Error changing password:", err);
+        console.error("Error changing password:", err);
       }
     });
   }
