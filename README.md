@@ -1,69 +1,42 @@
-# Immigration Pathways Resource Hub
+# Immigration Pathways Consulting
 
-A full-stack web application built to support immigrants and their families with access to trustworthy resources, tools, and document handling — built as both a professional portfolio piece and a real solution for Immigration Pathways Consulting LLC.
+**Website:** [immigrationpathwaysconsulting.com](https:immigrationpathwaysconsulting.com)  
+**Repository:** [GitHub - CJLynch01](https://github.com/CJLynch01)  
+**Status:** 🟢 Live and in use  
+**Author:** Chris Lynch
+
+---
+
+## 📝 About
+
+**Immigration Pathways Consulting LLC** provides document preparation services and helpful information for individuals navigating U.S. immigration processes. This site allows users to securely register, communicate with an admin, upload documents, and access immigration resources.
+
+⚠️ **Disclaimer:** We do not offer legal advice or legal representation. For legal help, please consult a licensed attorney.
 
 ---
 
 ## 🌟 Project Purpose
 
-This application serves as a centralized hub for:
-- Educational blog posts and immigration resources
-- Interactive eligibility checklists and quizzes
-- Secure client document uploads
-- Appointment requests and scheduling
-- Admin-only content management and client tracking
+## 🚀 Features
 
-It reflects real-world use cases in legal document preparation, resource delivery, and client interaction — aligned with the mission of helping immigrants navigate their journeys with clarity and support.
-
----
-
-## 🧰 Tech Stack
-
-**Frontend:**
-- React (or EJS if SSR)
-- TailwindCSS
-- Axios
-
-**Backend:**
-- Node.js
-- Express.js
-- MongoDB (Mongoose)
-- JWT + bcrypt for authentication
-- Multer for file uploads
-- Nodemailer for email confirmations
-- Dotenv for environment configuration
-
-**Deployment:**
-- Render (Backend)
-- Vercel / Netlify (Frontend)
-- MongoDB Atlas (Database)
+- 🔒 **Secure Registration and Login** (JWT authentication)
+- 🧑‍💼 **Role-Based Access Control** (Admin vs. Client dashboards)
+- 📂 **File Upload to AWS S3** (Clients can upload documents, Admin can view)
+- 📥 **Admin Document Sharing** (Admins send documents directly to client dashboards)
+- 💬 **Internal Messaging System** (Admin ↔ Client communication)
+- 📝 **Blog System** (Admin can create Markdown blog posts, visible to users)
+- 📄 **Custom Pages** – About, Services, Contact, Legal (Terms of Use & Privacy Policy)
+- 🌓 **Dark Themed UI** with Gold Accent Styling
 
 ---
 
-## ✨ Key Features
+## ⚙️ Tech Stack
 
-### 🔐 User Roles
-- Client: Access their documents, appointments, and resources
-- Admin: Manage blog content, documents, appointments, and users
-
-### 📚 Knowledge Center
-- Admins can post/edit/delete blog articles (e.g., asylum, TPS, naturalization)
-- Public blog feed with categories and search
-
-### 📄 Document Uploads
-- Secure file upload area for clients
-- Admin dashboard to view and manage files
-
-### 🗓 Appointment Scheduling
-- Clients request appointments through a simple form
-- Admin panel to track and confirm sessions
-
-### 📊 Eligibility Tools
-- Interactive self-assessments: “Am I eligible for a green card?”
-- Generates results with suggestions and PDF output
-
-### 🌍 Language Support
-- English and Spanish versions
-- Language toggle on all pages
-
----
+| Layer        | Technology                          |
+|--------------|-------------------------------------|
+| Frontend     | HTML, CSS, JavaScript               |
+| Backend      | Node.js, Express.js                 |
+| Database     | MongoDB (Mongoose)                  |
+| File Storage | AWS S3 (AWS SDK v3)                 |
+| Auth         | JSON Web Tokens (JWT)               |
+| Hosting      | Render (API) + Hostinger (static site) |
