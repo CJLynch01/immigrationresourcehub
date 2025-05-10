@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await include("#include-nav", "components/nav.html", () => {
     showNavByAuth();
 
-    // ✅ Run hamburger logic only after nav is loaded
+    // Run hamburger logic only after nav is loaded
     const hamburger = document.getElementById("hamburger");
     const navbar = document.getElementById("navbar");
 
