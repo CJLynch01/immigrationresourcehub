@@ -1,5 +1,20 @@
 import { showNavByAuth } from "./auth.js";
 
+// Load Google Analytics script dynamically
+(function() {
+  const gaScript = document.createElement('script');
+  gaScript.async = true;
+  gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+  document.head.appendChild(gaScript);
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX'); // Replace with your real Measurement ID
+})();
+
 async function include(selector, url, callback) {
   const element = document.querySelector(selector);
   if (element) {
