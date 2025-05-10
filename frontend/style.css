@@ -1196,3 +1196,57 @@ button.active-page {
     border-bottom: 1px solid #333;
   }
 }
+
+/* Hamburger menu button */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    margin-left: auto;
+  }
+
+  .navbar {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    background-color: #222;
+    width: 100%;
+    padding: 1rem;
+    border-top: 1px solid #333;
+  }
+
+  .navbar.active {
+    display: flex;
+  }
+
+  .navbar a,
+  .navbar .admin-dropdown {
+    width: 100%;
+    padding: 0.75rem 0;
+    text-align: left;
+  }
+
+  .dropdown-content {
+    position: static;
+    box-shadow: none;
+    background-color: #2a2a2d;
+    border-radius: 0;
+  }
+
+  .admin-dropdown .dropbtn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    padding: 0.75rem 0;
+    color: var(--text-color);
+  }
+}

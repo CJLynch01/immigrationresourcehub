@@ -1,28 +1,39 @@
-<nav class="navbar">
-  <a href="index.html">Home</a>
-  <a href="services.html">Services</a>
-  <a href="about.html">About</a>
-  <a href="blog.html">Blog</a>
-  <a href="contact.html">Contact</a>
-  <a href="login.html" id="loginLink">Login</a>
-  <a href="register.html" id="registerLink">Register</a>
+<div class="site-header">
+  <div class="header-content">
+    <img src="/path-to-logo.png" class="site-logo" alt="Site Logo">
 
-  <div id="adminDropdown" class="admin-dropdown" style="display: none;">
-    <button class="dropbtn">Admin ▼</button>
-    <div class="dropdown-content">
-      <a href="admin.html">Admin Dashboard</a>
-      <a href="admin-posts.html">Admin Blog Posts</a>
-      <a href="messages.html">View Messages</a>
-    </div>
+    <!-- Hamburger Button -->
+    <button class="hamburger" id="hamburger">&#9776;</button>
   </div>
 
-  <div id="clientDropdown" class="admin-dropdown" style="display: none;">
-    <button class="dropbtn">Client ▼</button>
-    <div class="dropdown-content">
-      <a href="client.html">Client Dashboard</a>
-      <a href="messages.html">Messages</a>
-    </div>
-  </div>
+  <!-- Navbar (with dropdowns) -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html" id="loginLink">Login</a>
+    <a href="register.html" id="registerLink">Register</a>
 
-  <a href="#" id="logoutLink" style="display: none;">Logout</a>
-</nav>
+    <div id="adminDropdown" class="admin-dropdown" style="display: none;">
+      <button class="dropbtn">Admin ▼</button>
+      <div class="dropdown-content">
+        <a href="admin.html">Admin Dashboard</a>
+        <a href="admin-posts.html">Admin Blog Posts</a>
+        <a href="messages.html">View Messages</a>
+      </div>
+    </div>
+
+    <div id="clientDropdown" class="admin-dropdown" style="display: none;">
+      <button class="dropbtn">Client ▼</button>
+      <div class="dropdown-content">
+        <a href="client.html">Client Dashboard</a>
+        <a href="messages.html">Messages</a>
+      </div>
+    </div>
+
+    <a href="#" id="logoutLink" style="display: none;">Logout</a>
+  </nav>
+</div>
+
