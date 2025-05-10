@@ -12,7 +12,7 @@ import { showNavByAuth } from "./auth.js";
   window.gtag = gtag;
 
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX'); // Replace with your real Measurement ID
+  gtag('config', 'G-2Q8W6M3EFQ');
 })();
 
 async function include(selector, url, callback) {
