@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //Update a post (Admin only)
-router.put("/:id", isAdmin, async (req, res) => {
+router.put("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
     const updated = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updated);
@@ -54,7 +54,7 @@ router.put("/:id", isAdmin, async (req, res) => {
 });
 
 //Delete a post (Admin only)
-router.delete("/:id", isAdmin, async (req, res) => {
+router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
     await Post.findByIdAndDelete(req.params.id);
     res.json({ msg: "Post deleted" });
