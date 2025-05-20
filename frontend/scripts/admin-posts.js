@@ -39,6 +39,56 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const postForm = document.getElementById("post-form");
+
+  if (postForm) {
+    postForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("title").value.trim();
+      const category = document.getElementById("category").value.trim();
+      const content = document.getElementById("content").value.trim();
+      const postDate = document.getElementById("postDate").value;
+
+      const token = getToken();
+
+      if (!title || !category || !content || !postDate) {
+        alert("All fields are required.");
+        return;
+      }
+
+      try {
+        const res = await fetch("https://immigrationresourcehub.onrender.com/api/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            title,
+            category,
+            content,
+            date: postDate
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Post published successfully!");
+          postForm.reset();
+          loadPosts();
+        } else {
+          console.warn("Publish failed:", data);
+          alert(data.error || "Failed to publish post.");
+        }
+      } catch (err) {
+        console.error("Error publishing post:", err);
+        alert("An error occurred while publishing the post.");
+      }
+    });
+  }
+
   function renderPosts() {
     if (!postsContainer) return;
 
