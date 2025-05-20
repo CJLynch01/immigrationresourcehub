@@ -1,11 +1,11 @@
 const express = require("express");
 const Post = require("../models/post");
-const { isAdmin } = require("../middleware/auth");
+const { verifyToken, isAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
 //Create a new post (Admin only)
-router.post("/", isAdmin, async (req, res) => {
+router.post("/", verifyToken, isAdmin, async (req, res) => {
   try {
     const { title, content, category, date } = req.body;
     const post = new Post({
