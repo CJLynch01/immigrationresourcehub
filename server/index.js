@@ -9,7 +9,7 @@ const postRoutes = require("./routes/posts");
 const uploadRoutes = require("./routes/uploads");
 const messageRoutes = require("./routes/messages");
 const userRoutes = require("./routes/users");
-const quizRoutes = require("./routes/quizRoutes"); // ✅ NEW
+const quizRoutes = require("./routes/quizRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -29,7 +29,7 @@ app.use("/api/posts", postRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/quiz", quizRoutes); // ✅ NEW
+app.use("/api/quiz", quizRoutes);
 
 app.get("/", (req, res) => {
   res.send("Immigration Resource Hub API is running");

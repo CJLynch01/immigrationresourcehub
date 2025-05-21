@@ -1,18 +1,24 @@
 import { getToken } from "./auth.js";
 
+// Automatically detect if running locally or in production
+const API_BASE =
+  window.location.hostname === "immigrationpathwaysconsulting.com"
+    ? "https://immigrationresourcehub.onrender.com"
+    : "http://localhost:3000";
+
 document.addEventListener("DOMContentLoaded", () => {
   const quizBtn = document.getElementById("startQuizBtn");
   const quizContainer = document.getElementById("quizContainer");
 
   quizBtn.addEventListener("click", async () => {
     try {
-      const count = confirm("Take full 100-question quiz?") ? 100 : 10;
-      const res = await fetch(`/api/quiz/random?count=${count}`);
-      if (!res.ok) throw new Error("Failed to fetch quiz questions.");
+      const count = confirm("Take the full 100-question quiz?") ? 100 : 10;
+      const res = await fetch(`${API_BASE}/api/quiz/random?count=${count}`);
+      if (!res.ok) throw new Error("Could not load quiz questions.");
       const questions = await res.json();
       runQuiz(questions);
     } catch (err) {
-      quizContainer.innerHTML = `<p class="error">Could not load quiz: ${err.message}</p>`;
+      quizContainer.innerHTML = `<p class="error">Error: ${err.message}</p>`;
     }
   });
 
@@ -31,19 +37,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showQuestion(i) {
       const q = questions[i];
-      questionEl.innerHTML = `<strong>Q${i + 1}:</strong> ${q.question}`;
+      questionEl.innerHTML = `<strong>Question ${i + 1}:</strong> ${q.question}`;
       optionsEl.innerHTML = "";
       nextBtn.disabled = true;
 
       q.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
         btn.textContent = opt;
+        btn.style.display = "block";
+        btn.style.margin = "5px 0";
         btn.onclick = () => {
           if (idx === q.correctAnswer) correct++;
           nextBtn.disabled = false;
         };
-        btn.style.display = "block";
-        btn.style.margin = "5px 0";
         optionsEl.appendChild(btn);
       });
     }
@@ -53,14 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
         showQuestion(current++);
       } else {
         quizContainer.innerHTML = `<h3>You scored ${correct} out of ${questions.length}</h3>`;
-        saveScore(correct, questions.length);
+        submitScore(correct, questions.length);
       }
     };
 
     showQuestion(current++);
   }
 
-  async function saveScore(score, total) {
+  async function submitScore(score, total) {
     const token = getToken();
     if (!token) {
       alert("You must be logged in to save your score.");
@@ -68,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch("/api/quiz/submit", {
+      const res = await fetch(`${API_BASE}/api/quiz/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -83,9 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
       if (res.ok) {
-        alert("Score saved successfully!");
+        alert("Your score has been saved!");
       } else {
-        alert("Error saving score: " + data.error);
+        alert("Failed to save score: " + data.error);
       }
     } catch (err) {
       alert("Error submitting quiz result: " + err.message);
