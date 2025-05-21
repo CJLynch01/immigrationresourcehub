@@ -1267,7 +1267,7 @@ button.active-page {
   color: var(--text-color);
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); /* soft gold glow */
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
   max-width: 700px;
   width: 100%;
   text-align: center;
@@ -1302,7 +1302,7 @@ button.active-page {
 }
 
 .quiz-box button:hover:not(:disabled) {
-  background-color: #4a4a4d;
+  background-color: #e0c865;
   border-color: var(--accent-color);
 }
 
@@ -1312,7 +1312,7 @@ button.active-page {
 }
 
 .quiz-box h3 {
-  color: var(#e0c865);
+  color: var(black);
   margin-top: 2rem;
 }
 
