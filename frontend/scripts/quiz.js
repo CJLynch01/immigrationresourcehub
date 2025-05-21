@@ -5,23 +5,33 @@ const API_BASE =
     ? "https://immigrationresourcehub.onrender.com"
     : "http://localhost:3000";
 
-// Helper: run when includes are loaded (via custom event or fallback delay)
-function whenReady(callback) {
-  if (window.includesLoaded) return callback(); // flag from include.js if you have it
+document.addEventListener("DOMContentLoaded", () => {
+  waitForQuizButtons(initQuiz);
+});
 
-  // fallback: wait a short delay
-  setTimeout(callback, 300); // adjust if needed
+function waitForQuizButtons(callback) {
+  const maxWait = 3000;
+  const interval = 100;
+  let waited = 0;
+
+  const check = setInterval(() => {
+    const buttons = document.querySelectorAll(".quiz-start-btn");
+    const container = document.getElementById("quizContainer");
+
+    if (buttons.length && container) {
+      clearInterval(check);
+      callback(buttons, container);
+    }
+
+    waited += interval;
+    if (waited >= maxWait) {
+      clearInterval(check);
+      console.error("Quiz buttons not found in time.");
+    }
+  }, interval);
 }
 
-whenReady(() => {
-  const quizButtons = document.querySelectorAll(".quiz-start-btn");
-  const quizContainer = document.getElementById("quizContainer");
-
-  if (!quizButtons.length) {
-    console.error("Quiz buttons not found in DOM.");
-    return;
-  }
-
+function initQuiz(quizButtons, quizContainer) {
   quizButtons.forEach((btn) => {
     btn.addEventListener("click", async () => {
       const count = parseInt(btn.dataset.count);
@@ -34,112 +44,112 @@ whenReady(() => {
           throw new Error("No quiz questions returned.");
         }
 
-        runQuiz(questions);
+        runQuiz(questions, quizContainer);
       } catch (err) {
         quizContainer.innerHTML = `<p class="error">Error: ${err.message}</p>`;
       }
     });
   });
+}
 
-  function runQuiz(questions) {
-    quizContainer.innerHTML = "";
-    let current = 0, correct = 0;
+function runQuiz(questions, quizContainer) {
+  quizContainer.innerHTML = "";
+  let current = 0, correct = 0;
 
-    const progressEl = document.createElement("div");
-    progressEl.style.marginBottom = "10px";
+  const progressEl = document.createElement("div");
+  progressEl.style.marginBottom = "10px";
 
-    const questionEl = document.createElement("div");
-    const optionsEl = document.createElement("div");
-    const nextBtn = document.createElement("button");
-    nextBtn.textContent = "Next";
-    nextBtn.style.marginTop = "10px";
+  const questionEl = document.createElement("div");
+  const optionsEl = document.createElement("div");
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next";
+  nextBtn.style.marginTop = "10px";
+  nextBtn.disabled = true;
+
+  quizContainer.append(progressEl, questionEl, optionsEl, nextBtn);
+
+  function showQuestion(i) {
+    const q = questions[i];
+    progressEl.innerHTML = `<strong>Question ${i + 1} of ${questions.length}</strong>`;
+    questionEl.innerHTML = `<p class="quiz-question">${q.question}</p>`;
+    optionsEl.innerHTML = "";
     nextBtn.disabled = true;
 
-    quizContainer.append(progressEl, questionEl, optionsEl, nextBtn);
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.style.display = "block";
+      btn.style.margin = "5px 0";
+      btn.style.padding = "8px";
+      btn.style.borderRadius = "6px";
+      btn.style.border = "1px solid #444";
+      btn.style.backgroundColor = "#3a3a3d";
+      btn.style.color = "#f0f0f0";
+      btn.style.cursor = "pointer";
+      btn.style.width = "100%";
 
-    function showQuestion(i) {
-      const q = questions[i];
-      progressEl.innerHTML = `<strong>Question ${i + 1} of ${questions.length}</strong>`;
-      questionEl.innerHTML = `<p class="quiz-question">${q.question}</p>`;
-      optionsEl.innerHTML = "";
-      nextBtn.disabled = true;
+      btn.onclick = () => {
+        Array.from(optionsEl.children).forEach((button, index) => {
+          button.disabled = true;
+          if (index === q.correctAnswer) {
+            button.style.backgroundColor = "#14532d";
+            button.style.borderColor = "#22c55e";
+            button.style.color = "#f8f8f8";
+          } else if (button === btn) {
+            button.style.backgroundColor = "#7f1d1d";
+            button.style.borderColor = "#ef4444";
+            button.style.color = "#f8f8f8";
+          }
+        });
 
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.style.display = "block";
-        btn.style.margin = "5px 0";
-        btn.style.padding = "8px";
-        btn.style.borderRadius = "6px";
-        btn.style.border = "1px solid #444";
-        btn.style.backgroundColor = "#3a3a3d";
-        btn.style.color = "#f0f0f0";
-        btn.style.cursor = "pointer";
-        btn.style.width = "100%";
+        if (idx === q.correctAnswer) correct++;
+        nextBtn.disabled = false;
+      };
 
-        btn.onclick = () => {
-          Array.from(optionsEl.children).forEach((button, index) => {
-            button.disabled = true;
-            if (index === q.correctAnswer) {
-              button.style.backgroundColor = "#14532d";
-              button.style.borderColor = "#22c55e";
-              button.style.color = "#f8f8f8";
-            } else if (button === btn) {
-              button.style.backgroundColor = "#7f1d1d";
-              button.style.borderColor = "#ef4444";
-              button.style.color = "#f8f8f8";
-            }
-          });
-
-          if (idx === q.correctAnswer) correct++;
-          nextBtn.disabled = false;
-        };
-
-        optionsEl.appendChild(btn);
-      });
-    }
-
-    nextBtn.onclick = () => {
-      if (current < questions.length) {
-        showQuestion(current++);
-      } else {
-        quizContainer.innerHTML = `<h3>You scored ${correct} out of ${questions.length}</h3>`;
-        submitScore(correct, questions.length);
-      }
-    };
-
-    showQuestion(current++);
+      optionsEl.appendChild(btn);
+    });
   }
 
-  async function submitScore(score, total) {
-    const token = getToken();
-    if (!token) {
-      alert("You must be logged in to save your score.");
-      return;
+  nextBtn.onclick = () => {
+    if (current < questions.length) {
+      showQuestion(current++);
+    } else {
+      quizContainer.innerHTML = `<h3>You scored ${correct} out of ${questions.length}</h3>`;
+      submitScore(correct, questions.length);
     }
+  };
 
-    try {
-      const res = await fetch(`${API_BASE}/api/quiz/submit`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          score,
-          totalQuestions: total,
-          correctAnswers: score,
-        }),
-      });
+  showQuestion(current++);
+}
 
-      const data = await res.json();
-      if (res.ok) {
-        alert("Your score has been saved!");
-      } else {
-        alert("Failed to save score: " + data.error);
-      }
-    } catch (err) {
-      alert("Error submitting quiz result: " + err.message);
-    }
+async function submitScore(score, total) {
+  const token = getToken();
+  if (!token) {
+    alert("You must be logged in to save your score.");
+    return;
   }
-});
+
+  try {
+    const res = await fetch(`${API_BASE}/api/quiz/submit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        score,
+        totalQuestions: total,
+        correctAnswers: score,
+      }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("Your score has been saved!");
+    } else {
+      alert("Failed to save score: " + data.error);
+    }
+  } catch (err) {
+    alert("Error submitting quiz result: " + err.message);
+  }
+}
