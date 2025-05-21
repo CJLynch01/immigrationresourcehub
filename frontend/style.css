@@ -1321,3 +1321,26 @@ button.active-page {
   margin-bottom: 1rem;
   font-size: 1.1rem;
 }
+
+.quiz-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.quiz-start-btn {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.quiz-start-btn:hover {
+  background-color: #e0c865;
+}

@@ -1,30 +1,32 @@
 import { getToken } from "./auth.js";
 
-// Detect local vs. production
+// Auto-detect environment
 const API_BASE =
   window.location.hostname === "immigrationpathwaysconsulting.com"
     ? "https://immigrationresourcehub.onrender.com"
     : "http://localhost:3000";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const quizBtn = document.getElementById("startQuizBtn");
+  const quizButtons = document.querySelectorAll(".quiz-start-btn");
   const quizContainer = document.getElementById("quizContainer");
 
-  quizBtn.addEventListener("click", async () => {
-    try {
-      const count = confirm("Take the full 100-question quiz?") ? 100 : 10;
-      const res = await fetch(`${API_BASE}/api/quiz/random?count=${count}`);
-      if (!res.ok) throw new Error("Could not load quiz questions.");
-      const questions = await res.json();
+  quizButtons.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const count = parseInt(btn.dataset.count);
+      try {
+        const res = await fetch(`${API_BASE}/api/quiz/random?count=${count}`);
+        if (!res.ok) throw new Error("Could not load quiz questions.");
+        const questions = await res.json();
 
-      if (!Array.isArray(questions) || questions.length === 0) {
-        throw new Error("No quiz questions returned.");
+        if (!Array.isArray(questions) || questions.length === 0) {
+          throw new Error("No quiz questions returned.");
+        }
+
+        runQuiz(questions);
+      } catch (err) {
+        quizContainer.innerHTML = `<p class="error">Error: ${err.message}</p>`;
       }
-
-      runQuiz(questions);
-    } catch (err) {
-      quizContainer.innerHTML = `<p class="error">Error: ${err.message}</p>`;
-    }
+    });
   });
 
   function runQuiz(questions) {
@@ -33,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const progressEl = document.createElement("div");
     progressEl.style.marginBottom = "10px";
+
     const questionEl = document.createElement("div");
     const optionsEl = document.createElement("div");
     const nextBtn = document.createElement("button");
@@ -45,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showQuestion(i) {
       const q = questions[i];
       progressEl.innerHTML = `<strong>Question ${i + 1} of ${questions.length}</strong>`;
-      questionEl.innerHTML = `<strong>${q.question}</strong>`;
+      questionEl.innerHTML = `<p class="quiz-question">${q.question}</p>`;
       optionsEl.innerHTML = "";
       nextBtn.disabled = true;
 
@@ -56,22 +59,23 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.style.margin = "5px 0";
         btn.style.padding = "8px";
         btn.style.borderRadius = "6px";
-        btn.style.border = "1px solid #ccc";
+        btn.style.border = "1px solid #444";
+        btn.style.backgroundColor = "#3a3a3d";
+        btn.style.color = "#f0f0f0";
         btn.style.cursor = "pointer";
-        btn.style.backgroundColor = "#fff";
+        btn.style.width = "100%";
 
         btn.onclick = () => {
-          // Highlight correct and incorrect
           Array.from(optionsEl.children).forEach((button, index) => {
             button.disabled = true;
             if (index === q.correctAnswer) {
-              button.style.backgroundColor = "#d4edda"; // green
-              button.style.borderColor = "#28a745";
-              button.style.color = "#155724";
+              button.style.backgroundColor = "#14532d"; // green
+              button.style.borderColor = "#22c55e";
+              button.style.color = "#f8f8f8";
             } else if (button === btn) {
-              button.style.backgroundColor = "#f8d7da"; // red
-              button.style.borderColor = "#dc3545";
-              button.style.color = "#721c24";
+              button.style.backgroundColor = "#7f1d1d"; // red
+              button.style.borderColor = "#ef4444";
+              button.style.color = "#f8f8f8";
             }
           });
 
