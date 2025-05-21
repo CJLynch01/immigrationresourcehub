@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
+
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 // Define question schema
 const questionSchema = new mongoose.Schema({
@@ -12,10 +13,13 @@ const questionSchema = new mongoose.Schema({
 });
 
 const Question = mongoose.model('Question', questionSchema);
-const MONGO_URI = process.env.MONGO_URI
+
+const MONGO_URI = process.env.MONGO_URI;
 
 async function seedDatabase() {
   try {
+    if (!MONGO_URI) throw new Error("MONGO_URI is undefined. Check your .env file.");
+
     await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -23,15 +27,12 @@ async function seedDatabase() {
 
     console.log('Connected to MongoDB.');
 
-    // Read JSON data
     const dataPath = path.join(__dirname, '../data/final_citizenship_quiz_100.json');
     const questions = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 
-    // Clear existing questions
     await Question.deleteMany({});
     console.log('Existing questions removed.');
 
-    // Insert new questions
     await Question.insertMany(questions);
     console.log('Quiz questions inserted successfully.');
 
