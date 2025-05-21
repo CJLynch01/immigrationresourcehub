@@ -1,6 +1,5 @@
 import { getToken } from "./auth.js";
 
-// Automatically detect if running locally or in production
 const API_BASE =
   window.location.hostname === "immigrationpathwaysconsulting.com"
     ? "https://immigrationresourcehub.onrender.com"
