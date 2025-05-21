@@ -151,7 +151,7 @@
       "The police"
     ],
     "correctAnswer": 0,
-    "explanation": "The system of checks and balances ensures no branch becomes too powerful."
+    "explanation": "The system of checks and balances stops one branch of the federal government from becoming too powerful. The United States government is divided into three separate branches. They are the president, Congress, and the courts. Here is an example of how this works. Congress makes laws. But the president can veto a law. That means the president can refuse to sign it. The law is then sent back to Congress. This is one way the president limits, or checks, the power of Congress."
   },
   {
     "question": "Who is in charge of the executive branch?",
@@ -162,7 +162,7 @@
       "The Senate"
     ],
     "correctAnswer": 0,
-    "explanation": "The President leads the executive branch of the U.S. government."
+    "explanation": "The president is the leader of the executive branch. He or she signs and enforces laws. The president is the commander in chief of the military. The president represents the United States to other countries. He or she signs treaties with other countries. The president is in charge of the executive branch."
   },
   {
     "question": "Who makes federal laws?",
@@ -319,136 +319,136 @@
     "explanation": "James Madison, Alexander Hamilton, and John Jay wrote the Federalist Papers. The U.S. Constitution was written at the Constitutional Convention in 1787. People at the Constitutional Convention decided how the government should work. Then James Madison, Alexander Hamilton, and John Jay wrote the Federalist Papers. The Federalist Papers explained the new government. They said that the new United States needed the Constitution. Newspapers all over the United States published the Federalist Papers."
   },
   {
-    "question": "Sample Question 30?",
+    "question": "If the President can no longer serve, who becomes President?",
     "options": [
-      "Option A30",
-      "Option B30",
-      "Option C30",
-      "Option D30"
+      "The Secretary of State",
+      "The President Pro Tempore",
+      "The Speaker of the House",
+      "The Vice President"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 30."
+    "correctAnswer": 3,
+    "explanation": "If the president can no longer serve, the vice president becomes the president. This has occurred nine times in American history. For example, on November 22, 1963, President John F. Kennedy was shot in Dallas, Texas. Ninety-nine minutes after President Kennedy's death, Vice President Lyndon Johnson was sworn in as president."
   },
   {
-    "question": "Sample Question 31?",
+    "question": "Before he was President, Eisenhower was a general. What war was he in?",
     "options": [
-      "Option A31",
-      "Option B31",
-      "Option C31",
-      "Option D31"
+      "Vietnam War",
+      "World War II",
+      "Civil War",
+      "Spanish-American War"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 31."
+    "correctAnswer": 1,
+    "explanation": "President Dwight D. Eisenhower was a general in World War II. He led the United States Army and its allies in western Europe during World War II. When he came home from World War II, he was a famous war hero. He became president in 1953."
   },
   {
-    "question": "Sample Question 32?",
+    "question": "What is the political party of the President now?",
     "options": [
-      "Option A32",
-      "Option B32",
-      "Option C32",
-      "Option D32"
+      "Green Party",
+      "Democratic Party",
+      "Republican Party",
+      "Independent Party"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 32."
+    "correctAnswer": 2,
+    "explanation": "Today, there are two major political parties, the Democrats and the Republicans. The political party of the president might change in each election."
   },
   {
-    "question": "Sample Question 33?",
+    "question": "What territory did the United States buy from France in 1803?",
     "options": [
-      "Option A33",
-      "Option B33",
-      "Option C33",
-      "Option D33"
+      "Hawaii",
+      "Quebec",
+      "The Louisiana Territory",
+      "Alaska"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 33."
+    "correctAnswer": 2,
+    "explanation": "The United States bought the Louisiana Territory from France in 1803. After the United States gained independence, many Americans believed that the country should expand. In 1803, President Thomas Jefferson bought the Louisiana Territory for $15 million. This land doubled the size of the United States. American Indians and European settlers lived on this land. After the United States bought the Louisiana Territory, many more settlers moved west."
   },
   {
-    "question": "Sample Question 34?",
+    "question": "If both the President and the Vice President can no longer serve, who becomes President?",
     "options": [
-      "Option A34",
-      "Option B34",
-      "Option C34",
-      "Option D34"
+      "The Secretary of State",
+      "The Speaker of the House",
+      "The President Pro Tempore",
+      "The Secretary of the Treasury"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 34."
+    "correctAnswer": 1,
+    "explanation": "The Speaker of the House is the leader of the House of Representatives. If both the president and the vice president can no longer serve, the Speaker of the House becomes the president of the United States. This has never occurred in American history."
   },
   {
-    "question": "Sample Question 35?",
+    "question": "Under our Constitution, some powers belong to the federal government. What is one power of the federal government?",
     "options": [
-      "Option A35",
-      "Option B35",
-      "Option C35",
-      "Option D35"
+      "To issue driver's licenses",
+      "To declare war",
+      "To provide protection (police)",
+      "To provide schooling and education"
     ],
     "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 35."
+    "explanation": "The powers of the United States government are listed in the Constitution. The powers of the federal government include the power to print money, create an army, and make treaties. Another is the power to declare war. The president can ask Congress for a declaration of war. In 1941, after Japan attacked Pearl Harbor, President Franklin D. Roosevelt asked Congress to declare war. Congress voted to declare war and the United States entered World War II."
   },
   {
-    "question": "Sample Question 36?",
+    "question": "What is one thing Benjamin Franklin is famous for?",
     "options": [
-      "Option A36",
-      "Option B36",
-      "Option C36",
-      "Option D36"
+      "Youngest member of the Constiutional Convention",
+      "Inventor of the airplane",
+      "U.S. Diplomat",
+      "Third President of the United States"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 36."
+    "correctAnswer": 2,
+    "explanation": "Benjamin Franklin was a famous American. He lived from 1706 to 1790. Benjamin Franklin was an inventor. He invented many things that we use today. He invented bifocal eyeglasses. He invented the Franklin stove. Franklin was the writer of Poor Richard's Almanac. It was a book with information about the weather and other topics. Franklin became the first postmaster general of the United States in 1775. He created the postal, or mail, system in the United States. Also, he started the first free libraries. Later, he was a U.S. diplomat. He was the oldest member at the Constitutional Convention."
   },
   {
-    "question": "Sample Question 37?",
+    "question": "Name two national U.S. holidays?",
     "options": [
-      "Option A37",
-      "Option B37",
-      "Option C37",
-      "Option D37"
+      "April Fool's Day and Labor Day",
+      "Labor Day and Thanksgiving",
+      "Valentine's Day and President's Day",
+      "Citizenship Day and Columbus Day"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 37."
+    "correctAnswer": 1,
+    "explanation": "National holidays honor special events and important people in American history. Some holidays honor individuals. On Martin Luther King, Jr. Day, we honor a man who worked for equality for all Americans. Columbus Day commemorates the day Christopher Columbus arrived in the Americas. Some holidays honor groups of people. Veterans Day and Memorial Day honor people who served in the military and who died for their country. On Labor Day, we celebrate American workers. On Presidents' Day, we honor the work of American presidents. On Thanksgiving and Independence Day we remember important events in U.S. history. Christmas and New Year's Day are national holidays in the winter season. There are also other holidays during this time."
   },
   {
-    "question": "Sample Question 38?",
+    "question": "Name one problem that led to the Civil War",
     "options": [
-      "Option A38",
-      "Option B38",
-      "Option C38",
-      "Option D38"
+      "Sugar",
+      "Westward Expansion",
+      "Slavery",
+      "Oil"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 38."
+    "correctAnswer": 2,
+    "explanation": "Disagreements over slavery and other issues led to the Civil War. Some people believed slavery should be illegal. Other people did not. When the Civil War started in 1861, enslaved African Americans worked on farms and in cities. Many people in the South believed their economy and daily life needed slaves. Many people in the North wanted to stop slavery. The South fought the Civil War because they wanted states' rights to keep slavery legal. The North won the war in 1865. Slavery became illegal in all states. Slavery, economic reasons, and states' rights were problems that led to the Civil War."
   },
   {
-    "question": "Sample Question 39?",
+    "question": "What do we show loyalty to when we say the Pledge of Allegiance?",
     "options": [
-      "Option A39",
-      "Option B39",
-      "Option C39",
-      "Option D39"
+      "The state where you live",
+      "The United States",
+      "Congress",
+      "The President"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 39."
+    "correctAnswer": 1,
+    "explanation": "The Pledge of Allegiance is a promise to be loyal to the United States: 'I pledge allegiance to the Flag of the United States of America, and to the Republic for which it stands, one Nation under God, indivisible, with liberty and justice for all.' We show loyalty to the United States when we say the Pledge of Allegiance."
   },
   {
-    "question": "Sample Question 40?",
+    "question": "What did Martin Luther King, Jr. do?",
     "options": [
-      "Option A40",
-      "Option B40",
-      "Option C40",
-      "Option D40"
+      "Fought for women's suffrage",
+      "Fought for civil rights",
+      "Became a U.S. Senator",
+      "Ran for the President of the United States"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 40."
+    "correctAnswer": 1,
+    "explanation": "Martin Luther King, Jr., fought for civil rights and worked for equality for all Americans. In some places, it was difficult for African Americans and other groups to vote in elections. One citizen who is famous for helping the government change is Martin Luther King, Jr. He worked for equality for all Americans. He led thousands of men and women in nonviolent protests. Martin Luther King, Jr. believed that nonviolent protest was more powerful than violence. The government passed the Civil Rights Act of 1964 and the Voting Rights Act of 1965. These laws ended segregation and protected voting rights. On April 4, 1968, Martin Luther King, Jr. was killed. Each year in January, we celebrate Martin Luther King, Jr. Day."
   },
   {
-    "question": "Sample Question 41?",
+    "question": "Who signs bills to become laws?",
     "options": [
-      "Option A41",
-      "Option B41",
-      "Option C41",
-      "Option D41"
+      "The Secretary of State",
+      "The Vice President",
+      "The President",
+      "The Chief Justice of the Supreme Court"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 41."
+    "correctAnswer": 2,
+    "explanation": "The president signs bills to become laws. A bill is a proposed law. Members of Congress write bills to address issues that are important to the American people. They vote on bills. If Congress accepts a bill, they send it to the president to be signed. If the president agrees with the bill, the president signs it. Then the bill becomes a law."
   },
   {
     "question": "Sample Question 42?",
