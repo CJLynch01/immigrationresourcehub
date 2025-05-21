@@ -5,10 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const quizContainer = document.getElementById("quizContainer");
 
   quizBtn.addEventListener("click", async () => {
-    const count = confirm("Take full 100-question quiz?") ? 100 : 10;
-    const res = await fetch(`/api/quiz/random?count=${count}`);
-    const questions = await res.json();
-    runQuiz(questions);
+    try {
+      const count = confirm("Take full 100-question quiz?") ? 100 : 10;
+      const res = await fetch(`/api/quiz/random?count=${count}`);
+      if (!res.ok) throw new Error("Failed to fetch quiz questions.");
+      const questions = await res.json();
+      runQuiz(questions);
+    } catch (err) {
+      quizContainer.innerHTML = `<p class="error">Could not load quiz: ${err.message}</p>`;
+    }
   });
 
   function runQuiz(questions) {
@@ -20,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.createElement("button");
     nextBtn.textContent = "Next";
     nextBtn.style.marginTop = "10px";
+    nextBtn.disabled = true;
 
     quizContainer.append(questionEl, optionsEl, nextBtn);
 
@@ -27,13 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const q = questions[i];
       questionEl.innerHTML = `<strong>Q${i + 1}:</strong> ${q.question}`;
       optionsEl.innerHTML = "";
+      nextBtn.disabled = true;
+
       q.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
         btn.textContent = opt;
         btn.onclick = () => {
           if (idx === q.correctAnswer) correct++;
-          nextBtn.click();
+          nextBtn.disabled = false;
         };
+        btn.style.display = "block";
+        btn.style.margin = "5px 0";
         optionsEl.appendChild(btn);
       });
     }
@@ -52,24 +62,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function saveScore(score, total) {
     const token = getToken();
-    const res = await fetch("/api/quiz/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        score,
-        totalQuestions: total,
-        correctAnswers: score,
-      }),
-    });
+    if (!token) {
+      alert("You must be logged in to save your score.");
+      return;
+    }
 
-    const data = await res.json();
-    if (res.ok) {
-      alert("Score saved successfully!");
-    } else {
-      alert("Error saving score: " + data.error);
+    try {
+      const res = await fetch("/api/quiz/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          score,
+          totalQuestions: total,
+          correctAnswers: score,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Score saved successfully!");
+      } else {
+        alert("Error saving score: " + data.error);
+      }
+    } catch (err) {
+      alert("Error submitting quiz result: " + err.message);
     }
   }
 });
