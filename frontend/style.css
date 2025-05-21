@@ -1312,7 +1312,7 @@ button.active-page {
 }
 
 .quiz-box h3 {
-  color: var(--bg-color);
+  color: var(black);
   margin-top: 2rem;
 }
 
