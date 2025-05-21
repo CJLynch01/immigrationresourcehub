@@ -1291,7 +1291,7 @@ button.active-page {
 
 .quiz-box button {
   background-color: #3a3a3d;
-  color: var(--text-color);
+  color: var(black);
   padding: 10px;
   margin: 6px 0;
   border: 1px solid #444;
