@@ -12,9 +12,10 @@ router.get('/random', async (req, res) => {
     if (count <= 0 || count > 100) count = 10;
 
     if (count === 100) {
-      const questions = await Question.find().sort({ _id: 1 });
-      return res.json(questions);
+        const questions = await Question.aggregate([{ $sample: { size: 100 } }]);
+        return res.json(questions);
     }
+
 
     const questions = await Question.aggregate([{ $sample: { size: count } }]);
     res.json(questions);
