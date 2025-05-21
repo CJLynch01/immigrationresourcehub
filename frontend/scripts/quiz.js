@@ -1,14 +1,26 @@
 import { getToken } from "./auth.js";
 
-// Auto-detect environment
 const API_BASE =
   window.location.hostname === "immigrationpathwaysconsulting.com"
     ? "https://immigrationresourcehub.onrender.com"
     : "http://localhost:3000";
 
-document.addEventListener("DOMContentLoaded", () => {
+// Helper: run when includes are loaded (via custom event or fallback delay)
+function whenReady(callback) {
+  if (window.includesLoaded) return callback(); // flag from include.js if you have it
+
+  // fallback: wait a short delay
+  setTimeout(callback, 300); // adjust if needed
+}
+
+whenReady(() => {
   const quizButtons = document.querySelectorAll(".quiz-start-btn");
   const quizContainer = document.getElementById("quizContainer");
+
+  if (!quizButtons.length) {
+    console.error("Quiz buttons not found in DOM.");
+    return;
+  }
 
   quizButtons.forEach((btn) => {
     btn.addEventListener("click", async () => {
@@ -69,11 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
           Array.from(optionsEl.children).forEach((button, index) => {
             button.disabled = true;
             if (index === q.correctAnswer) {
-              button.style.backgroundColor = "#14532d"; // green
+              button.style.backgroundColor = "#14532d";
               button.style.borderColor = "#22c55e";
               button.style.color = "#f8f8f8";
             } else if (button === btn) {
-              button.style.backgroundColor = "#7f1d1d"; // red
+              button.style.backgroundColor = "#7f1d1d";
               button.style.borderColor = "#ef4444";
               button.style.color = "#f8f8f8";
             }
