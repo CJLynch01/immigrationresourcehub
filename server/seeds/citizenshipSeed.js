@@ -1,11 +1,9 @@
-
-// citizenshipSeed.js
-
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 
-// Define your question schema
+// Define question schema
 const questionSchema = new mongoose.Schema({
   question: String,
   options: [String],
@@ -14,9 +12,7 @@ const questionSchema = new mongoose.Schema({
 });
 
 const Question = mongoose.model('Question', questionSchema);
-
-// MongoDB connection URI (replace with your own)
-const MONGODB_URI = 'mongodb://localhost:27017/immigrationApp'; // or your Atlas URI
+const MONGODB_URI = process.env.MONGODB_URI
 
 async function seedDatabase() {
   try {
