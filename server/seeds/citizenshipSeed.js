@@ -12,11 +12,11 @@ const questionSchema = new mongoose.Schema({
 });
 
 const Question = mongoose.model('Question', questionSchema);
-const MONGODB_URI = process.env.MONGODB_URI
+const MONGO_URI = process.env.MONGO_URI
 
 async function seedDatabase() {
   try {
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
