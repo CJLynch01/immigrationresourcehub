@@ -41,7 +41,7 @@
       "A branch of government"
     ],
     "correctAnswer": 0,
-    "explanation": "An amendment is a change or addition to the Constitution."
+    "explanation": "An amendment is a change to the Constitution. The country grows and changes. Amendments to the Constitution allow the government to grow and change, too. For example, the Nineteenth Amendment gave women the right to vote. Many people, like Susan B. Anthony, fought for this right for many years. Today, women can vote because of this amendment."
   },
   {
     "question": "What do we call the first ten amendments to the Constitution?",
@@ -52,7 +52,7 @@
       "The Federalist Papers"
     ],
     "correctAnswer": 0,
-    "explanation": "The first ten amendments to the Constitution are called the Bill of Rights."
+    "explanation": "The first ten amendments to the Constitution are called the Bill of Rights. Members of the Constitutional Convention wrote the Constitution in 1787. The original Constitution did not protect individual rights. Soon after, in 1791, Congress added the first ten amendments to the Constitution. The first amendment protects the freedoms of speech, religion, and assembly. It also protects the freedom of the press, and freedom to petition the government. Other amendments in the Bill of Rights protect the rights to a speedy and public trial, the right to bear arms, and the right to fair police searches."
   },
   {
     "question": "What is one right or freedom from the First Amendment?",
@@ -140,7 +140,7 @@
       "The Military"
     ],
     "correctAnswer": 0,
-    "explanation": "Congress is one of the three branches of the U.S. government (legislative)."
+    "explanation": "There are three branches of the federal government: Congress, the president, and the courts. Each branch has a special role. The Congress is called the legislative branch. Congress writes, debates, and makes laws. The president leads the executive branch. The president enforces the laws. The president also represents the United States to other countries. The courts are called the judicial branch. The courts explain laws. They decide if laws follow the Constitution. They also decide if people have broken laws."
   },
   {
     "question": "What stops one branch of government from becoming too powerful?",
@@ -198,125 +198,125 @@
     "explanation": "There are 100 U.S. Senators, two from each state."
   },
   {
-    "question": "Sample Question 19?",
+    "question": "When is the last day you can send in federal income tax forms?",
     "options": [
-      "Option A19",
-      "Option B19",
-      "Option C19",
-      "Option D19"
+      "May 15",
+      "July 4",
+      "April 15",
+      "March 15"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 19."
+    "correctAnswer": 2,
+    "explanation": "April 15 is the last day you can send in federal income tax forms. The Constitution gives the federal government the power to collect taxes. Taxes pay for things like national defense, educational programs, and Social Security. April 15 is the last day we can send our federal income tax forms. We send them to the Internal Revenue Service, or IRS. The IRS is the federal agency that collects taxes."
   },
   {
-    "question": "Sample Question 20?",
+    "question": "What did Susan B. Anthony do?",
     "options": [
-      "Option A20",
-      "Option B20",
-      "Option C20",
-      "Option D20"
+      "Founded the Red Cross",
+      "Fought for women's rights",
+      "The first woman elected to the House of Representatives",
+      "Made the first flag of the United States"
     ],
     "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 20."
+    "explanation": "Susan B. Anthony was an important leader in the women's rights movement. She fought for women's rights and for civil rights. She gave speeches to support women's rights, especially the right to vote. In 1872, Susan B. Anthony tried to vote and had to go to jail. Susan B. Anthony died in 1906. Women still did not have the right to vote all over the United States. Other people fought for women's rights. In 1920, the Nineteenth Amendment was added to the Constitution. It gave women the right to vote. Susan B. Anthony is an important leader in American history."
   },
   {
-    "question": "Sample Question 21?",
+    "question": "The idea of self-government is in the first three words of the Constitution. What are these words?",
     "options": [
-      "Option A21",
-      "Option B21",
-      "Option C21",
-      "Option D21"
+      "Congress shall make",
+      "We the People",
+      "We the British",
+      "We the Colonists"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 21."
+    "correctAnswer": 1,
+    "explanation": "The first three words of the Constitution are 'We the People.' The document says that the people of the United States choose to create the government. 'We the People' also explains that people elect representatives to make laws. This is a form of self-government."
   },
   {
-    "question": "Sample Question 22?",
+    "question": "The House of Representatives has how many voting members?",
     "options": [
-      "Option A22",
-      "Option B22",
-      "Option C22",
-      "Option D22"
+      "Two hundred (200)",
+      "Four hundred thirty-five (435)",
+      "Four hundred forty-one (441)",
+      "One hundred (100)"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 22."
+    "correctAnswer": 1,
+    "explanation": "There are 435 voting members in the House of Representatives. Each state is divided into districts. Each district elects one representative. California is the state with the most people. It has more than 50 representatives. States with fewer people, like Alaska, have only one representative."
   },
   {
-    "question": "Sample Question 23?",
+    "question": "What is the name of the Vice President of the United States?",
     "options": [
-      "Option A23",
-      "Option B23",
-      "Option C23",
-      "Option D23"
+      "Dick Cheney",
+      "Donald J. Trump",
+      "JD Vance",
+      "Joe Biden"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 23."
+    "correctAnswer": 2,
+    "explanation": "The vice president advises the president. If the president can no longer serve, the vice president becomes the president. The vice president is also the president of the U.S. Senate. He or she votes in the Senate when there is a tie."
   },
   {
-    "question": "Sample Question 24?",
+    "question": "What is the name of the President of the United States now?",
     "options": [
-      "Option A24",
-      "Option B24",
-      "Option C24",
-      "Option D24"
+      "Kamala Harris",
+      "Donald J. Trump",
+      "George W. Bush",
+      "Barack Obama"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 24."
+    "correctAnswer": 1,
+    "explanation": "The president of the United States is the leader of the executive branch. The president enforces the laws of the United States."
   },
   {
-    "question": "Sample Question 25?",
+    "question": "In what month do we vote for President?",
     "options": [
-      "Option A25",
-      "Option B25",
-      "Option C25",
-      "Option D25"
+      "January",
+      "October",
+      "February",
+      "November"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 25."
+    "correctAnswer": 3,
+    "explanation": "We vote for the president in November. In 1845, Congress decided that November was the perfect month to have elections. At that time, most American citizens lived on farms. By November, farmers had finished harvesting their crops. They could leave the farm to vote. Also, November was not as cold as the winter months. Bad weather would not stop people from voting."
   },
   {
-    "question": "Sample Question 26?",
+    "question": "What group of people was taken to America and sold as slaves?",
     "options": [
-      "Option A26",
-      "Option B26",
-      "Option C26",
-      "Option D26"
+      "Dutch",
+      "English",
+      "Africans",
+      "Canadians"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 26."
+    "correctAnswer": 2,
+    "explanation": "Millions of Africans were taken to America and sold as slaves. For hundreds of years, slave owners treated slaves as property. Slaves had no rights. People in the United States did not agree about slavery. This was a major cause of the Civil War. In 1865, after the Civil War was over, slavery was illegal. Enslaved people became free citizens."
   },
   {
-    "question": "Sample Question 27?",
+    "question": "What major event happened on September 11, 2001, in the United States?",
     "options": [
-      "Option A27",
-      "Option B27",
-      "Option C27",
-      "Option D27"
+      "Hurrican Andrew struck the United States",
+      "An accident at Three Mile Island Nuclear Plant occurred",
+      "Terrorists attacked the United States",
+      "The Japanese attacked Pearl Harbor"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 27."
+    "correctAnswer": 2,
+    "explanation": "On September 11, 2001, terrorists attacked the United States. They hijacked four American passenger airplanes. They used the planes as weapons. Two planes hit the World Trade Center in New York City. One plane hit the Pentagon, a government building in Virginia. The last plane crashed in a field in Pennsylvania. The attacks killed almost 3,000 people. After the terrorist attacks on September 11, 2001, the United States began the war on terrorism."
   },
   {
-    "question": "Sample Question 28?",
+    "question": "We elect a U.S. Representative for how many years?",
     "options": [
-      "Option A28",
-      "Option B28",
-      "Option C28",
-      "Option D28"
+      "Six (6)",
+      "Four (4)",
+      "Two (2)",
+      "Eight (8)"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 28."
+    "correctAnswer": 2,
+    "explanation": "We elect a U.S. representative for two years. Representatives can run for office as many times as they want. Their job is to represent the people who live in their district in the House of Representatives."
   },
   {
-    "question": "Sample Question 29?",
+    "question": "The Federalist Papers supported the passage of the U.S. Constitution. Name one of the writers.",
     "options": [
-      "Option A29",
-      "Option B29",
-      "Option C29",
-      "Option D29"
+      "Thomas Jefferson",
+      "James Madison",
+      "John Adams",
+      "George Washington"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 29."
+    "correctAnswer": 1,
+    "explanation": "James Madison, Alexander Hamilton, and John Jay wrote the Federalist Papers. The U.S. Constitution was written at the Constitutional Convention in 1787. People at the Constitutional Convention decided how the government should work. Then James Madison, Alexander Hamilton, and John Jay wrote the Federalist Papers. The Federalist Papers explained the new government. They said that the new United States needed the Constitution. Newspapers all over the United States published the Federalist Papers."
   },
   {
     "question": "Sample Question 30?",
