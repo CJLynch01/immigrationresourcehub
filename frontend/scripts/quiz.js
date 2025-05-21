@@ -1,5 +1,6 @@
 import { getToken } from "./auth.js";
 
+// Detect local vs. production
 const API_BASE =
   window.location.hostname === "immigrationpathwaysconsulting.com"
     ? "https://immigrationresourcehub.onrender.com"
@@ -15,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch(`${API_BASE}/api/quiz/random?count=${count}`);
       if (!res.ok) throw new Error("Could not load quiz questions.");
       const questions = await res.json();
+
+      if (!Array.isArray(questions) || questions.length === 0) {
+        throw new Error("No quiz questions returned.");
+      }
+
       runQuiz(questions);
     } catch (err) {
       quizContainer.innerHTML = `<p class="error">Error: ${err.message}</p>`;
@@ -25,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     quizContainer.innerHTML = "";
     let current = 0, correct = 0;
 
+    const progressEl = document.createElement("div");
+    progressEl.style.marginBottom = "10px";
     const questionEl = document.createElement("div");
     const optionsEl = document.createElement("div");
     const nextBtn = document.createElement("button");
@@ -32,11 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
     nextBtn.style.marginTop = "10px";
     nextBtn.disabled = true;
 
-    quizContainer.append(questionEl, optionsEl, nextBtn);
+    quizContainer.append(progressEl, questionEl, optionsEl, nextBtn);
 
     function showQuestion(i) {
       const q = questions[i];
-      questionEl.innerHTML = `<strong>Question ${i + 1}:</strong> ${q.question}`;
+      progressEl.innerHTML = `<strong>Question ${i + 1} of ${questions.length}</strong>`;
+      questionEl.innerHTML = `<strong>${q.question}</strong>`;
       optionsEl.innerHTML = "";
       nextBtn.disabled = true;
 
@@ -45,10 +54,31 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.textContent = opt;
         btn.style.display = "block";
         btn.style.margin = "5px 0";
+        btn.style.padding = "8px";
+        btn.style.borderRadius = "6px";
+        btn.style.border = "1px solid #ccc";
+        btn.style.cursor = "pointer";
+        btn.style.backgroundColor = "#fff";
+
         btn.onclick = () => {
+          // Highlight correct and incorrect
+          Array.from(optionsEl.children).forEach((button, index) => {
+            button.disabled = true;
+            if (index === q.correctAnswer) {
+              button.style.backgroundColor = "#d4edda"; // green
+              button.style.borderColor = "#28a745";
+              button.style.color = "#155724";
+            } else if (button === btn) {
+              button.style.backgroundColor = "#f8d7da"; // red
+              button.style.borderColor = "#dc3545";
+              button.style.color = "#721c24";
+            }
+          });
+
           if (idx === q.correctAnswer) correct++;
           nextBtn.disabled = false;
         };
+
         optionsEl.appendChild(btn);
       });
     }
