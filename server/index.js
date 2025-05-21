@@ -1,14 +1,16 @@
 const express = require("express");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
+
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const protectedRoutes = require("./routes/protected");
 const postRoutes = require("./routes/posts");
 const uploadRoutes = require("./routes/uploads");
 const messageRoutes = require("./routes/messages");
-const userRoutes = require("./routes/users.js");
+const userRoutes = require("./routes/users");
+const quizRoutes = require("./routes/quizRoutes"); // ✅ NEW
 const cors = require("cors");
-
-require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +29,7 @@ app.use("/api/posts", postRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/quiz", quizRoutes); // ✅ NEW
 
 app.get("/", (req, res) => {
   res.send("Immigration Resource Hub API is running");

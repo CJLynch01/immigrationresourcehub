@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/questions100');
 const QuizResult = require('../models/quizResult');
-const verifyToken = require('../middleware/auth');
+const { verifyToken } = require('../middleware/auth'); // ✅ fixed
 
-// GET /api/quiz/random?count=10 or /api/quiz/random?count=100
+// GET /api/quiz/random
 router.get('/random', async (req, res) => {
   let count = parseInt(req.query.count) || 10;
 
