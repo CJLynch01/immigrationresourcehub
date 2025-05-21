@@ -1,24 +1,19 @@
 import { getToken } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const startQuizBtn = document.getElementById("startQuizBtn");
+  const quizBtn = document.getElementById("startQuizBtn");
   const quizContainer = document.getElementById("quizContainer");
 
-  if (startQuizBtn) {
-    startQuizBtn.addEventListener("click", async () => {
-      const count = confirm("Would you like to take the full 100-question quiz?") ? 100 : 10;
-      const res = await fetch(`/api/quiz/random?count=${count}`);
-      const questions = await res.json();
-      renderQuiz(questions);
-    });
-  }
+  quizBtn.addEventListener("click", async () => {
+    const count = confirm("Take full 100-question quiz?") ? 100 : 10;
+    const res = await fetch(`/api/quiz/random?count=${count}`);
+    const questions = await res.json();
+    runQuiz(questions);
+  });
 
-  function renderQuiz(questions) {
+  function runQuiz(questions) {
     quizContainer.innerHTML = "";
-    quizContainer.style.display = "block";
-
-    let current = 0;
-    let correct = 0;
+    let current = 0, correct = 0;
 
     const questionEl = document.createElement("div");
     const optionsEl = document.createElement("div");
@@ -26,21 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
     nextBtn.textContent = "Next";
     nextBtn.style.marginTop = "10px";
 
-    quizContainer.appendChild(questionEl);
-    quizContainer.appendChild(optionsEl);
-    quizContainer.appendChild(nextBtn);
+    quizContainer.append(questionEl, optionsEl, nextBtn);
 
-    function showQuestion(index) {
-      const q = questions[index];
-      questionEl.innerHTML = `<strong>Question ${index + 1}:</strong> ${q.question}`;
+    function showQuestion(i) {
+      const q = questions[i];
+      questionEl.innerHTML = `<strong>Q${i + 1}:</strong> ${q.question}`;
       optionsEl.innerHTML = "";
-
-      q.options.forEach((opt, i) => {
+      q.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
         btn.textContent = opt;
-        btn.style.margin = "5px";
         btn.onclick = () => {
-          if (i === q.correctAnswer) correct++;
+          if (idx === q.correctAnswer) correct++;
           nextBtn.click();
         };
         optionsEl.appendChild(btn);
@@ -52,14 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
         showQuestion(current++);
       } else {
         quizContainer.innerHTML = `<h3>You scored ${correct} out of ${questions.length}</h3>`;
-        submitScore(correct, questions.length);
+        saveScore(correct, questions.length);
       }
     };
 
     showQuestion(current++);
   }
 
-  async function submitScore(score, totalQuestions) {
+  async function saveScore(score, total) {
     const token = getToken();
     const res = await fetch("/api/quiz/submit", {
       method: "POST",
@@ -69,16 +60,16 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       body: JSON.stringify({
         score,
-        totalQuestions,
+        totalQuestions: total,
         correctAnswers: score,
       }),
     });
 
     const data = await res.json();
     if (res.ok) {
-      alert("Your score was saved.");
+      alert("Score saved successfully!");
     } else {
-      alert("Failed to save score: " + data.error);
+      alert("Error saving score: " + data.error);
     }
   }
 });
