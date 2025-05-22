@@ -1337,7 +1337,7 @@ button.active-page {
 }
 
 .note {
-  background-color: #2c2c2e;
+  background-color: #1f1f1f;
   border-left: 4px solid var(--accent-color);
   padding: 1rem 1.5rem;
   margin-bottom: 1.5rem;
