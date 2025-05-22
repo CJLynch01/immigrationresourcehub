@@ -1345,6 +1345,21 @@ button.active-page {
   background-color: #e0c865;
 }
 
+.quiz-results {
+  background-color: #2a2a2c;
+  padding: 1rem;
+  border-radius: 8px;
+  color: var(--text-color);
+}
+.quiz-results ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.quiz-results li {
+  margin-bottom: 0.5rem;
+}
+
 .note {
   background-color: #2c2c2e;
   color: var(--text-color);
