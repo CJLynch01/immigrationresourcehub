@@ -35,7 +35,7 @@ router.post('/submit', verifyToken, async (req, res) => {
     }
 
     const newResult = new QuizResult({
-      userId: req.user._id,
+      userId: req.user.id,
       score,
       totalQuestions,
       correctAnswers
