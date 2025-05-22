@@ -142,4 +142,53 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Error submitting quiz result: " + err.message);
     }
   }
+
+  async function fetchAndDisplayPastScores() {
+    const token = getToken();
+    const pastScores = document.getElementById("pastScores");
+
+    if (!pastScores || !token) {
+      pastScores.innerHTML = "<p>You must be logged in to view past scores.</p>";
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/quiz/results`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (!Array.isArray(data)) throw new Error("Invalid response");
+
+      const scores10 = data.filter(r => r.totalQuestions === 10).slice(0, 2);
+      const scores100 = data.filter(r => r.totalQuestions === 100).slice(0, 2);
+
+      const renderScoreList = (scores, label) => `
+        <h4 style="margin-top: 1rem;">${label}</h4>
+        <ul style="list-style: none; padding-left: 0;">
+          ${scores.map(s => `
+            <li style="margin-bottom: .5rem;">
+              <strong>${s.score}/${s.totalQuestions}</strong>
+              <br>
+              <small>${new Date(s.date).toLocaleString()}</small>
+            </li>
+          `).join('')}
+        </ul>
+      `;
+
+      pastScores.innerHTML = `
+        <h3>Your Recent Scores</h3>
+        ${renderScoreList(scores10, "10-Question Quizzes")}
+        ${renderScoreList(scores100, "100-Question Quizzes")}
+      `;
+    } catch (err) {
+      console.error("Error fetching past scores:", err);
+      pastScores.innerHTML = "<p>Error loading past scores.</p>";
+    }
+  }
+
+  fetchAndDisplayPastScores();
+
 });

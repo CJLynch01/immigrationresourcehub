@@ -49,4 +49,40 @@ router.post('/submit', verifyToken, async (req, res) => {
   }
 });
 
+router.get('/results', verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.id || req.user._id;
+
+    // Fetch all results for the user
+    const allResults = await QuizResult.find({ userId }).sort({ date: -1 });
+
+    // Group by totalQuestions (10 or 100)
+    const grouped = { 10: [], 100: [] };
+
+    for (const result of allResults) {
+      if (result.totalQuestions === 10 || result.totalQuestions === 100) {
+        grouped[result.totalQuestions].push(result);
+      }
+    }
+
+    // Keep only top 2 of each
+    const trimmedResults = [
+      ...grouped[10].slice(0, 2),
+      ...grouped[100].slice(0, 2),
+    ];
+
+    // Optional: delete the rest from DB
+    const idsToKeep = trimmedResults.map(r => r._id.toString());
+    await QuizResult.deleteMany({
+      userId,
+      _id: { $nin: idsToKeep }
+    });
+
+    res.json(trimmedResults);
+  } catch (err) {
+    console.error("Error fetching quiz results:", err);
+    res.status(500).json({ error: "Failed to fetch results" });
+  }
+});
+
 module.exports = router;
