@@ -9,6 +9,13 @@ const API_BASE =
 document.addEventListener("DOMContentLoaded", () => {
   const quizButtons = document.querySelectorAll(".quiz-start-btn");
   const quizContainer = document.getElementById("quizContainer");
+  const token = getToken();
+  
+  if (!token) {
+    alert("Please log in to access the quiz.");
+    window.location.href = "/login.html";
+    return;
+  }
 
   quizButtons.forEach((btn) => {
     btn.addEventListener("click", async () => {
