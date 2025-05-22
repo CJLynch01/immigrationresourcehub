@@ -1065,38 +1065,5 @@
     ],
     "correctAnswer": 3,
     "explanation": "The Constitution was written at the Constitutional Convention. In 1787, 55 representatives went to Philadelphia. They came from 12 of the 13 original states. They talked about how to design the government. They wrote the Constitution. After the Constitutional Convention, the states agreed to adopt the Constitution."
-  },
-  {
-    "question": "What is the capital of your state?",
-    "options": [
-      "1787",
-      "Option B98",
-      "Option C98",
-      "Option D98"
-    ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 98."
-  },
-  {
-    "question": "Who is the Governor of your state now?",
-    "options": [
-      "Option A99",
-      "Option B99",
-      "Option C99",
-      "Option D99"
-    ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 99."
-  },
-  {
-    "question": "Name your U.S. Representative.",
-    "options": [
-      "Option A100",
-      "Option B100",
-      "Option C100",
-      "Option D100"
-    ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 100."
   }
 ]
