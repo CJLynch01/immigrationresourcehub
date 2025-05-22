@@ -1399,17 +1399,6 @@ button.active-page {
   background-color: #16a34a;
 }
 
-.quiz-section-box {
-  background-color: #2a2a2c;
-  color: var(--text-color);
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border-left: 4px solid var(--accent-color);
-  margin-top: 2rem;
-  text-align: left;
-}
-
 @media (max-width: 768px) {
   .hamburger {
     display: block;
