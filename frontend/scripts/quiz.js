@@ -1,37 +1,15 @@
 import { getToken } from "./auth.js";
 
+// Auto-detect environment
 const API_BASE =
   window.location.hostname === "immigrationpathwaysconsulting.com"
     ? "https://immigrationresourcehub.onrender.com"
     : "http://localhost:3000";
 
 document.addEventListener("DOMContentLoaded", () => {
-  waitForQuizButtons(initQuiz);
-});
+  const quizButtons = document.querySelectorAll(".quiz-start-btn");
+  const quizContainer = document.getElementById("quizContainer");
 
-function waitForQuizButtons(callback) {
-  const maxWait = 3000;
-  const interval = 100;
-  let waited = 0;
-
-  const check = setInterval(() => {
-    const buttons = document.querySelectorAll(".quiz-start-btn");
-    const container = document.getElementById("quizContainer");
-
-    if (buttons.length && container) {
-      clearInterval(check);
-      callback(buttons, container);
-    }
-
-    waited += interval;
-    if (waited >= maxWait) {
-      clearInterval(check);
-      console.error("Quiz buttons not found in time.");
-    }
-  }, interval);
-}
-
-function initQuiz(quizButtons, quizContainer) {
   quizButtons.forEach((btn) => {
     btn.addEventListener("click", async () => {
       const count = parseInt(btn.dataset.count);
@@ -44,112 +22,123 @@ function initQuiz(quizButtons, quizContainer) {
           throw new Error("No quiz questions returned.");
         }
 
-        runQuiz(questions, quizContainer);
+        runQuiz(questions);
       } catch (err) {
         quizContainer.innerHTML = `<p class="error">Error: ${err.message}</p>`;
       }
     });
   });
-}
 
-function runQuiz(questions, quizContainer) {
-  quizContainer.innerHTML = "";
-  let current = 0, correct = 0;
+  function runQuiz(questions) {
+    quizContainer.innerHTML = "";
+    let current = 0, correct = 0;
 
-  const progressEl = document.createElement("div");
-  progressEl.style.marginBottom = "10px";
+    const progressEl = document.createElement("div");
+    progressEl.style.marginBottom = "10px";
 
-  const questionEl = document.createElement("div");
-  const optionsEl = document.createElement("div");
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next";
-  nextBtn.style.marginTop = "10px";
-  nextBtn.disabled = true;
+    const questionEl = document.createElement("div");
+    const optionsEl = document.createElement("div");
+    const explanationEl = document.createElement("div");
+    explanationEl.style.marginTop = "10px";
+    explanationEl.style.padding = "10px";
+    explanationEl.style.borderLeft = "4px solid var(--accent-color)";
+    explanationEl.style.backgroundColor = "#2c2c2e";
+    explanationEl.style.fontStyle = "italic";
+    explanationEl.style.color = "#ccc";
 
-  quizContainer.append(progressEl, questionEl, optionsEl, nextBtn);
-
-  function showQuestion(i) {
-    const q = questions[i];
-    progressEl.innerHTML = `<strong>Question ${i + 1} of ${questions.length}</strong>`;
-    questionEl.innerHTML = `<p class="quiz-question">${q.question}</p>`;
-    optionsEl.innerHTML = "";
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next";
+    nextBtn.style.marginTop = "10px";
     nextBtn.disabled = true;
 
-    q.options.forEach((opt, idx) => {
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.style.display = "block";
-      btn.style.margin = "5px 0";
-      btn.style.padding = "8px";
-      btn.style.borderRadius = "6px";
-      btn.style.border = "1px solid #444";
-      btn.style.backgroundColor = "#3a3a3d";
-      btn.style.color = "#f0f0f0";
-      btn.style.cursor = "pointer";
-      btn.style.width = "100%";
+    quizContainer.append(progressEl, questionEl, optionsEl, explanationEl, nextBtn);
 
-      btn.onclick = () => {
-        Array.from(optionsEl.children).forEach((button, index) => {
-          button.disabled = true;
-          if (index === q.correctAnswer) {
-            button.style.backgroundColor = "#14532d";
-            button.style.borderColor = "#22c55e";
-            button.style.color = "#f8f8f8";
-          } else if (button === btn) {
-            button.style.backgroundColor = "#7f1d1d";
-            button.style.borderColor = "#ef4444";
-            button.style.color = "#f8f8f8";
-          }
-        });
+    function showQuestion(i) {
+      const q = questions[i];
+      progressEl.innerHTML = `<strong>Question ${i + 1} of ${questions.length}</strong>`;
+      questionEl.innerHTML = `<p class="quiz-question">${q.question}</p>`;
+      optionsEl.innerHTML = "";
+      explanationEl.innerHTML = "";
+      nextBtn.disabled = true;
 
-        if (idx === q.correctAnswer) correct++;
-        nextBtn.disabled = false;
-      };
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.style.display = "block";
+        btn.style.margin = "5px 0";
+        btn.style.padding = "8px";
+        btn.style.borderRadius = "6px";
+        btn.style.border = "1px solid #444";
+        btn.style.backgroundColor = "#3a3a3d";
+        btn.style.color = "#f0f0f0";
+        btn.style.cursor = "pointer";
+        btn.style.width = "100%";
 
-      optionsEl.appendChild(btn);
-    });
-  }
+        btn.onclick = () => {
+          Array.from(optionsEl.children).forEach((button, index) => {
+            button.disabled = true;
+            if (index === q.correctAnswer) {
+              button.style.backgroundColor = "#14532d";
+              button.style.borderColor = "#22c55e";
+              button.style.color = "#f8f8f8";
+            } else if (button === btn) {
+              button.style.backgroundColor = "#7f1d1d";
+              button.style.borderColor = "#ef4444";
+              button.style.color = "#f8f8f8";
+            }
+          });
 
-  nextBtn.onclick = () => {
-    if (current < questions.length) {
-      showQuestion(current++);
-    } else {
-      quizContainer.innerHTML = `<h3>You scored ${correct} out of ${questions.length}</h3>`;
-      submitScore(correct, questions.length);
+          if (idx === q.correctAnswer) correct++;
+
+          explanationEl.innerHTML = `<p>${q.explanation}</p>`;
+          nextBtn.disabled = false;
+        };
+
+        optionsEl.appendChild(btn);
+      });
     }
-  };
 
-  showQuestion(current++);
-}
+    nextBtn.onclick = () => {
+      if (current < questions.length) {
+        showQuestion(current++);
+      } else {
+        quizContainer.innerHTML = `<h3>You scored ${correct} out of ${questions.length}</h3>`;
+        submitScore(correct, questions.length);
+      }
+    };
 
-async function submitScore(score, total) {
-  const token = getToken();
-  if (!token) {
-    alert("You must be logged in to save your score.");
-    return;
+    showQuestion(current++);
   }
 
-  try {
-    const res = await fetch(`${API_BASE}/api/quiz/submit`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        score,
-        totalQuestions: total,
-        correctAnswers: score,
-      }),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      alert("Your score has been saved!");
-    } else {
-      alert("Failed to save score: " + data.error);
+  async function submitScore(score, total) {
+    const token = getToken();
+    if (!token) {
+      alert("You must be logged in to save your score.");
+      return;
     }
-  } catch (err) {
-    alert("Error submitting quiz result: " + err.message);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/quiz/submit`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          score,
+          totalQuestions: total,
+          correctAnswers: score,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Your score has been saved!");
+      } else {
+        alert("Failed to save score: " + data.error);
+      }
+    } catch (err) {
+      alert("Error submitting quiz result: " + err.message);
+    }
   }
-}
+});
