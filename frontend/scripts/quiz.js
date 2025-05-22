@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const quizButtons = document.querySelectorAll(".quiz-start-btn");
   const quizContainer = document.getElementById("quizContainer");
   const token = getToken();
-  
+
   if (!token) {
     alert("Please log in to access the quiz.");
     window.location.href = "/login.html";
@@ -21,7 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", async () => {
       const count = parseInt(btn.dataset.count);
       try {
-        const res = await fetch(`${API_BASE}/api/quiz/random?count=${count}`);
+        const res = await fetch(`${API_BASE}/api/quiz/random?count=${count}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         if (!res.ok) throw new Error("Could not load quiz questions.");
         const questions = await res.json();
 
@@ -197,5 +201,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   fetchAndDisplayPastScores();
-
 });
