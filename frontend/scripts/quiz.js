@@ -135,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (res.ok) {
         alert("Your score has been saved!");
       } else {
+        console.error("Save error response:", data);
         alert("Failed to save score: " + data.error);
       }
     } catch (err) {
