@@ -145,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (res.ok) {
         alert("Your score has been saved!");
+        fetchAndDisplayPastScores();
       } else {
         console.error("Save error response:", data);
         alert("Failed to save score: " + data.error);
