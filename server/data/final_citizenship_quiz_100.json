@@ -74,7 +74,7 @@
       "23"
     ],
     "correctAnswer": 0,
-    "explanation": "There are 27 amendments to the U.S. Constitution."
+    "explanation": "The Constitution has 27 amendments. Amendments are changes to the Constitution. Congress added the first ten amendments in 1791. They are called the Bill of Rights. Since then, the government added more amendments. The Twenty-seventh Amendment was added in 1992. "
   },
   {
     "question": "What did the Declaration of Independence do?",
@@ -118,7 +118,7 @@
       "Traditional economy"
     ],
     "correctAnswer": 0,
-    "explanation": "The U.S. has a capitalist (or market) economy."
+    "explanation": "Capitalism is the economic system in the United States. It is a market economy. Capitalism means that people, not the government, own most businesses. In the United States, businesses decide what to sell. They decide how much money to charge for products and services. Then people decide what they want to buy. This is called a market economy. The economy is controlled by individual people and businesses, not by the government. The United States has a capitalist, market economy."
   },
   {
     "question": "What is the \u201crule of law\u201d?",
@@ -129,7 +129,7 @@
       "All of the above"
     ],
     "correctAnswer": 3,
-    "explanation": "Rule of law means everyone, including leaders and the government, must follow the law."
+    "explanation": "In the United States, everyone must follow the law. All people and groups must follow the law. Government officials must follow the law. Everyone is equal under the government. This way, the government can protect everyone's rights. The rule of law means that everyone must follow the law."
   },
   {
     "question": "Name one branch or part of the government.",
@@ -184,7 +184,7 @@
       "The Senate and Supreme Court"
     ],
     "correctAnswer": 0,
-    "explanation": "The U.S. Congress has two parts: the Senate and the House of Representatives."
+    "explanation": "The two parts of the United States Congress are the Senate and the House of Representatives. Citizens from all over the United States are elected to the Senate and the House of Representatives. There are 100 members in the Senate. Every state elects two senators. Senators represent all the people in their state. They are elected for 6-year terms. The House of Representatives has 435 voting members. States with more people have more representatives in the House of Representatives. Representatives represent a district, or part, of each state. They are elected for 2-year terms."
   },
   {
     "question": "How many U.S. Senators are there?",
@@ -616,460 +616,460 @@
     "explanation": "State governments have the power to do many things. They provide schooling and education. State and local governments provide protection and safety. States give drivers' licenses, and approve zoning and land use."
   },
   {
-    "question": "Sample Question 57?",
+    "question": "What does the President's Cabinet do?",
     "options": [
-      "Option A57",
-      "Option B57",
-      "Option C57",
-      "Option D57"
+      "Commands the U.S. Armed Forces",
+      "All of these",
+      "Advises the President",
+      "Makes laws"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 57."
+    "correctAnswer": 2,
+    "explanation": "The president's cabinet advises the president. The people in the cabinet are the vice president and the heads of 15 government departments."
   },
   {
-    "question": "Sample Question 58?",
+    "question": "How many justices are on the Supreme Court?",
     "options": [
-      "Option A58",
-      "Option B58",
-      "Option C58",
-      "Option D58"
+      "Ten (10)",
+      "Nine (9)",
+      "Eleven (11)",
+      "Twelve (12)"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 58."
+    "correctAnswer": 1,
+    "explanation": "There are nine justices on the Supreme Court. The president nominates Supreme Court justices. The Senate votes to confirm them. Supreme Court justices have the job for life or until they decide to retire."
   },
   {
-    "question": "Sample Question 59?",
+    "question": "Who does a U.S. Senator represent?",
     "options": [
-      "Option A59",
-      "Option B59",
-      "Option C59",
-      "Option D59"
+      "The state legislatures",
+      "Only the people in the state who voted for the senator",
+      "All people of the state",
+      "Only the people of the state who belong to the senator's political party"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 59."
+    "correctAnswer": 2,
+    "explanation": "A U.S. senator represents all the people in a state. Each state has two senators. Every citizen who is 18 or older and living in a state can vote for both senators from that state. The number of U.S. senators does not change if a state has more people or fewer people living in it. This way, every state has equal representation in the Senate."
   },
   {
-    "question": "Sample Question 60?",
+    "question": "What is the name of the national anthem?",
     "options": [
-      "Option A60",
-      "Option B60",
-      "Option C60",
-      "Option D60"
+      "America the Beautiful",
+      "God Bless the U.S.A.",
+      "The Star-Spangled Banner",
+      "My Country Tis of Thee"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 60."
+    "correctAnswer": 2,
+    "explanation": "'The Star-Spangled Banner' is the name of our national anthem. The song is about the United States flag. In the War of 1812, the United States fought the British. One night during the war, British ships attacked Fort McHenry in Baltimore. Bombs exploded all night. An American man named Francis Scott Key watched the battle from a ship. He worried that the United States might lose the battle. The next morning, he saw the United States' flag flying in the wind. He knew that the United States won the battle. Then he wrote the words to 'The Star-Spangled Banner.' 'The Star-Spangled Banner' is now the national anthem of the United States."
   },
   {
-    "question": "Sample Question 61?",
+    "question": "What is one promise you make when you become a United States citizen?",
     "options": [
-      "Option A61",
-      "Option B61",
-      "Option C61",
-      "Option D61"
+      "Never travel outside the United States",
+      "Disobey the laws of the United States",
+      "Give up loyalty to other countries",
+      "Not defend the Constitution and laws of the United States"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 61."
+    "correctAnswer": 2,
+    "explanation": "An immigrant completes many requirements to become a U.S. citizen. The final step is to take an Oath of Allegiance. You promise to be loyal to the United States and give up loyalty to other countries. You promise to defend the Constitution and obey the laws of the United States. And you promise to serve the United States when the government needs your help."
   },
   {
-    "question": "Sample Question 62?",
+    "question": "Name one war fought by the United States in the 1800s?",
     "options": [
-      "Option A62",
-      "Option B62",
-      "Option C62",
-      "Option D62"
+      "Korean War",
+      "World War I",
+      "Mexican-American War",
+      "World War II"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 62."
+    "correctAnswer": 2,
+    "explanation": "The United States fought four wars in the 1800s: the War of 1812, the Mexican-American War, the Civil War, and the Spanish-American War. The United States fought Mexico in the Mexican-American War from 1846 to 1848. The United States wanted to expand west. In 1846, the government of the United States decided it wanted land that belonged to Mexico. Many citizens of the United States and Mexico lived on that land. The United States won the war. The land that was once part of Mexico became part of the United States. That land now forms the states of California, New Mexico, Utah, Nevada, Arizona, and parts of Colorado and Wyoming."
   },
   {
-    "question": "Sample Question 63?",
+    "question": "Who wrote the Declaration of Independence?",
     "options": [
-      "Option A63",
-      "Option B63",
-      "Option C63",
-      "Option D63"
+      "James Madison",
+      "Abraham Lincoln",
+      "George Washington",
+      "Thomas Jefferson"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 63."
+    "correctAnswer": 3,
+    "explanation": "Thomas Jefferson wrote the Declaration of Independence. Thomas Jefferson was an important political leader and thinker. He wanted to create a government for the United States that protected individual rights. Thomas Jefferson wrote that the United States was free from Britain. He wrote that all men are created equal. He wrote that everyone has the right to life, liberty, and the pursuit of happiness. The ideas in the Declaration helped shape the American government. These ideas are still important today."
   },
   {
-    "question": "Sample Question 64?",
+    "question": "What is one responsibility that is only for United States citizens?",
     "options": [
-      "Option A64",
-      "Option B64",
-      "Option C64",
-      "Option D64"
+      "Be respectful of others",
+      "Pay taxes",
+      "Obey the law",
+      "Serve on a jury"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 64."
+    "correctAnswer": 3,
+    "explanation": "United States citizens vote in federal elections and serve on juries. It is the responsibility of United States citizens to vote in federal elections. Voting is important. However, there is no law that says citizens must vote. It is also the responsibility of citizens to serve on a jury when they are asked. If a citizen gets a court letter to serve on a jury, the person must go. A jury is a group of citizens in a courtroom that listen to a trial. The jury decides the outcome of the trial."
   },
   {
-    "question": "Sample Question 65?",
+    "question": "We elect a U.S. Senator for how many years?",
     "options": [
-      "Option A65",
-      "Option B65",
-      "Option C65",
-      "Option D65"
+      "Four (4)",
+      "Ten (10)",
+      "Six (6)",
+      "Two (2)"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 65."
+    "correctAnswer": 2,
+    "explanation": "We elect U.S. senators for six years. Senators can run for as many terms as they want. Their job is to represent all the people of their state in the Senate."
   },
   {
-    "question": "Sample Question 66?",
+    "question": "Who vetoes bills?",
     "options": [
-      "Option A66",
-      "Option B66",
-      "Option C66",
-      "Option D66"
+      "The Speaker of the House",
+      "The Vice President",
+      "The President Pro Tempore",
+      "The President"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 66."
+    "correctAnswer": 3,
+    "explanation": "The president vetoes bills. The president has the power to stop a bill from becoming a law. The president can refuse to sign a bill that Congress approved. This is called a veto. The bill is sent back to Congress without the president's signature. Congress can change the bill or vote again. If two-thirds of the House of Representatives and two-thirds of the Senate vote to override the veto, it becomes a law without the president's signature."
   },
   {
-    "question": "Sample Question 67?",
+    "question": "When was the Constitution written?",
     "options": [
-      "Option A67",
-      "Option B67",
-      "Option C67",
-      "Option D67"
+      "1790",
+      "1789",
+      "1776",
+      "1787"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 67."
+    "correctAnswer": 3,
+    "explanation": "The Constitution was written in 1787. The American army won the War of Independence in 1783. For several years, the United States was governed by a congress of representatives from the states. But in 1787, delegates for the states met in Philadelphia to create a stronger federal government. They wrote the Constitution that gave the framework for the government we have today. The Constitution was written in 1787. "
   },
   {
-    "question": "Sample Question 68?",
+    "question": "What are two rights of everyone living in the United States?",
     "options": [
-      "Option A68",
-      "Option B68",
-      "Option C68",
-      "Option D68"
+      "Freedom of religion and freedom to make treaties with other countries",
+      "Freedom of speech and freedom of religion",
+      "Freedom of speech and freedom to run for president",
+      "Freedom to petition the government and freedom to disobey traffic laws"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 68."
+    "correctAnswer": 1,
+    "explanation": "Individual freedoms, or rights, are protected in the United States. Many of these rights are for everyone. We all have the right to free expression and free speech. We are allowed to say what we think without fear of what the government will do. We have the right to freedom of assembly. We can meet peacefully with other people. We have the right to petition the government. We can ask the government to change or correct a problem. We have the right to practice religion as we choose. We have the right to practice no religion at all. This is freedom of religion. We also have the right to bear arms. With limits, we have the right to have weapons. These rights are for everyone living in the United States."
   },
   {
-    "question": "Sample Question 69?",
+    "question": "Who was President during World War I?",
     "options": [
-      "Option A69",
-      "Option B69",
-      "Option C69",
-      "Option D69"
+      "Theodore Roosevelt",
+      "Woodrow Wilson",
+      "Warren Harding",
+      "Franklin Roosevelt"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 69."
+    "correctAnswer": 1,
+    "explanation": "Woodrow Wilson was the president during World War I. The war started in 1914. Many countries in Europe and other places fought each other during World War I. Woodrow Wilson and others in the United States did not want to enter World War I. But in 1917, German submarines attacked American ships. Woodrow Wilson decided the United States had to fight in the war. Congress agreed and declared war."
   },
   {
-    "question": "Sample Question 70?",
+    "question": "What does the judicial branch do?",
     "options": [
-      "Option A70",
-      "Option B70",
-      "Option C70",
-      "Option D70"
+      "Resolves disputes",
+      "Decides if a law goes against the Constitution",
+      "Reviews laws",
+      "All of these answers"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 70."
+    "correctAnswer": 3,
+    "explanation": "The judicial branch reviews laws and explains laws. It resolves disagreements. It also decides if a law is supported by the Constitution, or is constitutional. The Supreme Court and all other federal courts are part of the judicial branch."
   },
   {
-    "question": "Sample Question 71?",
+    "question": "We elect a President for how many years?",
     "options": [
-      "Option A71",
-      "Option B71",
-      "Option C71",
-      "Option D71"
+      "Two (2)",
+      "Eight (8)",
+      "Four (4)",
+      "Ten (10)"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 71."
+    "correctAnswer": 2,
+    "explanation": "We elect a president for a 4-year term. A candidate can run for president as many times as he or she wants. The person can only be elected president for eight years, or two terms of four years each. The Constitution says how many terms a president can serve. For example, President Dwight D. Eisenhower became president for the first time in 1953. Then he ran for president again. He won the election and, in 1957, became president for another four years."
   },
   {
-    "question": "Sample Question 72?",
+    "question": "When do we celebrate Independence Day?",
     "options": [
-      "Option A72",
-      "Option B72",
-      "Option C72",
-      "Option D72"
+      "January 1",
+      "March 4",
+      "June 30",
+      "July 4"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 72."
+    "correctAnswer": 3,
+    "explanation": "We celebrate Independence Day on July 4. Representatives from the colonies signed the Declaration of Independence on July 4, 1776. This is the day the United States declared independence from Great Britain. On July 4, Americans celebrate in many different ways. We have parades, picnics, and watch fireworks. We celebrate Independence Day every year on July 4."
   },
   {
-    "question": "Sample Question 73?",
+    "question": "Name one state that borders Mexico.",
     "options": [
-      "Option A73",
-      "Option B73",
-      "Option C73",
-      "Option D73"
+      "Alabama",
+      "Arkansas",
+      "California",
+      "Florida"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 73."
+    "correctAnswer": 2,
+    "explanation": "There are four states that border Mexico: California, Arizona, New Mexico, and Texas. Mexico is the country to the south of the United States. All of the states that now border Mexico were once part of Mexico."
   },
   {
-    "question": "Sample Question 74?",
+    "question": "What is the name of the Speaker of the House of Representatives now?",
     "options": [
-      "Option A74",
-      "Option B74",
-      "Option C74",
-      "Option D74"
+      "Kamala Harris",
+      "Chuck Schumer",
+      "Mark Johnson",
+      "Joe Biden"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 74."
+    "correctAnswer": 2,
+    "explanation": "The Speaker of the House of Representatives is the leader of the House of Representatives. He or she speaks for the majority party. If the president and vice president can no longer be in office, the Speaker of the House of Representatives becomes president."
   },
   {
-    "question": "Sample Question 75?",
+    "question": "What movement tried to end racial discrimination?",
     "options": [
-      "Option A75",
-      "Option B75",
-      "Option C75",
-      "Option D75"
+      "Conservation",
+      "Civil Rights (movement)",
+      "Women's suffrage",
+      "Prohibition"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 75."
+    "correctAnswer": 1,
+    "explanation": "The civil rights movement tried to end racial discrimination. Most African Americans in the United States were slaves until the end of the Civil War in 1865. Unfair treatment of African Americans continued into the 1900s. In many places, African Americans were not allowed to vote. They had to go to separate schools, and use separate public spaces. In the 1950s and 1960s, people of all races worked for equal rights for all Americans. People gave speeches. They organized peaceful marches and protests. They demanded that the government change its laws and protect the rights of all Americans."
   },
   {
-    "question": "Sample Question 76?",
+    "question": "Who was the first President?",
     "options": [
-      "Option A76",
-      "Option B76",
-      "Option C76",
-      "Option D76"
+      "John Adams",
+      "Thomas Jefferson",
+      "Abraham Lincoln",
+      "George Washington"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 76."
+    "correctAnswer": 3,
+    "explanation": "George Washington was the first president of the United States. He was president from 1789 to 1797. Before he became president, George Washington was the general of the American army. George Washington decided to stop being president after two 4-year terms. Today, we follow his example. The Twenty-second Amendment, added to the Constitution in 1951, limits presidents to two 4-year terms. No one can be president for more than two 4-year terms."
   },
   {
-    "question": "Sample Question 77?",
+    "question": "Where is the Statue of Liberty?",
     "options": [
-      "Option A77",
-      "Option B77",
-      "Option C77",
-      "Option D77"
+      "Long Island",
+      "San Francisco Bay",
+      "Boston Harbor",
+      "New York Harbor"
     ],
     "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 77."
+    "explanation": "The Statue of Liberty is on an island in New York Harbor. In 1886, France gave the statue to the United States. Many immigrants came by boat to New York. The Statue of Liberty was the first symbol of the United States they saw. The statue represents liberty. The statue is a famous symbol of hope. It is a symbol of starting a new life in the United States."
   },
   {
-    "question": "Sample Question 78?",
+    "question": "Who was President during the Great Depression and World War II?",
     "options": [
-      "Option A78",
-      "Option B78",
-      "Option C78",
-      "Option D78"
+      "Harry Truman",
+      "Franklin Roosevelt",
+      "Herbert Hoover",
+      "Calvin Coolidge"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 78."
+    "correctAnswer": 1,
+    "explanation": "Franklin Roosevelt was president of the United States during the Great Depression and World War II. Franklin Roosevelt became president in 1933. The United States economy was weak. Banks failed. Many people did not have jobs. Franklin Roosevelt tried to fix the economy. He made rules for banks and the stock market. He started programs to create jobs and help workers across the country. The United States joined World War II in 1941. Americans joined Britain and the Soviet Union to fight against Germany, Italy, and Japan. Franklin Roosevelt was the president until he died in 1945. Roosevelt led America through the challenges of the Great Depression and World War II."
   },
   {
-    "question": "Sample Question 79?",
+    "question": "What is one reason colonists came to America?",
     "options": [
-      "Option A79",
-      "Option B79",
-      "Option C79",
-      "Option D79"
+      "For the experience traveling across the ocean",
+      "None of these answers",
+      "To join a civic group",
+      "Freedom"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 79."
+    "correctAnswer": 3,
+    "explanation": "Colonists came to America because they wanted political liberty. They wanted religious freedom and economic opportunity. The United States is a country where individual rights and self-government are important. This has always been true. Colonists first came to America for more freedom. Governments in Europe ruled the colonies. But the colonists were free to decide many things for themselves. Some colonists came to America for religious freedom. In Europe, governments punished people for practicing certain religions. In America, there was more freedom of religion. Some colonists came to America for political liberty. One example of political liberty is the government in Plymouth Colony in Massachusetts. The men in the colony voted to elect a governor. Later, they elected representatives to their government. Some colonists came to America for economic opportunity. In the colonies, people had more opportunities to trade goods and farm the land. America was a place where colonists were free to do things differently. It was an opportunity to have a better life."
   },
   {
-    "question": "Sample Question 80?",
+    "question": "There are four amendments to the Constitution about who can vote. Describe one of them.",
     "options": [
-      "Option A80",
-      "Option B80",
-      "Option C80",
-      "Option D80"
+      "Citizens by birth only can vote",
+      "Citizens eighteen (18) and older can vote",
+      "Only citizens with a job can vote",
+      "Citizens seventeen (17) and older can vote"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 80."
+    "correctAnswer": 1,
+    "explanation": "The United States added four amendments to the Constitution on who can vote. Congress added the Fifteenth Amendment in 1870. That amendment says that a male citizen of any race can vote. The Nineteenth Amendment says that any citizen, even women, can vote. Congress added the Twenty-fourth Amendment to the Constitution in 1964. It makes suffrage taxes illegal. Suffrage taxes were taxes that citizens had to pay in order to vote. These suffrage taxes were used to stop some people from voting, especially African Americans. The Twenty-sixth Amendment was added in 1971. This amendment states that all citizens 18 years of age or older can vote."
   },
   {
-    "question": "Sample Question 81?",
+    "question": "Name one right only for United States citizens?",
     "options": [
-      "Option A81",
-      "Option B81",
-      "Option C81",
-      "Option D81"
+      "Freedom of speech",
+      "Attend public school",
+      "Run for federal office",
+      "Freedom of religion"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 81."
+    "correctAnswer": 2,
+    "explanation": "Only United States citizens can vote in federal elections and run for federal office. Citizens make laws through elected representatives. Many naturalized citizens have been elected as U.S. senators and U.S. representatives. However, naturalized citizens cannot run for president."
   },
   {
-    "question": "Sample Question 82?",
+    "question": "What ocean is on the West Coast of the United States?",
     "options": [
-      "Option A82",
-      "Option B82",
-      "Option C82",
-      "Option D82"
+      "Arctic Ocean",
+      "Southern Ocean",
+      "Pacific Ocean",
+      "Atlantic Ocean"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 82."
+    "correctAnswer": 2,
+    "explanation": "The Pacific Ocean is on the West Coast of the United States. The Pacific Ocean is the largest ocean in the world. It reaches from the West Coast of the United States to Asia and Australia. The states of Alaska, Washington, Oregon, California, and Hawaii border the Pacific Ocean."
   },
   {
-    "question": "Sample Question 83?",
+    "question": "Why does the flag have 13 stripes?",
     "options": [
-      "Option A83",
-      "Option B83",
-      "Option C83",
-      "Option D83"
+      "Because the stripes represent the number of signatures on the U.S. Constitution",
+      "Because it was considered luck to have 13 stripes on a flag",
+      "Because the stripes represent the original colonies",
+      "Because the stripes represent the members of the Second Continental Congress"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 83."
+    "correctAnswer": 2,
+    "explanation": "The United States flag has 13 stripes because there were 13 original colonies. Today, the United States is an independent country. Before that, it was 13 separate colonies. Great Britain governed the 13 colonies. The 13 colonies worked together to fight the British. They won the War of Independence in 1783. The colonies became an independent country, called the United States of America. The 13 original colonies became the first states. The flag has 13 stripes to represent the 13 original colonies."
   },
   {
-    "question": "Sample Question 84?",
+    "question": "When must all men register for the Selective Service?",
     "options": [
-      "Option A84",
-      "Option B84",
-      "Option C84",
-      "Option D84"
+      "At any age",
+      "At age sixteen (16)",
+      "Men do not have to register",
+      "Between eighteen (18) and twenty-six (26)"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 84."
+    "correctAnswer": 3,
+    "explanation": "All men must register for the Selective Service between the ages of 18 and 26. When you register, you tell the government you can serve in the military if necessary. Selective Service was used in World War II, the Korean War, and the Vietnam War. The government calls this the draft. The United States does not have a draft now. You do not have to serve in the military unless you want to."
   },
   {
-    "question": "Sample Question 85?",
+    "question": "Who is the Chief Justice of the United States now?",
     "options": [
-      "Option A85",
-      "Option B85",
-      "Option C85",
-      "Option D85"
+      "Barack Obama",
+      "Anthony Kennedy",
+      "Joe Biden",
+      "John G. Roberts, Jr."
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 85."
+    "correctAnswer": 3,
+    "explanation": "The Chief Justice of the United States is the leader of the judicial branch. This person is one of nine justices of the Supreme Court."
   },
   {
-    "question": "Sample Question 86?",
+    "question": "Name one war fought by the United States in the 1900s?",
     "options": [
-      "Option A86",
-      "Option B86",
-      "Option C86",
-      "Option D86"
+      "Revolutionary War",
+      "World War I",
+      "War of 1812",
+      "Civil War"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 86."
+    "correctAnswer": 1,
+    "explanation": "The United States fought five wars in the 1900s: World War I, World War II, the Korean War, the Vietnam War, and the Gulf War. In 1917, 2 million American soldiers went to France to help end World War I. The United States joined France, Britain, and Russia in a war against Germany and Austria-Hungary. The war ended in 1918."
   },
   {
-    "question": "Sample Question 87?",
+    "question": "What did the Emancipation Proclamation do?",
     "options": [
-      "Option A87",
-      "Option B87",
-      "Option C87",
-      "Option D87"
+      "Ended World War I",
+      "Gave the United States independence from Great Britain",
+      "Gave women the right to vote",
+      "Freed slaves in most Southern states"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 87."
+    "correctAnswer": 3,
+    "explanation": "The Emancipation Proclamation freed the slaves. Abraham Lincoln issued the Emancipation Proclamation in 1863, during the Civil War. It said that slaves in the Southern states were free. Slaves could then join the United States Army. 185,000 African Americans fought in the Civil War. They fought for the Union and for freedom."
   },
   {
-    "question": "Sample Question 88?",
+    "question": "During the Cold War, what was the main concern of the United States?",
     "options": [
-      "Option A88",
-      "Option B88",
-      "Option C88",
-      "Option D88"
+      "Slavery",
+      "Climate Change",
+      "The Great Depression",
+      "Communism"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 88."
+    "correctAnswer": 3,
+    "explanation": "The United States' main concern during the Cold War was communism. The Cold War was not a traditional war. It was 'cold' because the United States and the Soviet Union did not fight each other directly. The Cold War began after World War II ended in 1945. The Soviet Union was a communist country. Communism is an economic system where most property belongs to the government. The United States has a capitalist economy, where property usually belongs to individuals. The United States and the Soviet Union competed for world power. Leaders of both countries worried that the other would use the atomic bomb to turn the Cold War into a real war. This never happened. The Cold War ended in 1991 when the Soviet Union divided into many smaller countries."
   },
   {
-    "question": "Sample Question 89?",
+    "question": "Name one U.S. territory?",
     "options": [
-      "Option A89",
-      "Option B89",
-      "Option C89",
-      "Option D89"
+      "Bermuda",
+      "Cayman Islands",
+      "Haiti",
+      "Guam"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 89."
+    "correctAnswer": 3,
+    "explanation": "There are five major U.S. territories: Puerto Rico, U.S. Virgin Islands, American Samoa, Northern Mariana Islands, and Guam. Territories have their own local governments. They also must follow the laws of the U.S. federal government."
   },
   {
-    "question": "Sample Question 90?",
+    "question": "What ocean is on the East Coast of the United States?",
     "options": [
-      "Option A90",
-      "Option B90",
-      "Option C90",
-      "Option D90"
+      "Arctic Ocean",
+      "Indian Ocean",
+      "Atlantic Ocean",
+      "Pacific Ocean"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 90."
+    "correctAnswer": 2,
+    "explanation": "The Atlantic Ocean is on the East Coast of the United States. The Atlantic Ocean reaches from the East Coast of the United States to Europe and Africa. The 13 original colonies bordered the Atlantic Ocean."
   },
   {
-    "question": "Sample Question 91?",
+    "question": "Name one of the two longest rivers in the United States.",
     "options": [
-      "Option A91",
-      "Option B91",
-      "Option C91",
-      "Option D91"
+      "Ohio River",
+      "Rio Grande River",
+      "Colorado River",
+      "Mississippi River"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 91."
+    "correctAnswer": 3,
+    "explanation": "The two longest rivers in the United States are the Missouri River and the Mississippi River. The Missouri River starts in Montana. It joins the Mississippi River in the state of Missouri. The Mississippi River runs through ten U.S. states. It starts in Minnesota near the border we share with Canada. It ends in Louisiana. The rivers have always been important to people living in the United States. American Indians used the rivers for trade, food and water. People still use the rivers to transport products. They are an important source of water."
   },
   {
-    "question": "Sample Question 92?",
+    "question": "Name the U.S. war betweeen the North and the South",
     "options": [
-      "Option A92",
-      "Option B92",
-      "Option C92",
-      "Option D92"
+      "World War I",
+      "The Revolutionary War",
+      "The Civil War",
+      "The War of 1812"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 92."
+    "correctAnswer": 2,
+    "explanation": "The war between the states in the North and the states in the South is called the Civil War. The Civil War started in 1861. It ended in 1865. Southern states disagreed with the North over slavery and other issues. They did not want to be part of the United States. They formed their own country called the Confederate States of America, or the Confederacy. States in the North wanted to keep the United States together. They were the Union. The North won the war. The Confederacy became part of the United States again."
   },
   {
-    "question": "Sample Question 93?",
+    "question": "There were 13 original states. Name three.",
     "options": [
-      "Option A93",
-      "Option B93",
-      "Option C93",
-      "Option D93"
+      "Virginia, North Carolina, and Florida",
+      "Washington, Oregon, and California",
+      "New York, Kentucky, and Georgia",
+      "Maryland, Virginia, and North Carolina"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 93."
+    "correctAnswer": 3,
+    "explanation": "The 13 original states were New Hampshire, Massachusetts, Rhode Island, Connecticut, New York, New Jersey, Pennsylvania, Delaware, Maryland, Virginia, North Carolina, South Carolina, and Georgia. The 13 original states were the first 13 British colonies. British colonists traveled across the Atlantic Ocean from Europe. They came to the East Coast of the United States. They founded colonies there. Maryland, Virginia, and North Carolina are three of the 13 original states."
   },
   {
-    "question": "Sample Question 94?",
+    "question": "What is the capital of the United States?",
     "options": [
-      "Option A94",
-      "Option B94",
-      "Option C94",
-      "Option D94"
+      "New York, NY",
+      "Boston, MA",
+      "Washington, D.C.",
+      "Philadelphia, PA"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 94."
+    "correctAnswer": 2,
+    "explanation": "Washington, D.C., is the capital of the United States. In 1800, the federal government moved to Washington, D.C. D.C. stands for District of Columbia. Senators and representatives meet at the Capitol building in Washington, D.C., to make laws. The president lives and works at the White House in Washington, D.C. Supreme Court judges make decisions at the Supreme Court building in Washington, D.C."
   },
   {
-    "question": "Sample Question 95?",
+    "question": "When was the Declaration of Independence adopted?",
     "options": [
-      "Option A95",
-      "Option B95",
-      "Option C95",
-      "Option D95"
+      "July 2, 1789",
+      "December 7, 1787",
+      "March 4, 1789",
+      "July 4, 1776"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 95."
+    "correctAnswer": 3,
+    "explanation": "On July 4, 1776, the colonists adopted the Declaration of Independence. Thomas Jefferson wrote the Declaration of Independence. It said the colonies were free from Great Britain. Representatives from the 13 colonies signed the Declaration. July 4, 1776, is a special date in American history. It is the day that the United States became an independent country, separate from Britain."
   },
   {
-    "question": "Sample Question 96?",
+    "question": "Why did the colonists fight the British?",
     "options": [
-      "Option A96",
-      "Option B96",
-      "Option C96",
-      "Option D96"
+      "Because of high taxes",
+      "Because they didn't have self-government",
+      "All of these answers",
+      "Because the British army stated in their houses"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 96."
+    "correctAnswer": 2,
+    "explanation": "The colonists fought the British because they wanted to be free from Britain. They fought the British because of unfair taxes. They fought because they didn’t have self-government. When the American colonies formed, they were part of Britain. Britain increased taxes for colonists on things they bought and used every day, like tea. Many colonists were angry because no one represented their needs in the British government. Colonists believed they did not have self-government. The British forced colonists to allow British soldiers to sleep and eat in their homes. The colonists joined together to fight Britain and gain independence."
   },
   {
-    "question": "Sample Question 97?",
+    "question": "What happened at the Constitutional Convention?",
     "options": [
-      "Option A97",
-      "Option B97",
-      "Option C97",
-      "Option D97"
+      "The Virginia Declaration of Rights was written",
+      "The Declaration of Independence was written",
+      "The Emancipation Proclamation was written",
+      "The Constitution was written"
     ],
-    "correctAnswer": 0,
-    "explanation": "Sample explanation for Question 97."
+    "correctAnswer": 3,
+    "explanation": "The Constitution was written at the Constitutional Convention. In 1787, 55 representatives went to Philadelphia. They came from 12 of the 13 original states. They talked about how to design the government. They wrote the Constitution. After the Constitutional Convention, the states agreed to adopt the Constitution."
   },
   {
-    "question": "Sample Question 98?",
+    "question": "What is the capital of your state?",
     "options": [
-      "Option A98",
+      "1787",
       "Option B98",
       "Option C98",
       "Option D98"
@@ -1078,7 +1078,7 @@
     "explanation": "Sample explanation for Question 98."
   },
   {
-    "question": "Sample Question 99?",
+    "question": "Who is the Governor of your state now?",
     "options": [
       "Option A99",
       "Option B99",
@@ -1089,7 +1089,7 @@
     "explanation": "Sample explanation for Question 99."
   },
   {
-    "question": "Sample Question 100?",
+    "question": "Name your U.S. Representative.",
     "options": [
       "Option A100",
       "Option B100",
