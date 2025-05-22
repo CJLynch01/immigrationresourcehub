@@ -1392,6 +1392,7 @@ button.active-page {
 .note ul {
   margin: 0.5rem 0 0 1.5rem;
   padding: 0;
+  list-style-type: none;
 }
 .note strong {
   color: var(--accent-color);
