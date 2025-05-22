@@ -5,7 +5,7 @@ const QuizResult = require('../models/quizResult');
 const { verifyToken } = require('../middleware/auth'); // ✅ fixed
 
 // GET /api/quiz/random
-router.get('/random', async (req, res) => {
+router.get('/random', verifyToken, async (req, res) => {
   let count = parseInt(req.query.count) || 10;
 
   try {
