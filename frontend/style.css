@@ -189,6 +189,7 @@ body {
   background-color: #1f1f1f;
   padding: 1.5rem;
   border-radius: 8px;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   border-left: 5px solid var(--accent-color, #ffd700);
   color: #f0f0f0;
