@@ -15,8 +15,19 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  "https://immigrationpathwaysconsulting.com",
+  "https://www.immigrationpathwaysconsulting.com"
+];
+
 app.use(cors({
-  origin: "https://immigrationpathwaysconsulting.com",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 
