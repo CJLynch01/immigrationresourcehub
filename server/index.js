@@ -15,6 +15,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Allow both Render and your domain
 const allowedOrigins = new Set([
   "https://immigrationpathwaysconsulting.com",
   "https://www.immigrationpathwaysconsulting.com",
@@ -35,16 +36,20 @@ app.use(cors({
 connectDB();
 app.use(express.json());
 
+// 🔹 Serve landing.html at root BEFORE static middleware
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "landing.html"));
 });
 
+// Redirect landing.html route back to /
 app.get("/landing.html", (req, res) => {
   res.redirect("/");
 });
 
+// 🔹 Static middleware comes AFTER
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/protected", protectedRoutes);
 app.use("/api/posts", postRoutes);
