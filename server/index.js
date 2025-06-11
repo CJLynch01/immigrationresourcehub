@@ -49,6 +49,13 @@ app.get("/landing.html", (req, res) => {
 // 🔹 Static middleware comes AFTER
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
+app.use((req, res, next) => {
+  if (req.hostname === 'immigrationpathwaysconsulting.com') {
+    return res.redirect(301, 'https://www.immigrationpathwaysconsulting.com' + req.originalUrl);
+  }
+  next();
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/protected", protectedRoutes);
