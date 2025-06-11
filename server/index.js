@@ -42,8 +42,14 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/quiz", quizRoutes);
 
+app.use(express.static(path.join(__dirname, "frontend")));
+
 app.get("/", (req, res) => {
-  res.send("Immigration Resource Hub API is running");
+  res.sendFile(path.join(__dirname, "frontend", "landing.html"));
+});
+
+app.get("/landing.html", (req, res) => {
+  res.redirect("/");
 });
 
 app.listen(PORT, () => {
