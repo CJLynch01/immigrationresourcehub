@@ -15,20 +15,20 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const allowedOrigins = [
+const allowedOrigins = new Set([
   "https://immigrationpathwaysconsulting.com",
-  "https://www.immigrationpathwaysconsulting.com"
-];
+  "https://www.immigrationpathwaysconsulting.com",
+]);
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    if (!origin || allowedOrigins.has(origin)) {
+      return callback(null, true);
     }
+    console.error("Blocked by CORS:", origin);
+    return callback(new Error("Not allowed by CORS"));
   },
-  credentials: true
+  credentials: true,
 }));
 
 connectDB();
