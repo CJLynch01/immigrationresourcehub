@@ -45,7 +45,7 @@ app.use("/api/quiz", quizRoutes);
 app.use(express.static(path.join(__dirname, "frontend")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "landing.html"));
+  res.sendFile(path.join(__dirname, "..", "frontend", "landing.html"));
 });
 
 app.get("/landing.html", (req, res) => {
