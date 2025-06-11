@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = new Set([
   "https://immigrationpathwaysconsulting.com",
   "https://www.immigrationpathwaysconsulting.com",
+  "https://immigrationresourcehub.onrender.com",
 ]);
 
 app.use(cors({
