@@ -1,6 +1,6 @@
 // Redirect to main site if the user has already seen the landing page
 if (localStorage.getItem("seenLanding")) {
-  window.location.href = "/index.html";
+  window.location.href = "index.html";
 }
 
 // Set the flag when the button is clicked
