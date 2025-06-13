@@ -4,7 +4,7 @@ import { showNavByAuth } from "./auth.js";
 (function() {
   const gaScript = document.createElement('script');
   gaScript.async = true;
-  gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+  gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-2Q8W6M3EFQ';
   document.head.appendChild(gaScript);
 
   window.dataLayer = window.dataLayer || [];
