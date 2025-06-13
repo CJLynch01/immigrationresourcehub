@@ -6,6 +6,10 @@
   --button-text: #1c1c1e;
 }
 
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
 .hero-banner {
   position: relative;
   width: auto;
