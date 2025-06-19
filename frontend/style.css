@@ -1667,6 +1667,580 @@ button.active-page {
   margin: 0 auto;
 }
 
+/* Citizenship */
+.citizenship-section {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.citizenship-section h2 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.citizenship-section p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.citizenship-section ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.citizenship-section ul li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.citizenship-section strong {
+  color: var(--accent-color);
+}
+
+.citizenship-section em {
+  color: #ccc;
+}
+
+.citizenship-section a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.citizenship-section a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Family-Based Petitions */
+.family-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background-color: #1f1f21;
+  color: #f4f4f4;
+}
+.family-section th, .family-section td {
+  border: 1px solid #444;
+  padding: 0.75rem;
+  text-align: left;
+}
+.family-section th {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+/* Work Permit */
+.work-permit {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.work-permit h2 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.work-permit p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.work-permit ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.work-permit ul li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.work-permit strong {
+  color: var(--accent-color);
+}
+
+.work-permit em {
+  color: #ccc;
+}
+
+.work-permit a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.work-permit a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Adjustment of Status */
+.adjustment-status {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.adjustment-status h2 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.adjustment-status p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.adjustment-status ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.adjustment-status ul li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.adjustment-status strong {
+  color: var(--accent-color);
+}
+
+.adjustment-status em {
+  color: #ccc;
+}
+
+.adjustment-status a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.adjustment-status a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Asylum & Humanitarian */
+.asylum-section {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.asylum-section h2 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.asylum-section p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.asylum-section ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.asylum-section ul li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.asylum-section strong {
+  color: var(--accent-color);
+}
+
+.asylum-section em {
+  color: #ccc;
+}
+
+.asylum-section a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.asylum-section a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Visa */
+.visa-section {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.visa-section h2, 
+.visa-section h3 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.visa-section p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.visa-section ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.visa-section ul li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.visa-section strong {
+  color: var(--accent-color);
+}
+
+.visa-section em {
+  color: #ccc;
+}
+
+.visa-section a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.visa-section a:hover {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.visa-section a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.visa-section a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Family Visas */
+.family-section {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.family-section h2, 
+.family-section h3 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.family-section p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.family-section ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.family-section ul li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.family-section strong {
+  color: var(--accent-color);
+}
+
+.family-section em {
+  color: #ccc;
+}
+
+.family-section a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.family-section a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Fiance Visas */
+.fiancee-section {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.fiancee-section h2, 
+.fiancee-section h3 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.fiancee-section p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.fiancee-section ul, 
+.fiancee-section ol {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.fiancee-section ul li, 
+.fiancee-section ol li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.fiancee-section strong {
+  color: var(--accent-color);
+}
+
+.fiancee-section em {
+  color: #ccc;
+}
+
+.fiancee-section a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.fiancee-section a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Student Visas */
+.student-section {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.student-section h2, 
+.student-section h3 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.student-section p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.student-section ul, 
+.student-section ol {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.student-section ul li, 
+.student-section ol li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.student-section strong {
+  color: var(--accent-color);
+}
+
+.student-section em {
+  color: #ccc;
+}
+
+.student-section a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.student-section a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
+/* Tourist Visas */
+.visitor-section {
+  background-color: #2a2a2d;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+  max-width: 900px;
+}
+
+.visitor-section h2, 
+.visitor-section h3 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.visitor-section p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.visitor-section ul, 
+.visitor-section ol {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.visitor-section ul li, 
+.visitor-section ol li {
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.visitor-section strong {
+  color: var(--accent-color);
+}
+
+.visitor-section em {
+  color: #ccc;
+}
+
+.visitor-section a.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.visitor-section a.button:hover {
+  background-color: #e0c865;
+  color: #000;
+}
+
 /* ===== Responsive Layout for Mobile Devices ===== */
 @media (max-width: 600px) {
   .header-content {
