@@ -92,7 +92,7 @@ router.get("/me", verifyToken, async (req, res) => {
 //GET /api/auth/clients — Admin-only: get list of clients
 router.get("/clients", verifyToken, isAdmin, async (req, res) => {
   try {
-    const clients = await User.find({ role: "client" }).select("name email");
+    const clients = await User.find({ role: "client" }).select("_id name email");
     res.json(clients);
   } catch (err) {
     console.error("Client list error:", err);
