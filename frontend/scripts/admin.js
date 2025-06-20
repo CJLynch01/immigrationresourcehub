@@ -160,9 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
-
-
   async function checkMfaStatus() {
     const token = localStorage.getItem("token");
     console.log("Token for /api/auth/me:", token);
@@ -171,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const user = await res.json();
-    console.log("/me response:", user);
     const mfaDiv = document.getElementById("mfaStatus");
     if (user.mfa?.enabled) {
       mfaDiv.textContent = "✅ MFA is enabled";
