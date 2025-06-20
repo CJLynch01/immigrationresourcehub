@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function populateClientDropdown() {
     const token = getToken();
-    const dropdown = document.getElementById("clientDropdown");
+    const dropdown = document.getElementById("clientSelect");
     const userIdField = document.getElementById("userId");
 
     if (!dropdown || !userIdField) {
@@ -147,12 +147,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       dropdown.innerHTML = '<option value="">-- Choose a client --</option>';
 
+      console.log("Appending to dropdown:", dropdown);
+
       clients.forEach((client) => {
         const option = document.createElement("option");
         option.value = client._id;
         option.textContent = `${client.name} (${client.email})`;
         dropdown.appendChild(option);
+        console.log("Added:", option);
       });
+
 
       dropdown.addEventListener("change", () => {
         userIdField.value = dropdown.value;
