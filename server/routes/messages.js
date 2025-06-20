@@ -1,3 +1,6 @@
+// const dotenv = require("dotenv");
+// dotenv.config();
+
 const express = require("express");
 const Message = require("../models/message.js");
 const User = require("../models/user.js");
@@ -141,5 +144,7 @@ router.get("/sent", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to load sent messages." });
   }
 });
+
+console.log("SMTP host is:", process.env.SMTP_HOST);
 
 module.exports = router;
