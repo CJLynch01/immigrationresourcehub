@@ -124,9 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
   async function populateClientDropdown() {
     const token = getToken();
     const dropdown = document.getElementById("clientDropdown");
-    const userIdField = document.getElementById("userId");
-
-    if (!dropdown || !userIdField) return;
 
     try {
       const res = await fetch("https://immigrationresourcehub.onrender.com/api/users/clients", {
@@ -135,20 +132,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const clients = await res.json();
 
-      dropdown.innerHTML = '<option value="">-- Choose a client --</option>';
-      clients.forEach(client => {
+      clients.forEach((client) => {
         const option = document.createElement("option");
         option.value = client._id;
         option.textContent = `${client.name} (${client.email})`;
         dropdown.appendChild(option);
       });
-
-      dropdown.addEventListener("change", () => {
-        userIdField.value = dropdown.value;
-      });
     } catch (err) {
       console.error("Failed to load clients:", err);
-      dropdown.innerHTML = '<option value="">⚠️ Error loading clients</option>';
     }
   }
 
