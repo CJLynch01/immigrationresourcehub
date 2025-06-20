@@ -122,26 +122,38 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   async function populateClientDropdown() {
-    const token = getToken();
-    const dropdown = document.getElementById("clientDropdown");
+  const token = getToken();
+  const dropdown = document.getElementById("clientDropdown");
+  const userIdField = document.getElementById("userId");
 
-    try {
-      const res = await fetch("https://immigrationresourcehub.onrender.com/api/users/clients", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+  if (!dropdown || !userIdField) return;
 
-      const clients = await res.json();
+  try {
+    const res = await fetch("https://immigrationresourcehub.onrender.com/api/users/clients", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
-      clients.forEach((client) => {
-        const option = document.createElement("option");
-        option.value = client._id;
-        option.textContent = `${client.name} (${client.email})`;
-        dropdown.appendChild(option);
-      });
-    } catch (err) {
-      console.error("Failed to load clients:", err);
-    }
+    const clients = await res.json();
+
+    // Clear and repopulate dropdown
+    dropdown.innerHTML = '<option value="">-- Choose a client --</option>';
+
+    clients.forEach((client) => {
+      const option = document.createElement("option");
+      option.value = client._id;
+      option.textContent = `${client.name} (${client.email})`;
+      dropdown.appendChild(option);
+    });
+
+    // Update userId field when selection changes
+    dropdown.addEventListener("change", () => {
+      userIdField.value = dropdown.value;
+    });
+  } catch (err) {
+    console.error("Failed to load clients:", err);
   }
+}
+
 
 
 
