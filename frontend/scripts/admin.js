@@ -122,24 +122,39 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   async function populateClientDropdown() {
+    const token = getToken();
+    const dropdown = document.getElementById("clientDropdown");
+    const userIdField = document.getElementById("userId");
+
+    if (!dropdown || !userIdField) return;
+
     try {
       const res = await fetch("https://immigrationresourcehub.onrender.com/api/auth/clients", {
-        headers: { Authorization: `Bearer ${getToken()}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("Failed to load clients. Status:", res.status, "Message:", errorData?.msg || errorData?.error);
+        dropdown.innerHTML = '<option value="">⚠️ Unable to load clients</option>';
+        return;
+      }
+
       const clients = await res.json();
-      const dropdown = document.getElementById("clientDropdown");
-      const userIdField = document.getElementById("userId");
-      if (!dropdown || !userIdField) return;
+
       dropdown.innerHTML =
         '<option value="">-- Choose a client --</option>' +
         clients.map(c => `<option value="${c._id}">${c.name} (${c.email})</option>`).join("");
+
       dropdown.addEventListener("change", () => {
         userIdField.value = dropdown.value;
       });
     } catch (err) {
-      console.error("Failed to load clients:", err);
+      console.error("❌ Exception loading clients:", err);
+      dropdown.innerHTML = '<option value="">⚠️ Error loading clients</option>';
     }
   }
+
 
   async function checkMfaStatus() {
     const token = localStorage.getItem("token");
