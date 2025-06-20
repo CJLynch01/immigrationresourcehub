@@ -64,21 +64,21 @@
     <section class="section">
       <h2>📤 Send File to Client</h2>
 
-      <label for="clientDropdown">Select Client</label>
-      <select id="clientDropdown" required>
-        <option value="">Select a client</option>
-      </select>
-
       <form id="adminSendForm" class="admin-form" enctype="multipart/form-data">
+        <label for="clientDropdown">Select Client</label>
+        <select id="clientDropdown" required>
+          <option value="">Select a client</option>
+        </select>
+
         <label for="userId">Client User ID</label>
         <input type="text" id="userId" name="userId" readonly required />
-    
+
         <label for="docType">Document Type</label>
         <input type="text" id="docType" name="docType" placeholder="e.g. Welcome Letter" required />
-    
+
         <label for="adminFile">Choose File</label>
         <input type="file" id="adminFile" name="file" required />
-    
+
         <button type="submit" class="button">📨 Send</button>
       </form>
 
