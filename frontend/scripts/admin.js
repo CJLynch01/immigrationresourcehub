@@ -122,37 +122,45 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   async function populateClientDropdown() {
-  const token = getToken();
-  const dropdown = document.getElementById("clientDropdown");
-  const userIdField = document.getElementById("userId");
+    const token = getToken();
+    const dropdown = document.getElementById("clientDropdown");
+    const userIdField = document.getElementById("userId");
 
-  if (!dropdown || !userIdField) return;
+    if (!dropdown || !userIdField) {
+      console.log("Dropdown or userId field missing from DOM");
+      return;
+    }
 
-  try {
-    const res = await fetch("https://immigrationresourcehub.onrender.com/api/users/clients", {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    try {
+      const res = await fetch("https://immigrationresourcehub.onrender.com/api/users/clients", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-    const clients = await res.json();
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Fetch failed:", res.status, text);
+        return;
+      }
 
-    // Clear and repopulate dropdown
-    dropdown.innerHTML = '<option value="">-- Choose a client --</option>';
+      const clients = await res.json();
+      console.log("✅ Loaded clients:", clients);
 
-    clients.forEach((client) => {
-      const option = document.createElement("option");
-      option.value = client._id;
-      option.textContent = `${client.name} (${client.email})`;
-      dropdown.appendChild(option);
-    });
+      dropdown.innerHTML = '<option value="">-- Choose a client --</option>';
 
-    // Update userId field when selection changes
-    dropdown.addEventListener("change", () => {
-      userIdField.value = dropdown.value;
-    });
-  } catch (err) {
-    console.error("Failed to load clients:", err);
+      clients.forEach((client) => {
+        const option = document.createElement("option");
+        option.value = client._id;
+        option.textContent = `${client.name} (${client.email})`;
+        dropdown.appendChild(option);
+      });
+
+      dropdown.addEventListener("change", () => {
+        userIdField.value = dropdown.value;
+      });
+    } catch (err) {
+      console.error("🚫 Failed to load clients:", err);
+    }
   }
-}
 
 
 
