@@ -6,6 +6,18 @@ const { verifyToken, isAdmin } = require("../middleware/auth");
 const speakeasy = require("speakeasy");
 const qrcode = require("qrcode");
 const User = require("../models/user");
+const nodemailer = require("nodemailer");
+
+// Setup mailer
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT),
+  secure: process.env.SMTP_SECURE === "true",
+  auth: {
+    user: process.env.EMAIL_FROM,
+    pass: process.env.EMAIL_PASSWORD
+  }
+});
 
 //POST /api/auth/login — Login with optional MFA
 router.post("/login", async (req, res) => {
@@ -68,6 +80,23 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashedPassword, role });
     await newUser.save();
+
+    // 🔔 Notify Admin of new registration
+    if (process.env.ADMIN_EMAIL) {
+      await transporter.sendMail({
+        from: process.env.EMAIL_FROM,
+        to: process.env.ADMIN_EMAIL,
+        subject: "🔔 New User Registration",
+        html: `
+          <p>A new user has registered:</p>
+          <ul>
+            <li><strong>Name:</strong> ${name}</li>
+            <li><strong>Email:</strong> ${email}</li>
+            <li><strong>Role:</strong> ${role}</li>
+          </ul>
+        `
+      });
+    }
 
     res.status(201).json({ msg: "User registered." });
   } catch (err) {
