@@ -127,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const userIdField = document.getElementById("userId");
 
     if (!dropdown || !userIdField) {
-      console.log("Dropdown or userId field missing from DOM");
       return;
     }
 
@@ -143,18 +142,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const clients = await res.json();
-      console.log("✅ Loaded clients:", clients);
 
       dropdown.innerHTML = '<option value="">-- Choose a client --</option>';
-
-      console.log("Appending to dropdown:", dropdown);
-
       clients.forEach((client) => {
         const option = document.createElement("option");
         option.value = client._id;
         option.textContent = `${client.name} (${client.email})`;
         dropdown.appendChild(option);
-        console.log("Added:", option);
       });
 
 
