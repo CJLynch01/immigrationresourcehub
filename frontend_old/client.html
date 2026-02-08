@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Dashboard | Immigration Pathways</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script type="module" src="scripts/client.js"></script>
+  <script type="module" src="scripts/include.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Client Dashboard</h1>
+    <div id="mfaStatus" class="mfa-status"></div>
+    <section id="mfaVerifySection" style="display: none;">
+      <h2>🔐 Verify MFA Setup</h2>
+      <p>Enter the 6-digit code from your authenticator app:</p>
+      <input type="text" id="verifyMfaToken" placeholder="123456" inputmode="numeric" />
+      <button id="verifyMfaBtn" class="button">Verify MFA</button>
+      <p id="mfaVerifyMsg"></p>
+    </section>
+    <p>Welcome to your personalized hub</p>
+  </header>
+
+  <div id="include-nav"></div>
+
+  <main class="client-dashboard">
+
+    <section class="password-card">
+      <h3>Change Password</h3>
+      <form id="changePasswordForm">
+        <label for="currentPassword">Current Password:</label>
+        <input type="password" id="currentPassword" required>
+    
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" required>
+    
+        <button type="submit">Update Password</button>
+        <p id="passwordMessage"></p>
+      </form>
+    </section>
+
+    <section class="section">
+      <h2>📄 Upload a Document</h2>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <label for="docType">Document Type</label>
+        <input type="text" name="docType" id="docType" placeholder="e.g. Work Permit Application" required />
+
+        <label for="file">Choose File</label>
+        <input type="file" name="file" id="file" accept=".pdf" required />
+
+        <button type="submit" class="button">Upload</button>
+      </form>
+    </section>
+
+    <section class="section">
+      <h2>📁 Your Documents</h2>
+      <div id="my-uploaded-docs">
+        <p>Loading documents...</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>📥 Documents From Admin</h2>
+      <div id="admin-sent-docs">
+        <p>Loading documents...</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="include-footer"></div>
+
+</body>
+</html>

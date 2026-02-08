@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | Immigration Pathways</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script type="module" src="scripts/register.js"></script>
+  <script type="module" src="scripts/include.js"></script>
+
+</head>
+<body>
+  <header class="site-header">
+    <h1>Create an Account</h1>
+    <p>Register to access your client dashboard</p>
+  </header>
+
+  <div id="include-nav"></div>
+
+  <main class="login-page">
+    <form id="registerForm" class="auth-form">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="John Doe" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" required />
+
+      <button type="submit" class="button">Create Account</button>
+    </form>
+  </main>
+
+  <div id="include-footer"></div>
+
+</body>
+</html>
