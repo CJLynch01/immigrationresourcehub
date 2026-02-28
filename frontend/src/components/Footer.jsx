@@ -51,8 +51,8 @@ export default function Footer() {
 
       <div className="footer-section small-print">
         <p>
-          <Link to="/legal">Privacy Policy</Link> |{" "}
-          <Link to="/legal">Terms of Use</Link>
+          <Link to="/privacy">Privacy Policy</Link> |{" "}
+          <Link to="/terms">Terms of Use</Link>
         </p>
         <p>© {new Date().getFullYear()} Immigration Pathways Consulting LLC</p>
       </div>

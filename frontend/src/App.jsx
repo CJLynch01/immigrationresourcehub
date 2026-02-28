@@ -7,6 +7,12 @@ import Services from "./pages/Services.jsx";
 import Contact from "./pages/Contact.jsx";
 import Login from "./pages/Login.jsx";
 
+// services pages
+import Citizenship from "./pages/Citizenship.jsx";
+import ConsularProcessing from "./pages/ConsularProcessing.jsx";
+import FamilyPetition from "./pages/FamilyPetition.jsx";
+import VisaServices from "./pages/VisaServices.jsx";
+
 import Privacy from "./pages/Privacy.jsx";
 import Terms from "./pages/Terms.jsx";
 
@@ -21,9 +27,13 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/citizenship" element={<Citizenship />} />
+        <Route path="/services/visa-services" element={<VisaServices />} />
+        <Route path="/services/consular-processing" element={<ConsularProcessing />} />
+        <Route path="/services/family-petition" element={<FamilyPetition />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/legal" element={<Legal />} />

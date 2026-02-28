@@ -1,0 +1,146 @@
+import { Link } from "react-router-dom";
+
+export default function FamilyPetition() {
+  return (
+    <section>
+      <header className="site-header">
+        <h1>Family-Based Petitions</h1>
+        <p>Helping families stay together through the immigration process</p>
+      </header>
+
+      <main className="about-page family-section">
+        <section className="about-content">
+          <h2>What is a Family-Based Petition?</h2>
+          <p>
+            A family-based petition is the first step in helping a relative
+            immigrate to the United States. It is used by U.S. citizens and lawful
+            permanent residents (LPRs) to sponsor eligible family members for
+            permanent residency (a green card).
+          </p>
+
+          <h2>Who Can File and Who Can Be Sponsored?</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Petitioner</th>
+                <th>Eligible Relatives</th>
+                <th>Category</th>
+                <th>Visa Cap?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>U.S. Citizen</td>
+                <td>Spouse, unmarried children under 21</td>
+                <td>Immediate Relative</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>U.S. Citizen</td>
+                <td>Unmarried children 21 or older</td>
+                <td>Family First Preference (F1)</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>U.S. Citizen</td>
+                <td>Married children of any age</td>
+                <td>Family Third Preference (F3)</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>U.S. Citizen</td>
+                <td>Siblings (if petitioner is 21+)</td>
+                <td>Family Fourth Preference (F4)</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Lawful Permanent Resident (LPR)</td>
+                <td>Spouse, unmarried children under 21</td>
+                <td>Family Second Preference A (F2A)</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Lawful Permanent Resident (LPR)</td>
+                <td>Unmarried children 21 or older</td>
+                <td>Family Second Preference B (F2B)</td>
+                <td>Yes</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Immediate Relatives vs. Family Preference</h2>
+          <p>
+            Immediate relatives (spouses, unmarried children under 21, and parents
+            of U.S. citizens) are not subject to annual visa limits, making the
+            process generally faster. Other relatives fall under the family
+            preference system, which has annual numerical caps and longer wait
+            times.
+          </p>
+
+          <h2>What Do the Family Preferences Mean?</h2>
+          <p>
+            The family preference system is used to allocate a limited number of
+            immigrant visas each year to certain qualified relatives. These
+            categories are:
+          </p>
+          <ul>
+            <li>
+              <strong>F1 – First Preference:</strong> Unmarried sons and daughters
+              (21 or older) of U.S. citizens
+            </li>
+            <li>
+              <strong>F2A – Second Preference A:</strong> Spouses and unmarried
+              children (under 21) of lawful permanent residents
+            </li>
+            <li>
+              <strong>F2B – Second Preference B:</strong> Unmarried sons and
+              daughters (21 or older) of lawful permanent residents
+            </li>
+            <li>
+              <strong>F3 – Third Preference:</strong> Married sons and daughters
+              of U.S. citizens
+            </li>
+            <li>
+              <strong>F4 – Fourth Preference:</strong> Brothers and sisters of
+              U.S. citizens (if the petitioner is at least 21)
+            </li>
+          </ul>
+
+          <p>
+            Because there are limits on the number of visas available each year
+            in these categories, applicants often face long wait times. The U.S.
+            Department of State publishes a monthly Visa Bulletin that shows which
+            priority dates are currently being processed.
+          </p>
+
+          <p>Estimated wait times can vary significantly by category and country of origin. On average:</p>
+          <ul>
+            <li><strong>F1:</strong> 7–10 years</li>
+            <li><strong>F2A:</strong> 2–3 years (but sometimes current)</li>
+            <li><strong>F2B:</strong> 6–9 years</li>
+            <li><strong>F3:</strong> 12–15 years</li>
+            <li><strong>F4:</strong> 14–20+ years</li>
+          </ul>
+
+          <h2>How We Help</h2>
+          <p>
+            At <strong>Immigration Pathways Consulting LLC</strong>, we offer
+            personalized, non-legal assistance with:
+          </p>
+          <ul>
+            <li>Preparing and submitting the I-130 Petition for Alien Relative</li>
+            <li>Gathering and organizing supporting documents</li>
+            <li>Helping track visa bulletin dates for preference category petitions</li>
+            <li>Providing checklists and guidance for next steps after petition approval</li>
+          </ul>
+
+          <br />
+
+          <Link to="/contact" className="button">
+            Schedule a Free Consultation
+          </Link>
+        </section>
+      </main>
+    </section>
+  );
+}
