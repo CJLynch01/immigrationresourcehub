@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 export default function VisaServices() {
+  useSEO({
+    title: "Visa Application Support",
+    description: "Document preparation help for family, student, tourist, and fiancé(e) visas. Immigration Pathways Consulting guides you every step of the way.",
+  });
   return (
     <section>
       <header className="site-header">

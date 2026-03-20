@@ -1,6 +1,11 @@
 import { useState } from "react";
+import useSEO from "../hooks/useSEO.js";
 
 export default function Contact() {
+  useSEO({
+    title: "Contact Us",
+    description: "Get in touch with Immigration Pathways Consulting. We're here to answer your questions and help you start your immigration document preparation journey.",
+  });
   // Optional: light client-side UX only (Formspree still handles submission)
   const [isSubmitting, setIsSubmitting] = useState(false);
 

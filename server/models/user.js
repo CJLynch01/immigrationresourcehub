@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
     enabled: { type: Boolean, default: false },
     secret: { type: String }
   },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
   createdAt: { type: Date, default: Date.now }
 });
 

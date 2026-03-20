@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 export default function ConsularProcessing() {
+  useSEO({
+    title: "Consular Processing Support",
+    description: "Help preparing documents for obtaining a U.S. immigrant visa through consular processing at a U.S. embassy or consulate abroad.",
+  });
   return (
     <section>
       <header className="site-header">

@@ -1,0 +1,70 @@
+import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
+
+export default function AdjustmentStatus() {
+  useSEO({
+    title: "Adjustment of Status",
+    description: "Document preparation support for applying for a green card without leaving the United States through Adjustment of Status (I-485).",
+  });
+  return (
+    <>
+      <header className="site-header">
+        <h1>Adjustment of Status</h1>
+        <p>Helping you apply for a green card without leaving the United States</p>
+      </header>
+
+      <main className="about-page adjustment-status">
+        <section className="about-content">
+          <h2>What is Adjustment of Status?</h2>
+          <p>
+            Adjustment of Status (AOS) is the process that allows certain
+            noncitizens already in the United States to apply for lawful
+            permanent residence (a green card) without having to return
+            to their home country for consular processing.
+          </p>
+
+          <h2>Who May Qualify?</h2>
+          <p>You may be eligible to adjust status if:</p>
+          <ul>
+            <li>You entered the U.S. lawfully (with inspection)</li>
+            <li>You have an approved immigrant petition (such as Form I-130 or I-140)</li>
+            <li>You have an immigrant visa number available</li>
+            <li>
+              You are not subject to certain bars to adjustment
+              (e.g., unlawful status, criminal history, fraud)
+            </li>
+          </ul>
+
+          <h2>Common Eligibility Scenarios</h2>
+          <ul>
+            <li>Spouses and immediate relatives of U.S. citizens</li>
+            <li>Employment-based immigrants already in the U.S. on a work visa</li>
+            <li>Refugees or asylees after one year in the U.S.</li>
+            <li>VAWA self-petitioners</li>
+            <li>Special immigrant juveniles and other humanitarian categories</li>
+          </ul>
+
+          <h2>How We Can Help</h2>
+          <p>
+            At <strong>Immigration Pathways Consulting LLC</strong>, we offer
+            document preparation support for those pursuing Adjustment of Status.
+            Our services include:
+          </p>
+          <ul>
+            <li>Completing Form I-485 accurately</li>
+            <li>Organizing supporting documentation (affidavits, medical exams, etc.)</li>
+            <li>
+              Assisting with concurrent filings like I-765 (work permit)
+              and I-131 (travel permit)
+            </li>
+            <li>Providing general guidance on timelines and interview expectations</li>
+          </ul>
+
+          <Link to="/contact" className="button">
+            Schedule a Free Consultation
+          </Link>
+        </section>
+      </main>
+    </>
+  );
+}

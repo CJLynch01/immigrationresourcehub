@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 export default function Home() {
+  useSEO({
+    title: "U.S. Immigration Document Preparation",
+    description: "Immigration Pathways Consulting helps you navigate the U.S. immigration process with personalized document preparation support. Family petitions, work permits, citizenship, and more.",
+  });
   return (
     <main className="landing-content">
       {/* HERO SECTION */}

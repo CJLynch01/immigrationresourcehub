@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 export default function Services() {
+  useSEO({
+    title: "Our Services",
+    description: "Explore immigration document preparation services including family petitions, work permits, adjustment of status, asylum, citizenship, and visa support.",
+  });
   return (
     <section>
       <header className="site-header">

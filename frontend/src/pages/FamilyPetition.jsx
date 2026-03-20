@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 export default function FamilyPetition() {
+  useSEO({
+    title: "Family-Based Petitions",
+    description: "Help preparing I-130 and family-based immigration petitions to keep your family together through the immigration process.",
+  });
   return (
     <section>
       <header className="site-header">

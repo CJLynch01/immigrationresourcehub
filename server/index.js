@@ -10,6 +10,7 @@ const uploadRoutes = require("./routes/uploads");
 const messageRoutes = require("./routes/messages");
 const userRoutes = require("./routes/users");
 const quizRoutes = require("./routes/quizRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -20,6 +21,9 @@ const allowedOrigins = new Set([
   "https://immigrationpathwaysconsulting.com",
   "https://www.immigrationpathwaysconsulting.com",
   "https://immigrationresourcehub.onrender.com",
+
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
 ]);
 
 app.use(cors({
@@ -64,6 +68,7 @@ app.use("/api/uploads", uploadRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/quiz", quizRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

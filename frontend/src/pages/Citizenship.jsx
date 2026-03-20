@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 export default function Citizenship() {
+  useSEO({
+    title: "Naturalization & Citizenship Support",
+    description: "Get help preparing your N-400 naturalization application and citizenship documents with Immigration Pathways Consulting.",
+  });
   return (
     <section>
       <header className="site-header">

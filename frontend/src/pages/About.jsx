@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 export default function About() {
+  useSEO({
+    title: "About Us",
+    description: "Learn about Immigration Pathways Consulting — dedicated to helping immigrants navigate U.S. immigration processes with expert document preparation support.",
+  });
   return (
     <section>
       <header className="site-header">

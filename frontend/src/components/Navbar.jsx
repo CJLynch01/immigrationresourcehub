@@ -1,24 +1,36 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Close menu when navigating (nice on mobile)
-  const closeMenu = () => setOpen(false);
+  const closeMenu = () => { setOpen(false); setAdminOpen(false); };
+
+  const isLoggedIn = !!localStorage.getItem("token");
+  const isAdmin = (() => {
+    try { return JSON.parse(localStorage.getItem("user"))?.role === "admin"; }
+    catch { return false; }
+  })();
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    closeMenu();
+    navigate("/login");
+  }
 
   return (
     <>
       <header className="site-header">
         <div className="header-content">
-          {/* If you have a logo file, put it in /public and set src="/logo.png" */}
-          {/* <img className="site-logo" src="/logo.png" alt="Immigration Pathways logo" /> */}
-
-          <div>
-            <h1 style={{ margin: 0 }}>Immigration Pathways</h1>
-            <p style={{ margin: "0.25rem 0 0", opacity: 0.9 }}>
-              Resource Hub
-            </p>
+          <div className="header-brand-group">
+            <img src="/images/logo.webp" alt="Immigration Pathways Consulting" className="site-logo" />
+            <div className="header-brand">
+              <span className="header-brand__name">Immigration Pathways Consulting</span>
+              <span className="header-brand__tagline">Your trusted guide through the U.S. immigration process</span>
+            </div>
           </div>
 
           <button
@@ -53,29 +65,44 @@ export default function Navbar() {
           Blog
         </NavLink>
 
-        <NavLink to="/login" onClick={closeMenu}>
-          Login
-        </NavLink>
+        {!isLoggedIn && (
+          <NavLink to="/login" onClick={closeMenu}>
+            Login
+          </NavLink>
+        )}
 
-        {/* Optional admin dropdown (keep/remove as needed) */}
-        <div className="admin-dropdown">
-          <button className="dropbtn" type="button">
-            Admin ▾
+        {isLoggedIn && (
+          <button type="button" onClick={handleLogout} className="nav-logout-btn">
+            Logout
           </button>
-          <div className="dropdown-content">
-            <NavLink to="/admin" onClick={closeMenu}>
-              Dashboard
-            </NavLink>
-            <NavLink to="/admin/posts" onClick={closeMenu}>
-              Posts
-            </NavLink>
-            <NavLink to="/admin/documents" onClick={closeMenu}>
-              Documents
-            </NavLink>
+        )}
+
+        {isAdmin && (
+          <div className={`admin-dropdown ${adminOpen ? "open" : ""}`}>
+            <button
+              className="dropbtn"
+              type="button"
+              onClick={() => setAdminOpen((v) => !v)}
+            >
+              Admin ▾
+            </button>
+            <div className="dropdown-content">
+              <NavLink to="/admin" onClick={closeMenu}>
+                Dashboard
+              </NavLink>
+              <NavLink to="/admin/posts" onClick={closeMenu}>
+                Blog
+              </NavLink>
+              <NavLink to="/admin/messages" onClick={closeMenu}>
+                Messages
+              </NavLink>
+              <NavLink to="/admin/analytics" onClick={closeMenu}>
+                Analytics
+              </NavLink>
+            </div>
           </div>
-        </div>
+        )}
       </nav>
     </>
   );
 }
-

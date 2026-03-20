@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const { verifyToken, isAdmin } = require("../middleware/auth");
 const speakeasy = require("speakeasy");
 const qrcode = require("qrcode");
@@ -176,6 +177,70 @@ router.post("/mfa/verify", verifyToken, async (req, res) => {
   await user.save();
 
   res.json({ msg: "MFA enabled successfully." });
+});
+
+//POST /api/auth/forgot-password — Send reset link
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    // Always respond the same way to prevent email enumeration
+    if (!user) {
+      return res.json({ msg: "If that email exists, a reset link has been sent." });
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 60 * 60 * 1000; // 1 hour
+    await user.save();
+
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_FROM,
+      to: user.email,
+      subject: "Password Reset — Immigration Pathways Consulting",
+      html: `
+        <p>Hi ${user.name},</p>
+        <p>You requested a password reset. Click the link below to set a new password. This link expires in 1 hour.</p>
+        <p><a href="${resetUrl}" style="color:#c9a84c">Reset My Password</a></p>
+        <p>If you didn't request this, you can ignore this email.</p>
+        <p>— Immigration Pathways Consulting</p>
+      `
+    });
+
+    res.json({ msg: "If that email exists, a reset link has been sent." });
+  } catch (err) {
+    console.error("Forgot password error:", err);
+    res.status(500).json({ error: "Server error." });
+  }
+});
+
+//POST /api/auth/reset-password — Set new password with token
+router.post("/reset-password", async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: "Reset link is invalid or has expired." });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({ msg: "Password updated successfully. You can now log in." });
+  } catch (err) {
+    console.error("Reset password error:", err);
+    res.status(500).json({ error: "Server error." });
+  }
 });
 
 module.exports = router;
