@@ -147,6 +147,48 @@ export default function AdminDashboard() {
 
       <main className="admin-dashboard">
         <section className="section">
+          <h2>🔗 Quick Links</h2>
+          <div className="quick-links">
+            <a
+              href="https://egov.uscis.gov/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="quick-link-card"
+            >
+              <span className="quick-link-card__icon">🏛️</span>
+              <div>
+                <strong>USCIS Case Status</strong>
+                <p>Check case status on the USCIS eGov portal</p>
+              </div>
+            </a>
+            <a
+              href="https://egov.uscis.gov/processing-times/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="quick-link-card"
+            >
+              <span className="quick-link-card__icon">⏱️</span>
+              <div>
+                <strong>USCIS Processing Times</strong>
+                <p>View current processing times by form type</p>
+              </div>
+            </a>
+            <a
+              href="https://www.uscis.gov/forms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="quick-link-card"
+            >
+              <span className="quick-link-card__icon">📋</span>
+              <div>
+                <strong>USCIS Forms</strong>
+                <p>Download official USCIS immigration forms</p>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section className="section">
           <h2>📤 Documents From Clients</h2>
 
           {docsLoading ? (

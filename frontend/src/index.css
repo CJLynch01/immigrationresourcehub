@@ -1670,6 +1670,52 @@ button.delete-button:hover {
   background-color: #0056b3;
 }
 
+/* Quick Links */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.quick-link-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: #25252a;
+  border: 1px solid #35353d;
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.quick-link-card:hover {
+  border-color: var(--accent-color);
+  background: #2c2c33;
+}
+
+.quick-link-card__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.quick-link-card strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  margin-bottom: 0.2rem;
+}
+
+.quick-link-card p {
+  font-size: 0.78rem;
+  color: #999;
+  margin: 0;
+  line-height: 1.4;
+}
+
 /* Change Password */
 .password-card {
   background-color: #1a1a1a;
