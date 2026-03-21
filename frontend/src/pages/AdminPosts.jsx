@@ -4,6 +4,9 @@ import RichTextEditor from "../components/RichTextEditor.jsx";
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 const CATEGORIES = [
+  "Breaking News",
+  "Immigration Updates",
+  "Business",
   "Work Permit",
   "Family Petition",
   "Citizenship",
