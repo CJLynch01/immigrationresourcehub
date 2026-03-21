@@ -25,6 +25,11 @@ function stripHtml(str) {
   return (str || "").replace(/<[^>]*>/g, "").trim();
 }
 
+// Escape HTML for safe use in email templates
+function escapeHtml(str) {
+  return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 // Send a new message
 router.post("/", verifyToken, async (req, res) => {
   try {
@@ -34,6 +39,13 @@ router.post("/", verifyToken, async (req, res) => {
 
     if (!subject || !body) {
       return res.status(400).json({ error: "Subject and message body are required." });
+    }
+
+    if (subject.length > 200) {
+      return res.status(400).json({ error: "Subject must be 200 characters or fewer." });
+    }
+    if (body.length > 5000) {
+      return res.status(400).json({ error: "Message body must be 5000 characters or fewer." });
     }
 
     if (req.user.role === "client") {
@@ -65,10 +77,10 @@ router.post("/", verifyToken, async (req, res) => {
       to: recipient.email,
       subject: `📬 New Message from ${sender.name}`,
       html: `
-        <p>You have a new message from ${sender.name}:</p>
-        <p><strong>Subject:</strong> ${message.subject}</p>
+        <p>You have a new message from ${escapeHtml(sender.name)}:</p>
+        <p><strong>Subject:</strong> ${escapeHtml(message.subject)}</p>
         <p><strong>Message:</strong></p>
-        <p>${message.body}</p>
+        <p>${escapeHtml(message.body)}</p>
         <br>
         <p>Log in to view and reply: <a href="https://www.immigrationpathwaysconsulting.com/client">Client Dashboard</a></p>
       `,

@@ -13,6 +13,7 @@ const quizRoutes = require("./routes/quizRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
 const contactRoutes = require("./routes/contact");
 const cors = require("cors");
+const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
 const authLimiter = rateLimit({
@@ -31,8 +32,18 @@ const contactLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+const passwordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,
+  message: { error: "Too many password change attempts. Please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(helmet());
 
 // Allow both Render and your domain
 const allowedOrigins = new Set([
@@ -77,7 +88,7 @@ app.use("/api/protected", protectedRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/messages", messageRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/users", passwordLimiter, userRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/contact", contactLimiter, contactRoutes);

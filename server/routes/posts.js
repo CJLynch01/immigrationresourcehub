@@ -18,7 +18,7 @@ router.post("/", verifyToken, isAdmin, async (req, res) => {
     await post.save();
     res.status(201).json(post);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to create post." });
   }
 });
 
@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
     const posts = await Post.find().populate("author", "name");
     res.json(posts);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to load posts." });
   }
 });
 
@@ -36,20 +36,25 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (!post) return res.status(404).json({ error: "Post not found" });
+    if (!post) return res.status(404).json({ error: "Post not found." });
     res.json(post);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to load post." });
   }
 });
 
 //Update a post (Admin only)
 router.put("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
-    const updated = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { title, content, category, date } = req.body;
+    const updated = await Post.findByIdAndUpdate(
+      req.params.id,
+      { title, content, category, date },
+      { new: true }
+    );
     res.json(updated);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to update post." });
   }
 });
 
@@ -59,7 +64,7 @@ router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
     await Post.findByIdAndDelete(req.params.id);
     res.json({ msg: "Post deleted" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to delete post." });
   }
 });
 

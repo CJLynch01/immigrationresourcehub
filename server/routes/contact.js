@@ -4,6 +4,10 @@ const nodemailer = require("nodemailer");
 const ContactSubmission = require("../models/ContactSubmission");
 const { verifyToken, isAdmin } = require("../middleware/auth");
 
+function escapeHtml(str) {
+  return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
@@ -25,6 +29,13 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Invalid email address." });
     }
 
+    if (name.trim().length > 100) {
+      return res.status(400).json({ error: "Name must be 100 characters or fewer." });
+    }
+    if (message.trim().length > 3000) {
+      return res.status(400).json({ error: "Message must be 3000 characters or fewer." });
+    }
+
     // Save to DB first (so the lead is never lost)
     const submission = new ContactSubmission({ name: name.trim(), email: email.trim(), message: message.trim() });
     await submission.save();
@@ -38,10 +49,10 @@ router.post("/", async (req, res) => {
           replyTo: email.trim(),
           subject: `New Contact Form Submission from ${name.trim()}`,
           html: `
-            <p><strong>Name:</strong> ${name.trim()}</p>
-            <p><strong>Email:</strong> ${email.trim()}</p>
+            <p><strong>Name:</strong> ${escapeHtml(name.trim())}</p>
+            <p><strong>Email:</strong> ${escapeHtml(email.trim())}</p>
             <p><strong>Message:</strong></p>
-            <p>${message.trim().replace(/\n/g, "<br>")}</p>
+            <p>${escapeHtml(message.trim()).replace(/\n/g, "<br>")}</p>
           `,
         });
       } catch (emailErr) {

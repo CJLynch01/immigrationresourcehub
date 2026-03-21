@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { verifyToken, isAdmin } = require("../middleware/auth");
 const speakeasy = require("speakeasy");
@@ -31,15 +31,12 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email: email.trim() });
     if (!user) {
-      console.log("User not found for:", email);
       return res.status(400).json({ msg: "Invalid credentials." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("🔐 Password match:", isMatch);
 
     if (!isMatch) {
-      console.log("Incorrect password for:", email);
       return res.status(400).json({ msg: "Invalid credentials." });
     }
 
@@ -122,7 +119,6 @@ router.post("/register", async (req, res) => {
 
 //GET /api/auth/me — Get current user
 router.get("/me", verifyToken, async (req, res) => {
-  console.log("hit by user", req.user?.id);
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -235,6 +231,10 @@ router.post("/forgot-password", async (req, res) => {
 router.post("/reset-password", async (req, res) => {
   try {
     const { token, password } = req.body;
+
+    if (!password || password.length < 8) {
+      return res.status(400).json({ error: "Password must be at least 8 characters." });
+    }
 
     const user = await User.findOne({
       resetPasswordToken: token,

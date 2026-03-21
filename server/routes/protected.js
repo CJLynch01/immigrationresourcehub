@@ -7,7 +7,7 @@ router.get("/user-dashboard", verifyToken, (req, res) => {
   res.json({ msg: `Welcome ${req.user.role}` });
 });
 
-router.get("/admin-only", isAdmin, (req, res) => {
+router.get("/admin-only", verifyToken, isAdmin, (req, res) => {
   res.json({ msg: "Welcome Admin" });
 });
 

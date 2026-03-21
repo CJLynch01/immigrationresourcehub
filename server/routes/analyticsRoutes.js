@@ -51,6 +51,9 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
   try {
     const { days = 30 } = req.query;
     const numDays = Number(days);
+    if (isNaN(numDays) || numDays < 1 || numDays > 365) {
+      return res.status(400).json({ error: "days must be between 1 and 365." });
+    }
     const now = new Date();
     const since = new Date(now - numDays * 24 * 60 * 60 * 1000);
     const prevSince = new Date(now - numDays * 2 * 24 * 60 * 60 * 1000);

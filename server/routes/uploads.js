@@ -11,6 +11,10 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 const allowedTypes = ['application/pdf'];
 
+function escapeHtml(str) {
+  return (str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 const upload = multer({
   storage: multer.memoryStorage(),
   fileFilter: (req, file, cb) => {
@@ -75,10 +79,10 @@ router.post("/", verifyToken, upload.single("file"), async (req, res) => {
       to: adminEmail,
       subject: "📅 New Document Uploaded by Client",
       html: `
-        <p>${user.name || "A client"} has uploaded a new document:</p>
-        <p><strong>Document Type:</strong> ${docType}</p>
-        <p><strong>Filename:</strong> ${file.originalname}</p>
-        <p>Check the <a href="https://www.immigrationpathwaysconsulting.com/admin.html">Admin Dashboard</a> for details.</p>
+        <p>${escapeHtml(user.name) || "A client"} has uploaded a new document:</p>
+        <p><strong>Document Type:</strong> ${escapeHtml(docType)}</p>
+        <p><strong>Filename:</strong> ${escapeHtml(file.originalname)}</p>
+        <p>Check the <a href="https://www.immigrationpathwaysconsulting.com/admin">Admin Dashboard</a> for details.</p>
       `
     });
 
@@ -130,10 +134,10 @@ router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (r
         to: user.email,
         subject: "📁 New Document Added to Your Dashboard",
         html: `
-          <p>Hello ${user.name || "Client"},</p>
+          <p>Hello ${escapeHtml(user.name) || "Client"},</p>
           <p>A new document has been added to your client portal:</p>
-          <p><strong>${docType}</strong></p>
-          <p>Please log in to view: <a href="https://www.immigrationpathwaysconsulting.com/client.html">Client Dashboard</a></p>
+          <p><strong>${escapeHtml(docType)}</strong></p>
+          <p>Please log in to view: <a href="https://www.immigrationpathwaysconsulting.com/client">Client Dashboard</a></p>
           <br><p>– Immigration Pathways Consulting</p>
         `
       });
@@ -151,10 +155,10 @@ router.post("/admin-send", verifyToken, isAdmin, upload.single("file"), async (r
       to: user.email,
       subject: "New Document from Immigration Pathways",
       html: `
-        <p>Hello ${user.name || "Client"},</p>
+        <p>Hello ${escapeHtml(user.name) || "Client"},</p>
         <p>A new document has been shared with you:</p>
-        <p><strong>${docType}</strong></p>
-        <p><a href="${s3Url}" target="_blank">📂 Click here to view/download</a></p>
+        <p><strong>${escapeHtml(docType)}</strong></p>
+        <p>Log in to your dashboard to view it: <a href="https://www.immigrationpathwaysconsulting.com/client">Client Dashboard</a></p>
         <br><p>– Immigration Pathways Consulting</p>
       `
     });
@@ -182,6 +186,18 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
 // Generate signed URL for protected access
 router.get("/signed-url/*", verifyToken, async (req, res) => {
   const key = req.params[0];
+
+  // Admins can access any document; clients can only access their own
+  if (req.user.role !== "admin") {
+    const allowedPrefixes = [
+      `client/${req.user.id}/`,
+      `admin/${req.user.id}/`,
+    ];
+    if (!allowedPrefixes.some((prefix) => key.startsWith(prefix))) {
+      return res.status(403).json({ error: "Access denied." });
+    }
+  }
+
   try {
     const command = new GetObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
