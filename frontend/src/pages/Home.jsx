@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useSEO from "../hooks/useSEO.js";
 
 export default function Home() {
+  const token = localStorage.getItem("token");
   useSEO({
     title: "U.S. Immigration Document Preparation",
     description: "Immigration Pathways Consulting helps you navigate the U.S. immigration process with personalized document preparation support. Family petitions, work permits, citizenship, and more.",
@@ -27,8 +28,8 @@ export default function Home() {
         <p>
           <strong>You must be logged in to access the quiz and save your progress.</strong>
         </p>
-        <Link className="quiz-btn" to="/login">
-          Log In to Begin
+        <Link className="quiz-btn" to={token ? "/quiz" : "/login"}>
+          {token ? "Start the Quiz" : "Log In to Begin"}
         </Link>
       </section>
 

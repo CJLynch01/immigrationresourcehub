@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/questions100');
 const QuizResult = require('../models/quizResult');
-const { verifyToken } = require('../middleware/auth'); // ✅ fixed
+const { verifyToken, isAdmin } = require('../middleware/auth');
 
 // GET /api/quiz/random
 router.get('/random', verifyToken, async (req, res) => {
@@ -82,6 +82,19 @@ router.get('/results', verifyToken, async (req, res) => {
   } catch (err) {
     console.error("Error fetching quiz results:", err);
     res.status(500).json({ error: "Failed to fetch results" });
+  }
+});
+
+// GET /api/quiz/admin/all-results (admin only)
+router.get('/admin/all-results', verifyToken, isAdmin, async (req, res) => {
+  try {
+    const results = await QuizResult.find({})
+      .populate('userId', 'name email')
+      .sort({ date: -1 });
+    res.json(results);
+  } catch (err) {
+    console.error('Error fetching all quiz results:', err);
+    res.status(500).json({ error: 'Failed to fetch quiz results' });
   }
 });
 

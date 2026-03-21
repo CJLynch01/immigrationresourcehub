@@ -16,6 +16,7 @@ export default function Login() {
   const [msg, setMsg] = useState("");
 
   const justRegistered = location.state?.registered;
+  const sessionExpired = location.state?.expired;
 
   async function fetchMe(jwtToken) {
     const res = await fetch(`${API_BASE}/api/auth/me`, {
@@ -135,6 +136,12 @@ export default function Login() {
                 required
               />
             </div>
+          )}
+
+          {sessionExpired && (
+            <p className="form-message form-message--error">
+              Your session has expired. Please log in again.
+            </p>
           )}
 
           {justRegistered && (

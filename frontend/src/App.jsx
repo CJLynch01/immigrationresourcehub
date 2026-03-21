@@ -74,6 +74,7 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import Register from "./pages/Register.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Quiz from "./pages/Quiz.jsx";
 
 export default function App() {
   return (
@@ -121,6 +122,7 @@ export default function App() {
         <Route path="/client" element={<ProtectedRoute requiredRole="client"><ClientDashboard /></ProtectedRoute>} />
 
         {/* Any logged-in user */}
+        <Route path="/quiz" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
         <Route path="/mfa" element={<ProtectedRoute><MfaSetup /></ProtectedRoute>} />
 
         <Route path="*" element={<NotFound />} />

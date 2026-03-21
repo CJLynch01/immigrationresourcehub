@@ -32,6 +32,9 @@ export default function AdminDashboard() {
   const [docsError, setDocsError] = useState("");
   const [allDocs, setAllDocs] = useState([]);
 
+  // quiz scores
+  const [quizResults, setQuizResults] = useState([]);
+
   // send form
   const [clients, setClients] = useState([]); // optional: wire to your real clients endpoint
   const [selectedClientId, setSelectedClientId] = useState("");
@@ -67,6 +70,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     loadAllDocs();
     apiJson("/api/users/clients").then(setClients).catch(() => {});
+    apiJson("/api/quiz/admin/all-results").then(setQuizResults).catch(() => {});
   }, []);
 
   async function openDoc(doc) {
@@ -206,6 +210,27 @@ export default function AdminDashboard() {
                       Delete
                     </button>
                   </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section className="section">
+          <h2>🏆 Client Quiz Scores</h2>
+          {quizResults.length === 0 ? (
+            <p>No quiz results yet.</p>
+          ) : (
+            <ul style={{ listStyle: "none", padding: 0 }}>
+              {quizResults.map((r) => (
+                <li key={r._id} style={{ background: "#2a2a2d", borderRadius: "6px", padding: "0.75rem 1rem", marginBottom: "0.5rem", borderLeft: "3px solid var(--accent-color)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>
+                    <strong>{r.userId?.name || "Unknown"}</strong>
+                    <span style={{ color: "#aaa", fontSize: "0.85rem" }}> ({r.userId?.email})</span>
+                    {" — "}
+                    <strong>{r.score}/{r.totalQuestions}</strong> ({Math.round((r.score / r.totalQuestions) * 100)}%)
+                  </span>
+                  <span style={{ fontSize: "0.85rem", color: "#888" }}>{new Date(r.date).toLocaleDateString()}</span>
                 </li>
               ))}
             </ul>

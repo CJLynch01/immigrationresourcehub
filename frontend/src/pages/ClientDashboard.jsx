@@ -27,6 +27,9 @@ export default function Client() {
   const [newPassword, setNewPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
 
+  // Quiz scores
+  const [quizScores, setQuizScores] = useState([]);
+
   // Upload + docs
   const [docType, setDocType] = useState("");
   const [file, setFile] = useState(null);
@@ -99,6 +102,20 @@ export default function Client() {
     }
 
     loadDocs();
+  }, [tokenExists]);
+
+  // Load quiz scores
+  useEffect(() => {
+    async function loadQuizScores() {
+      if (!tokenExists) return;
+      try {
+        const res = await fetch(`${API_BASE}/api/quiz/results`, { headers: { ...authHeaders() } });
+        if (!res.ok) return;
+        const data = await res.json();
+        setQuizScores(Array.isArray(data) ? data : []);
+      } catch { /* ignore */ }
+    }
+    loadQuizScores();
   }, [tokenExists]);
 
   // Load inbox
@@ -422,6 +439,22 @@ export default function Client() {
               <p>No documents from admin yet.</p>
             )}
           </div>
+        </section>
+
+        <section className="section">
+          <h2>🏆 Quiz Scores</h2>
+          {quizScores.length === 0 ? (
+            <p>No quiz scores yet. <a href="/quiz">Take the citizenship quiz!</a></p>
+          ) : (
+            <ul style={{ listStyle: "none", padding: 0 }}>
+              {quizScores.map((s) => (
+                <li key={s._id} style={{ background: "#2a2a2d", borderRadius: "6px", padding: "0.75rem 1rem", marginBottom: "0.5rem", borderLeft: "3px solid var(--accent-color)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span><strong>{s.score}/{s.totalQuestions}</strong> &mdash; {Math.round((s.score / s.totalQuestions) * 100)}%</span>
+                  <span style={{ fontSize: "0.85rem", color: "#888" }}>{new Date(s.date).toLocaleDateString()}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
 
         <section className="section">
