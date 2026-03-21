@@ -54,7 +54,7 @@ app.use(helmet({
       connectSrc: ["'self'"],
       fontSrc: ["'self'", "https:", "data:"],
       objectSrc: ["'none'"],
-      frameSrc: ["'none'"],
+      frameSrc: ["https://www.google.com"],
     },
   },
 }));
