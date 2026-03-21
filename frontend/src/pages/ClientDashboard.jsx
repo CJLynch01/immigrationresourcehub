@@ -337,6 +337,48 @@ export default function Client() {
       </header>
 
       <main className="client-dashboard">
+        <section className="section">
+          <h2>🔗 USCIS Resources</h2>
+          <div className="quick-links">
+            <a
+              href="https://egov.uscis.gov/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="quick-link-card"
+            >
+              <span className="quick-link-card__icon">🏛️</span>
+              <div>
+                <strong>Check Your Case Status</strong>
+                <p>Enter your receipt number on the USCIS eGov portal to see updates</p>
+              </div>
+            </a>
+            <a
+              href="https://egov.uscis.gov/processing-times/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="quick-link-card"
+            >
+              <span className="quick-link-card__icon">⏱️</span>
+              <div>
+                <strong>Processing Times</strong>
+                <p>View current processing times by form type and field office</p>
+              </div>
+            </a>
+            <a
+              href="https://www.uscis.gov/forms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="quick-link-card"
+            >
+              <span className="quick-link-card__icon">📋</span>
+              <div>
+                <strong>USCIS Forms</strong>
+                <p>Download official immigration forms directly from USCIS</p>
+              </div>
+            </a>
+          </div>
+        </section>
+
         <section className="password-card">
           <h3>Change Password</h3>
           <form id="changePasswordForm" onSubmit={handleChangePassword}>
