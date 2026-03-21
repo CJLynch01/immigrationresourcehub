@@ -101,7 +101,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
       ]),
 
       AnalyticsEvent.aggregate([
-        { $match: { eventType: "page_view", ts: currRange } },
+        { $match: { eventType: "page_view", ts: currRange, "page.section": { $ne: "Admin" } } },
         { $group: { _id: "$page.section", count: { $sum: 1 } } },
         { $sort: { count: -1 } },
       ]),
@@ -125,7 +125,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
       AnalyticsEvent.find({ ts: currRange })
         .sort({ ts: -1 })
         .limit(20)
-        .select("eventType page userType ts")
+        .select("eventType page userType device ts")
         .lean(),
 
       AnalyticsEvent.countDocuments({ eventType: "contact_submit", ts: currRange }),
@@ -185,6 +185,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
         eventType: e.eventType,
         path: e.page?.path,
         section: e.page?.section,
+        device: e.device,
         ts: e.ts,
       })),
     });

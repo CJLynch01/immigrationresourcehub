@@ -221,6 +221,7 @@ export default function AdminAnalytics() {
                     <tr style={{ color: GRAY, borderBottom: `1px solid #333` }}>
                       <th style={{ textAlign: "left", padding: "0.3rem 0.5rem" }}>User</th>
                       <th style={{ textAlign: "left", padding: "0.3rem 0.5rem" }}>Action</th>
+                      <th style={{ textAlign: "center", padding: "0.3rem 0.5rem" }}>Device</th>
                       <th style={{ textAlign: "right", padding: "0.3rem 0.5rem" }}>Time</th>
                     </tr>
                   </thead>
@@ -233,6 +234,9 @@ export default function AdminAnalytics() {
                         <td style={{ padding: "0.35rem 0.5rem", color: GRAY }}>
                           {EVENT_LABELS[e.eventType] || e.eventType}
                           {e.section ? <span style={{ color: WHITE }}> — {e.section}</span> : ""}
+                        </td>
+                        <td style={{ padding: "0.35rem 0.5rem", textAlign: "center", fontSize: "1rem" }} title={e.device || "unknown"}>
+                          {e.device === "mobile" ? "📱" : e.device === "tablet" ? "💻" : "🖥️"}
                         </td>
                         <td style={{ padding: "0.35rem 0.5rem", textAlign: "right", color: GRAY, whiteSpace: "nowrap" }}>
                           {timeAgo(e.ts)}
