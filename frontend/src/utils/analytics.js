@@ -26,6 +26,7 @@ function getUserInfo() {
 export async function trackEvent({ eventType, pagePath, pageSection, props = {} }) {
   try {
     const { userType, userId } = getUserInfo();
+    if (userType === "admin") return;
     await fetch(`${API_BASE}/api/analytics`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
