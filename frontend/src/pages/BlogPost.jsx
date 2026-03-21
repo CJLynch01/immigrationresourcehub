@@ -7,6 +7,8 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL;
 export default function BlogPost() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
+  const [prev, setPrev] = useState(null);
+  const [next, setNext] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -18,10 +20,27 @@ export default function BlogPost() {
   useEffect(() => {
     async function load() {
       setLoading(true);
+      setError("");
+      setPrev(null);
+      setNext(null);
       try {
-        const res = await fetch(`${API_BASE}/api/posts/${id}`);
-        if (!res.ok) throw new Error("Post not found.");
-        setPost(await res.json());
+        const [postRes, allRes] = await Promise.all([
+          fetch(`${API_BASE}/api/posts/${id}`),
+          fetch(`${API_BASE}/api/posts`),
+        ]);
+        if (!postRes.ok) throw new Error("Post not found.");
+        const postData = await postRes.json();
+        setPost(postData);
+
+        if (allRes.ok) {
+          const all = await allRes.json();
+          if (Array.isArray(all)) {
+            const sorted = [...all].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const idx = sorted.findIndex((p) => p._id === id);
+            if (idx > 0) setNext(sorted[idx - 1]);
+            if (idx < sorted.length - 1) setPrev(sorted[idx + 1]);
+          }
+        }
       } catch (e) {
         setError(e.message);
       } finally {
@@ -36,39 +55,50 @@ export default function BlogPost() {
   if (error) return (
     <main className="blog-post-page">
       <p style={{ color: "crimson" }}>{error}</p>
-      <Link to="/blog" className="button">← Back to Blog</Link>
+      <Link to="/blog" className="back-link">← Back to Blog</Link>
     </main>
   );
 
   return (
-    <>
-      <header className="site-header">
-        <h1>{post.title}</h1>
-        <p>
-          {post.category && <span className="blog-category">{post.category}</span>}
+    <main className="blog-post-page">
+      <Link to="/blog" className="back-link">← Back to Blog</Link>
+
+      <article className="blog-post-article">
+        <h1 className="blog-post-article__title">{post.title}</h1>
+
+        <div className="blog-post-article__meta">
           {post.date && (
-            <span style={{ marginLeft: post.category ? "1rem" : 0, opacity: 0.75 }}>
-              {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-            </span>
+            <span>{new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>
           )}
           {post.author?.name && (
-            <span style={{ marginLeft: "1rem", opacity: 0.75 }}>by {post.author.name}</span>
+            <>
+              <span className="blog-post-article__meta-divider">|</span>
+              <span>By: {post.author.name}</span>
+            </>
           )}
-        </p>
-      </header>
+          {post.category && <span className="blog-category">{post.category}</span>}
+        </div>
 
-      <main className="blog-post-page">
-        <Link to="/blog" className="back-link">← Back to Blog</Link>
+        <hr className="blog-post-article__rule" />
 
-        <article
+        <div
           className="blog-post-content"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
+      </article>
 
-        <div style={{ marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid #333" }}>
-          <Link to="/blog" className="button">← Back to Blog</Link>
-        </div>
-      </main>
-    </>
+      <div className="blog-post-nav">
+        {prev ? (
+          <Link to={`/blog/${prev._id}`} className="blog-post-nav__btn">
+            ← Previous
+          </Link>
+        ) : <span />}
+        {next ? (
+          <Link to={`/blog/${next._id}`} className="blog-post-nav__btn">
+            Next →
+          </Link>
+        ) : <span />}
+      </div>
+    </main>
   );
 }

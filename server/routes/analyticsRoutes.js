@@ -121,8 +121,8 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
         { $sort: { "_id.date": 1 } },
       ]),
 
-      // recent activity feed (last 20 events)
-      AnalyticsEvent.find({ ts: currRange })
+      // recent activity feed (last 20 events, exclude admin)
+      AnalyticsEvent.find({ ts: currRange, userType: { $ne: "admin" } })
         .sort({ ts: -1 })
         .limit(20)
         .select("eventType page userType device ts")

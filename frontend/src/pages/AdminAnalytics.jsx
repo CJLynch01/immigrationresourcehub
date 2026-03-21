@@ -102,14 +102,14 @@ export default function AdminAnalytics() {
   }, [filter]);
 
   return (
-    <div style={{ background: "#0d0d0d", minHeight: "100vh", padding: "2rem", color: WHITE, fontFamily: "inherit" }}>
+    <div className="analytics-page">
 
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+      <div className="analytics-header">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "0.25rem" }}>
-          <span style={{ height: 2, width: 60, background: GOLD, display: "inline-block" }} />
-          <h1 style={{ margin: 0, fontSize: "2rem", fontWeight: 700 }}>Analytics Dashboard</h1>
-          <span style={{ height: 2, width: 60, background: GOLD, display: "inline-block" }} />
+          <span className="analytics-header__rule" />
+          <h1>Analytics Dashboard</h1>
+          <span className="analytics-header__rule" />
         </div>
         <p style={{ margin: 0, color: GOLD, letterSpacing: 2 }}>
           — Immigration Pathways Consulting —
@@ -117,7 +117,7 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Date range + filter */}
-      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+      <div className="analytics-filters">
         <span style={{ fontSize: "0.9rem", color: GRAY, marginRight: "0.25rem" }}>
           {rangeLabel()}
         </span>
@@ -147,7 +147,7 @@ export default function AdminAnalytics() {
       {data && (
         <>
           {/* Stat Cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "1rem", marginBottom: "1.5rem" }}>
+          <div className="analytics-stat-grid">
             <StatCard
               label="Total Visits"
               value={data.totalVisits.toLocaleString()}
@@ -175,7 +175,7 @@ export default function AdminAnalytics() {
           </div>
 
           {/* Middle row */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+          <div className="analytics-middle-grid">
 
             {/* Pie chart */}
             <Card title="Page Views by Section">
