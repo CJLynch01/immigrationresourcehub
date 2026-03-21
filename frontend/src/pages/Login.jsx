@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +14,8 @@ export default function Login() {
   const [showMfa, setShowMfa] = useState(false);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+
+  const justRegistered = location.state?.registered;
 
   async function fetchMe(jwtToken) {
     const res = await fetch(`${API_BASE}/api/auth/me`, {
@@ -134,6 +137,12 @@ export default function Login() {
             </div>
           )}
 
+          {justRegistered && (
+            <p className="form-message form-message--success">
+              Account created! Please log in.
+            </p>
+          )}
+
           {msg && <p className="form-message">{msg}</p>}
 
           <button type="submit" className="button" disabled={loading}>
@@ -142,6 +151,10 @@ export default function Login() {
 
           <p style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.9rem" }}>
             <Link to="/forgot-password">Forgot your password?</Link>
+          </p>
+
+          <p style={{ textAlign: "center", marginTop: "0.5rem", fontSize: "0.9rem" }}>
+            Don't have an account? <Link to="/register">Create one</Link>
           </p>
         </form>
       </main>

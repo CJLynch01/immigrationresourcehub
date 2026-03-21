@@ -42,12 +42,12 @@ export default function Home() {
         <h2>Why Immigration Pathways?</h2>
         <p>
           With years of experience inside the U.S. immigration system, we provide a level of insight and
-          compassion unmatched by document preparers alone. We're your partners throughout the process.
+          compassion unmatched by document preparers alone. We are your partners throughout the process.
         </p>
         <ul>
-          <li>✔ Personalized attention for every case</li>
-          <li>✔ Transparent, flat-rate pricing</li>
-          <li>✔ Continual communication throughout the process</li>
+          <li>&#10004; Personalized attention for every case</li>
+          <li>&#10004; Transparent, flat-rate pricing</li>
+          <li>&#10004; Continual communication throughout the process</li>
         </ul>
       </section>
 
@@ -78,17 +78,24 @@ export default function Home() {
         <h2>What Our Clients Say</h2>
 
         <blockquote>
-          “Chris made everything feel easier. I didn’t know where to start, and now I have my work permit in hand.”
+          &ldquo;Chris made everything feel easier. I did not know where to start, and now I have my work permit in hand.&rdquo;
           <br />
-          <cite>– Angela R., Ogden, UT</cite>
+          <cite>&ndash; Angela R., Ogden, UT</cite>
         </blockquote>
 
         <blockquote>
-          “Professional, trustworthy, and patient. I’m so grateful for their help with my green card renewal.”
+          &ldquo;Professional, trustworthy, and patient. I am so grateful for their help with my green card renewal.&rdquo;
           <br />
-          <cite>– Mohammed K., Salt Lake City, UT</cite>
+          <cite>&ndash; Mohammed K., Salt Lake City, UT</cite>
         </blockquote>
       </section>
+
+      {/* CTA BANNER */}
+      <div className="cta-banner">
+        <h3>Ready to start your immigration journey?</h3>
+        <p>Book a free consultation today &mdash; no obligation, no pressure.</p>
+        <Link to="/contact" className="button">Book a Free Consultation</Link>
+      </div>
     </main>
   );
 }

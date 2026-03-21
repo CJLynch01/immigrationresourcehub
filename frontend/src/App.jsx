@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Layout from "./components/Layout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -64,12 +64,16 @@ import Legal from "./pages/Legal.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import AdminPosts from "./pages/AdminPosts.jsx";
 import AdminAnalytics from "./pages/AdminAnalytics.jsx";
+import AdminContacts from "./pages/AdminContacts.jsx";
+import AdminClients from "./pages/AdminClients.jsx";
 import Messages from "./pages/Messages.jsx";
 import ClientDashboard from "./pages/ClientDashboard.jsx";
 
 import MfaSetup from "./pages/MfaSetup.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
+import Register from "./pages/Register.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   return (
@@ -103,12 +107,15 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Admin-only routes */}
         <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
         <Route path="/admin/posts" element={<ProtectedRoute requiredRole="admin"><AdminPosts /></ProtectedRoute>} />
         <Route path="/admin/messages" element={<ProtectedRoute requiredRole="admin"><Messages /></ProtectedRoute>} />
         <Route path="/admin/analytics" element={<ProtectedRoute requiredRole="admin"><AdminAnalytics /></ProtectedRoute>} />
+        <Route path="/admin/contacts" element={<ProtectedRoute requiredRole="admin"><AdminContacts /></ProtectedRoute>} />
+        <Route path="/admin/clients" element={<ProtectedRoute requiredRole="admin"><AdminClients /></ProtectedRoute>} />
 
         {/* Client-only routes */}
         <Route path="/client" element={<ProtectedRoute requiredRole="client"><ClientDashboard /></ProtectedRoute>} />
@@ -116,7 +123,7 @@ export default function App() {
         {/* Any logged-in user */}
         <Route path="/mfa" element={<ProtectedRoute><MfaSetup /></ProtectedRoute>} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
     </>

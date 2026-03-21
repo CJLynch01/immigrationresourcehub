@@ -24,9 +24,12 @@ const transporter = nodemailer.createTransport({
 router.post("/login", async (req, res) => {
   try {
     const { email, password, token } = req.body;
-    console.log("Login body:", { email, password, token });
 
-    const user = await User.findOne({ email });
+    if (!email?.trim() || !password) {
+      return res.status(400).json({ msg: "Email and password are required." });
+    }
+
+    const user = await User.findOne({ email: email.trim() });
     if (!user) {
       console.log("User not found for:", email);
       return res.status(400).json({ msg: "Invalid credentials." });
@@ -73,13 +76,24 @@ router.post("/login", async (req, res) => {
 //POST /api/auth/register — New user registration
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
-    const existing = await User.findOne({ email });
+    if (!name?.trim() || !email?.trim() || !password) {
+      return res.status(400).json({ msg: "Name, email, and password are required." });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ msg: "Invalid email address." });
+    }
+    if (password.length < 8) {
+      return res.status(400).json({ msg: "Password must be at least 8 characters." });
+    }
+
+    const existing = await User.findOne({ email: email.trim() });
     if (existing) return res.status(400).json({ msg: "Email already exists." });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword, role });
+    const newUser = new User({ name, email, password: hashedPassword, role: "client" });
     await newUser.save();
 
     // 🔔 Notify Admin of new registration
@@ -93,7 +107,7 @@ router.post("/register", async (req, res) => {
           <ul>
             <li><strong>Name:</strong> ${name}</li>
             <li><strong>Email:</strong> ${email}</li>
-            <li><strong>Role:</strong> ${role}</li>
+            <li><strong>Role:</strong> client</li>
           </ul>
         `
       });

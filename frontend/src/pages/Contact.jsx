@@ -1,50 +1,95 @@
 import { useState } from "react";
 import useSEO from "../hooks/useSEO.js";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 export default function Contact() {
   useSEO({
     title: "Contact Us",
     description: "Get in touch with Immigration Pathways Consulting. We're here to answer your questions and help you start your immigration document preparation journey.",
   });
-  // Optional: light client-side UX only (Formspree still handles submission)
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState(null); // "success" | "error"
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setStatus("error");
+        setMsg(data.error || "Failed to send. Please try again.");
+        return;
+      }
+      setStatus("success");
+      setMsg(data.msg || "Message sent!");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch {
+      setStatus("error");
+      setMsg("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section>
       <header className="site-header">
         <h1>Contact Us</h1>
-        <p>We’re here to help you every step of the way</p>
+        <p>We're here to help you every step of the way</p>
       </header>
 
       <main className="contact-page">
         <section className="contact-form">
           <h2>Send Us a Message</h2>
 
-          <form
-            action="https://formspree.io/f/mvgrarol"
-            method="POST"
-            onSubmit={() => setIsSubmitting(true)}
-          >
+          <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" name="name" required />
-
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="_replyto" required />
-
-            <label htmlFor="message">Message:</label>
-            <textarea id="message" name="message" rows={5} required />
-
-            {/* 🐝 Honeypot field for bots */}
             <input
               type="text"
-              name="_gotcha"
-              style={{ display: "none" }}
-              tabIndex={-1}
-              autoComplete="off"
+              id="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
 
-            <button type="submit" className="button" disabled={isSubmitting}>
-              {isSubmitting ? "Sending..." : "Send Message"}
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <label htmlFor="message">Message:</label>
+            <textarea
+              id="message"
+              rows={5}
+              required
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+
+            {status && (
+              <p className={`form-message form-message--${status}`}>{msg}</p>
+            )}
+
+            <button type="submit" className="button" disabled={loading || status === "success"}>
+              {loading ? "Sending..." : "Send Message"}
             </button>
           </form>
         </section>
@@ -67,8 +112,7 @@ export default function Contact() {
           </p>
 
           <p>
-            <strong>Address:</strong> 3293 Harrison Blvd. Ste#200, Ogden, Utah
-            84403
+            <strong>Address:</strong> 3293 Harrison Blvd. Ste#200, Ogden, Utah 84403
           </p>
 
           <p>We typically respond within 24 hours. Please schedule an appointment.</p>
@@ -89,11 +133,8 @@ export default function Contact() {
         </section>
 
         <div className="cta-banner">
-          <h3>Let’s start your immigration journey together</h3>
-          <a
-            href="mailto:chris@immigrationpathwaysconsulting.com"
-            className="button"
-          >
+          <h3>Let's start your immigration journey together</h3>
+          <a href="mailto:chris@immigrationpathwaysconsulting.com" className="button">
             Email Chris
           </a>
         </div>

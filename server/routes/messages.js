@@ -20,14 +20,28 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Strip HTML tags to prevent XSS
+function stripHtml(str) {
+  return (str || "").replace(/<[^>]*>/g, "").trim();
+}
+
 // Send a new message
 router.post("/", verifyToken, async (req, res) => {
   try {
-    const { subject, body } = req.body;
+    const subject = stripHtml(req.body.subject);
+    const body = stripHtml(req.body.body);
     let to = req.body.to;
+
+    if (!subject || !body) {
+      return res.status(400).json({ error: "Subject and message body are required." });
+    }
 
     if (req.user.role === "client") {
       to = process.env.ADMIN_ID_MONGODB;
+    }
+
+    if (!to) {
+      return res.status(400).json({ error: "Message recipient is required." });
     }
 
     const message = new Message({
@@ -56,7 +70,7 @@ router.post("/", verifyToken, async (req, res) => {
         <p><strong>Message:</strong></p>
         <p>${message.body}</p>
         <br>
-        <p>Log in to view and reply: <a href="https://www.immigrationpathwaysconsulting.com/client.html">Client Dashboard</a></p>
+        <p>Log in to view and reply: <a href="https://www.immigrationpathwaysconsulting.com/client">Client Dashboard</a></p>
       `,
     });
 
@@ -144,7 +158,5 @@ router.get("/sent", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to load sent messages." });
   }
 });
-
-console.log("SMTP host is:", process.env.SMTP_HOST);
 
 module.exports = router;

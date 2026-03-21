@@ -96,6 +96,12 @@ export default function Navbar() {
               <NavLink to="/admin/messages" onClick={closeMenu}>
                 Messages
               </NavLink>
+              <NavLink to="/admin/contacts" onClick={closeMenu}>
+                Contacts
+              </NavLink>
+              <NavLink to="/admin/clients" onClick={closeMenu}>
+                Clients
+              </NavLink>
               <NavLink to="/admin/analytics" onClick={closeMenu}>
                 Analytics
               </NavLink>

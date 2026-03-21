@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,6 +15,12 @@ export default function Client() {
   const [showMfaVerify, setShowMfaVerify] = useState(false);
   const [verifyMfaToken, setVerifyMfaToken] = useState("");
   const [mfaVerifyMsg, setMfaVerifyMsg] = useState("");
+
+  // Messaging
+  const [inbox, setInbox] = useState([]);
+  const [msgSubject, setMsgSubject] = useState("");
+  const [msgBody, setMsgBody] = useState("");
+  const [msgStatus, setMsgStatus] = useState("");
 
   // Change password
   const [currentPassword, setCurrentPassword] = useState("");
@@ -94,6 +100,37 @@ export default function Client() {
 
     loadDocs();
   }, [tokenExists]);
+
+  // Load inbox
+  useEffect(() => {
+    async function loadInbox() {
+      if (!tokenExists) return;
+      try {
+        const res = await fetch(`${API_BASE}/api/messages/inbox`, { headers: { ...authHeaders() } });
+        if (!res.ok) return;
+        const data = await res.json();
+        setInbox(Array.isArray(data) ? data : []);
+      } catch { /* ignore */ }
+    }
+    loadInbox();
+  }, [tokenExists]);
+
+  async function handleSendMessage(e) {
+    e.preventDefault();
+    setMsgStatus("");
+    try {
+      const res = await fetch(`${API_BASE}/api/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeaders() },
+        body: JSON.stringify({ subject: msgSubject, body: msgBody }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { setMsgStatus(data?.error || "Failed to send."); return; }
+      setMsgStatus("Message sent!");
+      setMsgSubject("");
+      setMsgBody("");
+    } catch { setMsgStatus("Network error."); }
+  }
 
   async function handleVerifyMfa() {
     setMfaVerifyMsg("");
@@ -385,6 +422,48 @@ export default function Client() {
               <p>No documents from admin yet.</p>
             )}
           </div>
+        </section>
+
+        <section className="section">
+          <h2>✉️ Message Admin</h2>
+          <form onSubmit={handleSendMessage}>
+            <label htmlFor="msgSubject">Subject</label>
+            <input
+              type="text"
+              id="msgSubject"
+              required
+              value={msgSubject}
+              onChange={(e) => setMsgSubject(e.target.value)}
+              placeholder="e.g. Question about my application"
+            />
+            <label htmlFor="msgBody">Message</label>
+            <textarea
+              id="msgBody"
+              rows={4}
+              required
+              value={msgBody}
+              onChange={(e) => setMsgBody(e.target.value)}
+              placeholder="Type your message here..."
+              style={{ width: "100%", padding: "0.75rem", background: "#1c1c1e", color: "#f8f8f8", border: "1px solid #444", borderRadius: "5px", marginBottom: "1rem" }}
+            />
+            {msgStatus && <p className={`form-message ${msgStatus === "Message sent!" ? "form-message--success" : "form-message--error"}`}>{msgStatus}</p>}
+            <button type="submit" className="button">Send Message</button>
+          </form>
+
+          {inbox.length > 0 && (
+            <>
+              <h3 style={{ marginTop: "2rem" }}>Inbox</h3>
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {inbox.map((m) => (
+                  <li key={m._id} style={{ background: "#2a2a2d", borderRadius: "6px", padding: "1rem", marginBottom: "0.75rem", borderLeft: `3px solid ${m.isRead ? "#555" : "var(--accent-color)"}` }}>
+                    <p style={{ margin: 0, fontWeight: 600 }}>{m.subject}</p>
+                    <p style={{ margin: "0.4rem 0", fontSize: "0.9rem", color: "#ccc" }}>{m.body}</p>
+                    <p style={{ margin: 0, fontSize: "0.8rem", color: "#888" }}>{new Date(m.createdAt).toLocaleDateString()}</p>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </section>
       </main>
     </>

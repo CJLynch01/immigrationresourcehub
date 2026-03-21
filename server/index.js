@@ -11,7 +11,25 @@ const messageRoutes = require("./routes/messages");
 const userRoutes = require("./routes/users");
 const quizRoutes = require("./routes/quizRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
+const contactRoutes = require("./routes/contact");
 const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  message: { error: "Too many attempts. Please try again in 15 minutes." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10,
+  message: { error: "Too many messages sent. Please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +40,7 @@ const allowedOrigins = new Set([
   "https://www.immigrationpathwaysconsulting.com",
   "https://immigrationresourcehub.onrender.com",
 
+  "http://localhost:3000",
   "http://localhost:5173",
   "http://127.0.0.1:5173",
 ]);
@@ -40,28 +59,20 @@ app.use(cors({
 connectDB();
 app.use(express.json());
 
-// 🔹 Serve landing.html at root BEFORE static middleware
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "landing.html"));
-});
-
-// Redirect landing.html route back to /
-app.get("/landing.html", (req, res) => {
-  res.redirect("/");
-});
-
-// 🔹 Static middleware comes AFTER
-app.use(express.static(path.join(__dirname, "..", "frontend")));
+const DIST = path.join(__dirname, "..", "frontend", "dist");
 
 app.use((req, res, next) => {
-  if (req.hostname === 'immigrationpathwaysconsulting.com') {
-    return res.redirect(301, 'https://www.immigrationpathwaysconsulting.com' + req.originalUrl);
+  if (req.hostname === "immigrationpathwaysconsulting.com") {
+    return res.redirect(301, "https://www.immigrationpathwaysconsulting.com" + req.originalUrl);
   }
   next();
 });
 
+// Serve built React app
+app.use(express.static(DIST));
+
 // Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/protected", protectedRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/uploads", uploadRoutes);
@@ -69,6 +80,12 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/contact", contactLimiter, contactRoutes);
+
+// All non-API routes serve the React app
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(DIST, "index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
