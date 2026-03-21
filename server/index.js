@@ -14,6 +14,7 @@ const analyticsRoutes = require("./routes/analyticsRoutes");
 const contactRoutes = require("./routes/contact");
 const cors = require("cors");
 const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 
 const authLimiter = rateLimit({
@@ -43,7 +44,21 @@ const passwordLimiter = rateLimit({
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'", "https:", "data:"],
+      objectSrc: ["'none'"],
+      frameSrc: ["'none'"],
+    },
+  },
+}));
+
 
 // Allow both Render and your domain
 const allowedOrigins = new Set([
@@ -68,7 +83,8 @@ app.use(cors({
 }));
 
 connectDB();
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
+app.use(mongoSanitize());
 
 const DIST = path.join(__dirname, "..", "frontend", "dist");
 

@@ -78,6 +78,12 @@ router.post("/register", async (req, res) => {
     if (!name?.trim() || !email?.trim() || !password) {
       return res.status(400).json({ msg: "Name, email, and password are required." });
     }
+    if (name.trim().length > 100) {
+      return res.status(400).json({ msg: "Name must be 100 characters or fewer." });
+    }
+    if (email.trim().length > 255) {
+      return res.status(400).json({ msg: "Email must be 255 characters or fewer." });
+    }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ msg: "Invalid email address." });
