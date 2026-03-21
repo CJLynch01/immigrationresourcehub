@@ -55,25 +55,41 @@ function pctLabel(val) {
   return `${sign}${val}%`;
 }
 
+function localDateStr(offsetDays = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() - offsetDays);
+  return d.toISOString().slice(0, 10);
+}
+
 export default function AdminAnalytics() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [days, setDays] = useState(30);
+  const [filter, setFilter] = useState("30"); // "today" | "yesterday" | "7" | "30" | "90"
 
-  const now = new Date();
-  const from = new Date(now - days * 24 * 60 * 60 * 1000);
   const fmtDate = (d) =>
-    d.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+    new Date(d).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+
+  const rangeLabel = () => {
+    if (filter === "today") return `Today — ${fmtDate(localDateStr(0))}`;
+    if (filter === "yesterday") return `Yesterday — ${fmtDate(localDateStr(1))}`;
+    const now = new Date();
+    const from = new Date(now - Number(filter) * 24 * 60 * 60 * 1000);
+    return `${fmtDate(from)} → ${fmtDate(now)}`;
+  };
+
+  const apiUrl = () => {
+    if (filter === "today") return `${API_BASE}/api/analytics?date=${localDateStr(0)}`;
+    if (filter === "yesterday") return `${API_BASE}/api/analytics?date=${localDateStr(1)}`;
+    return `${API_BASE}/api/analytics?days=${filter}`;
+  };
 
   useEffect(() => {
     async function load() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(`${API_BASE}/api/analytics?days=${days}`, {
-          headers: { ...authHeaders() },
-        });
+        const res = await fetch(apiUrl(), { headers: { ...authHeaders() } });
         if (!res.ok) throw new Error("Failed to load analytics.");
         setData(await res.json());
       } catch (e) {
@@ -83,7 +99,7 @@ export default function AdminAnalytics() {
       }
     }
     load();
-  }, [days]);
+  }, [filter]);
 
   return (
     <div style={{ background: "#0d0d0d", minHeight: "100vh", padding: "2rem", color: WHITE, fontFamily: "inherit" }}>
@@ -101,22 +117,28 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Date range + filter */}
-      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        <span style={{ fontSize: "0.9rem", color: GRAY }}>
-          {fmtDate(from)} → {fmtDate(now)}
+      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+        <span style={{ fontSize: "0.9rem", color: GRAY, marginRight: "0.25rem" }}>
+          {rangeLabel()}
         </span>
-        <select
-          value={days}
-          onChange={(e) => setDays(Number(e.target.value))}
-          style={{
-            background: GOLD, color: "#000", border: "none", borderRadius: 4,
-            padding: "0.4rem 0.75rem", fontWeight: 600, cursor: "pointer",
-          }}
-        >
-          <option value={7}>7 days</option>
-          <option value={30}>30 days</option>
-          <option value={90}>90 days</option>
-        </select>
+        {["today", "yesterday", "7", "30", "90"].map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            style={{
+              background: filter === f ? GOLD : "#222",
+              color: filter === f ? "#000" : GRAY,
+              border: `1px solid ${filter === f ? GOLD : "#444"}`,
+              borderRadius: 4,
+              padding: "0.4rem 0.75rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              fontSize: "0.85rem",
+            }}
+          >
+            {f === "today" ? "Today" : f === "yesterday" ? "Yesterday" : `${f}d`}
+          </button>
+        ))}
       </div>
 
       {loading && <p style={{ textAlign: "center", color: GRAY }}>Loading analytics...</p>}
@@ -247,7 +269,7 @@ export default function AdminAnalytics() {
           </div>
 
           {/* Traffic overview line chart */}
-          <Card title={`Traffic Overview (Last ${days} Days)`}>
+          <Card title={`Traffic Overview — ${rangeLabel()}`}>
             {data.trafficOverTime.length === 0 ? (
               <p style={{ color: GRAY, fontSize: "0.9rem" }}>No traffic data yet.</p>
             ) : (
