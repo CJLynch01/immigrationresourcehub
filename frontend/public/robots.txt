@@ -1,12 +1,17 @@
 User-agent: *
 Allow: /
 
-# Block admin and client areas from search engines
+# Block private/auth areas from search engines
 Disallow: /admin
 Disallow: /admin/
 Disallow: /client
 Disallow: /client/
 Disallow: /mfa
 Disallow: /mfa/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /quiz
 
 Sitemap: https://www.immigrationpathwaysconsulting.com/sitemap.xml

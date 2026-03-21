@@ -1,4 +1,7 @@
+import useSEO from "../hooks/useSEO.js";
+
 export default function Terms() {
+  useSEO({ title: "Terms of Use", description: "Read the terms and conditions for using the Immigration Pathways Consulting website and services." });
   return (
     <section className="legal-page" style={{ padding: 24 }}>
       <header className="site-header">

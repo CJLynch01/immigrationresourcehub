@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export default function ResetPassword() {
+  useSEO({ title: "Reset Password", description: "Set a new password for your Immigration Pathways Consulting account." });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const token = searchParams.get("token");

@@ -1,4 +1,7 @@
+import useSEO from "../hooks/useSEO.js";
+
 export default function Privacy() {
+  useSEO({ title: "Privacy Policy", description: "Learn how Immigration Pathways Consulting LLC collects, uses, and protects your personal information." });
   return (
     <section className="legal-page" style={{ padding: 24 }}>
       <header className="site-header">

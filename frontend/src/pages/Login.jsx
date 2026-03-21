@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export default function Login() {
+  useSEO({ title: "Login", description: "Log in to your Immigration Pathways Consulting client portal." });
   const navigate = useNavigate();
   const location = useLocation();
 

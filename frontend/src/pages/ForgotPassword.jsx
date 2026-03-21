@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useSEO from "../hooks/useSEO.js";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export default function ForgotPassword() {
+  useSEO({ title: "Forgot Password", description: "Reset your Immigration Pathways Consulting account password." });
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
