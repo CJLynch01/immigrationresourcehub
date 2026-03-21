@@ -13,7 +13,7 @@ function authHeaders(extra = {}) {
 export default function Messages() {
   const [me, setMe] = useState(null);
 
-  const [activeTab, setActiveTab] = useState("inbox");
+  const [activeTab, setActiveTab] = useState("compose");
 
   const [clients, setClients] = useState([]);
 
@@ -55,14 +55,10 @@ export default function Messages() {
 
   async function loadClients() {
     try {
-      const res = await fetch(`${API_BASE}/api/users`, { headers: authHeaders() });
+      const res = await fetch(`${API_BASE}/api/users/clients`, { headers: authHeaders() });
       if (!res.ok) return;
       const users = await res.json().catch(() => []);
-      // adjust filters to match your user model
-      const clientUsers = (Array.isArray(users) ? users : []).filter(
-        (u) => (u.role || "").toLowerCase() === "client"
-      );
-      setClients(clientUsers);
+      setClients(Array.isArray(users) ? users : []);
     } catch (e) {
       console.error("Failed to load clients", e);
     }
@@ -146,6 +142,14 @@ export default function Messages() {
     }
   }
 
+  function handleReply(msg) {
+    setTo(msg.from?._id || "");
+    setSubject(msg.subject?.startsWith("Re: ") ? msg.subject : `Re: ${msg.subject}`);
+    setBody("");
+    setActiveTab("compose");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   async function markRead(messageId) {
     try {
       const res = await fetch(`${API_BASE}/api/messages/${messageId}/read`, {
@@ -201,6 +205,12 @@ export default function Messages() {
           </span>
 
           <div style={{ display: "flex", gap: 8 }}>
+            {where === "inbox" && (
+              <button type="button" className="button" onClick={() => handleReply(msg)}>
+                Reply
+              </button>
+            )}
+
             {where === "inbox" && !msg.isRead && (
               <button type="button" className="button" onClick={() => markRead(msg._id)}>
                 Mark Read
@@ -232,61 +242,14 @@ export default function Messages() {
     <main className="messages-page">
       <h1>Messages</h1>
 
-      <section className="new-message">
-        <h2>New Message</h2>
-
-        <form onSubmit={sendMessage}>
-          {isAdmin && (
-            <div id="recipientWrapper">
-              <label htmlFor="recipientSelect">Select Client:</label>
-              <select
-                id="recipientSelect"
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-                required
-              >
-                <option value="">Select a client</option>
-                {clients.map((c) => (
-                  <option key={c._id} value={c._id}>
-                    {c.name} {c.email ? `(${c.email})` : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {isClient && (
-            <p style={{ opacity: 0.8 }}>
-              Your message will be sent to the admin.
-            </p>
-          )}
-
-          <label htmlFor="subject">Subject:</label>
-          <input
-            id="subject"
-            type="text"
-            required
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-
-          <label htmlFor="body">Message:</label>
-          <textarea
-            id="body"
-            required
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-
-          <button type="submit" className="button">
-            Send Message
-          </button>
-
-          {statusMsg && <p>{statusMsg}</p>}
-        </form>
-      </section>
-
       <div className="message-tabs">
+        <button
+          className={activeTab === "compose" ? "active" : ""}
+          onClick={() => setActiveTab("compose")}
+          type="button"
+        >
+          Compose
+        </button>
         <button
           id="inboxTab"
           className={activeTab === "inbox" ? "active" : ""}
@@ -304,6 +267,41 @@ export default function Messages() {
           Sent
         </button>
       </div>
+
+      {activeTab === "compose" && (
+        <section className="new-message">
+          <h2>New Message</h2>
+          <form onSubmit={sendMessage}>
+            {isAdmin && (
+              <div id="recipientWrapper">
+                <label htmlFor="recipientSelect">Select Client:</label>
+                <select
+                  id="recipientSelect"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
+                  required
+                >
+                  <option value="">Select a client</option>
+                  {clients.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.name} {c.email ? `(${c.email})` : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            {isClient && (
+              <p style={{ opacity: 0.8 }}>Your message will be sent to the admin.</p>
+            )}
+            <label htmlFor="subject">Subject:</label>
+            <input id="subject" type="text" required value={subject} onChange={(e) => setSubject(e.target.value)} />
+            <label htmlFor="body">Message:</label>
+            <textarea id="body" required value={body} onChange={(e) => setBody(e.target.value)} />
+            <button type="submit" className="button">Send Message</button>
+            {statusMsg && <p>{statusMsg}</p>}
+          </form>
+        </section>
+      )}
 
       {activeTab === "inbox" && (
         <section className="received-messages" id="messagesListSection">

@@ -54,6 +54,12 @@ export default function Citizenship() {
           <Link to="/contact" className="button">
             Schedule a Free Consultation
           </Link>
+
+          <div className="quiz-highlight" style={{ marginTop: "2rem" }}>
+            <h2>Practice for the Civics Test</h2>
+            <p>Use our free U.S. Citizenship Practice Quiz to prepare for the naturalization interview.</p>
+            <Link to="/quiz" className="quiz-btn">Take the Practice Quiz</Link>
+          </div>
         </section>
       </main>
     </section>

@@ -35,7 +35,7 @@ export default function Home() {
 
       {/* IMAGE */}
       <div className="photo-wrapper1">
-        <img src="/images/immigrant-world.webp" alt="Traveling with passport VISA" />
+        <img src="/images/immigrant-world.webp" alt="Traveling with passport VISA" loading="lazy" />
       </div>
 
       {/* WHY CHOOSE US */}
@@ -54,7 +54,7 @@ export default function Home() {
 
       {/* IMAGE */}
       <div className="photo-wrapper2">
-        <img src="/images/passport-photo.webp" alt="Traveling with passport VISA" />
+        <img src="/images/passport-photo.webp" alt="Passport and travel documents" loading="lazy" />
       </div>
 
       {/* HOW IT WORKS */}
@@ -71,7 +71,7 @@ export default function Home() {
 
       {/* IMAGE */}
       <div className="photo-wrapper3">
-        <img src="/images/chris-helping.webp" alt="Chris helping a client with immigration paperwork" />
+        <img src="/images/chris-helping.webp" alt="Chris helping a client with immigration paperwork" loading="lazy" />
       </div>
 
       {/* TESTIMONIALS */}
