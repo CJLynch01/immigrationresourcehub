@@ -1683,7 +1683,7 @@ button.delete-button:hover {
 .msg-form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.5rem;
 }
 
 .msg-form__field {

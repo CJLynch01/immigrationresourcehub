@@ -71,6 +71,12 @@ export default function Navbar() {
           </NavLink>
         )}
 
+        {isLoggedIn && !isAdmin && (
+          <NavLink to="/client" onClick={closeMenu}>
+            Dashboard
+          </NavLink>
+        )}
+
         {isLoggedIn && (
           <button type="button" onClick={handleLogout} className="nav-logout-btn">
             Logout
