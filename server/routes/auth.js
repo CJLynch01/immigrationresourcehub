@@ -221,6 +221,8 @@ router.post("/forgot-password", async (req, res) => {
         <p>Hi ${user.name},</p>
         <p>You requested a password reset. Click the link below to set a new password. This link expires in 1 hour.</p>
         <p><a href="${resetUrl}" style="color:#c9a84c">Reset My Password</a></p>
+        <p>If the link above doesn't work, copy and paste this URL into your browser:</p>
+        <p style="word-break:break-all;">${resetUrl}</p>
         <p>If you didn't request this, you can ignore this email.</p>
         <p>— Immigration Pathways Consulting</p>
       `
