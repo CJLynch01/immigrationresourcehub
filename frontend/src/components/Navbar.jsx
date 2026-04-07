@@ -24,12 +24,9 @@ export default function Navbar() {
 
     async function fetchCounts() {
       try {
-        const [msgs, contacts, clients] = await Promise.all([
-          fetch(`${API_BASE}/api/messages/unread-count`, { headers }).then(r => r.ok ? r.json() : {}),
-          fetch(`${API_BASE}/api/contact/unread-count`, { headers }).then(r => r.ok ? r.json() : {}),
-          fetch(`${API_BASE}/api/users/new-count`, { headers }).then(r => r.ok ? r.json() : {}),
-        ]);
-        setNotifCount((msgs.unreadCount || 0) + (contacts.unreadCount || 0) + (clients.newCount || 0));
+        const res = await fetch(`${API_BASE}/api/messages/unread-count`, { headers });
+        const data = res.ok ? await res.json() : {};
+        setNotifCount(data.unreadCount || 0);
       } catch { /* ignore */ }
     }
 
