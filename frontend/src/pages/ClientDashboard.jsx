@@ -15,6 +15,8 @@ export default function Client() {
   const [showMfaVerify, setShowMfaVerify] = useState(false);
   const [verifyMfaToken, setVerifyMfaToken] = useState("");
   const [mfaVerifyMsg, setMfaVerifyMsg] = useState("");
+  const [mfaQrCode, setMfaQrCode] = useState("");
+  const [mfaSetupMsg, setMfaSetupMsg] = useState("");
 
   // Messaging
   const [inbox, setInbox] = useState([]);
@@ -192,6 +194,20 @@ export default function Client() {
     }
   }
 
+  async function handleSetupMfa() {
+    setMfaSetupMsg("");
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/mfa/setup`, {
+        method: "POST",
+        headers: { ...authHeaders() },
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { setMfaSetupMsg(data?.error || "Failed to start MFA setup."); return; }
+      setMfaQrCode(data.qrCode);
+      setShowMfaVerify(true);
+    } catch { setMfaSetupMsg("Network error. Please try again."); }
+  }
+
   async function handleChangePassword(e) {
     e.preventDefault();
     setPasswordMessage("");
@@ -305,33 +321,6 @@ export default function Client() {
       <header className="site-header">
         <h1>Client Dashboard</h1>
 
-        <div id="mfaStatus" className="mfa-status">
-          {mfaEnabled ? "✅ MFA is enabled on your account." : "⚠️ MFA is not enabled."}
-        </div>
-
-        {showMfaVerify && (
-          <section id="mfaVerifySection">
-            <h2>🔐 Verify MFA Setup</h2>
-            <p>Enter the 6-digit code from your authenticator app:</p>
-
-            <input
-              type="text"
-              id="verifyMfaToken"
-              placeholder="123456"
-              inputMode="numeric"
-              value={verifyMfaToken}
-              onChange={(e) =>
-                setVerifyMfaToken(e.target.value.replace(/\D/g, "").slice(0, 6))
-              }
-            />
-
-            <button type="button" id="verifyMfaBtn" className="button" onClick={handleVerifyMfa}>
-              Verify MFA
-            </button>
-
-            <p id="mfaVerifyMsg">{mfaVerifyMsg}</p>
-          </section>
-        )}
 
         <p>Welcome{me?.name ? `, ${me.name}` : ""} to your personalized hub</p>
       </header>
@@ -403,6 +392,44 @@ export default function Client() {
             <button type="submit">Update Password</button>
             <p id="passwordMessage">{passwordMessage}</p>
           </form>
+        </section>
+
+        <section className="section">
+          <h2>🔐 Two-Factor Authentication</h2>
+          {mfaEnabled ? (
+            <p style={{ color: "#4caf7d" }}>MFA is enabled on your account.</p>
+          ) : (
+            <>
+              <p style={{ color: "#aaa", marginBottom: "1rem" }}>Add an extra layer of security by enabling MFA with an authenticator app.</p>
+              {!showMfaVerify && (
+                <button type="button" className="button" onClick={handleSetupMfa}>
+                  Enable MFA
+                </button>
+              )}
+              {mfaSetupMsg && <p className="form-message form-message--error">{mfaSetupMsg}</p>}
+              {mfaQrCode && (
+                <div style={{ margin: "1.25rem 0" }}>
+                  <p style={{ marginBottom: "0.75rem" }}>Scan this QR code with your authenticator app, then enter the 6-digit code below:</p>
+                  <img src={mfaQrCode} alt="MFA QR Code" style={{ display: "block", marginBottom: "1rem", borderRadius: "8px" }} />
+                  <div className="msg-form__field">
+                    <label htmlFor="verifyMfaToken">Verification Code</label>
+                    <input
+                      type="text"
+                      id="verifyMfaToken"
+                      placeholder="123456"
+                      inputMode="numeric"
+                      value={verifyMfaToken}
+                      onChange={(e) => setVerifyMfaToken(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                    />
+                  </div>
+                  <button type="button" className="button" style={{ marginTop: "0.75rem" }} onClick={handleVerifyMfa}>
+                    Verify & Activate
+                  </button>
+                  {mfaVerifyMsg && <p className="form-message">{mfaVerifyMsg}</p>}
+                </div>
+              )}
+            </>
+          )}
         </section>
 
         <section className="section">
