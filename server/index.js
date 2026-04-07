@@ -12,6 +12,7 @@ const userRoutes = require("./routes/users");
 const quizRoutes = require("./routes/quizRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
 const contactRoutes = require("./routes/contact");
+require("./utils/dailyReport");
 const cors = require("cors");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
