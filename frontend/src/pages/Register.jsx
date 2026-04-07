@@ -46,6 +46,11 @@ export default function Register() {
         return;
       }
 
+      fetch(`${API_BASE}/api/analytics`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ eventType: "register_submit", pagePath: "/register", pageSection: "Register", userType: "public" }),
+      }).catch(() => {});
       navigate("/login", { state: { registered: true } });
     } catch {
       setError("Network error. Please try again.");

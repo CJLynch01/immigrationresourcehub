@@ -17,10 +17,11 @@ const SECTION_COLORS = {
   Contact:  "#aaaaaa",
   Admin:    "#6699cc",
   Client:   "#88cc88",
+  Register: "#cc88cc",
   Other:    "#666666",
 };
 
-const PIE_COLORS = [GOLD, "#e8c96a", WHITE, "#888", "#6699cc", "#88cc88"];
+const PIE_COLORS = [GOLD, "#e8c96a", WHITE, "#888", "#6699cc", "#88cc88", "#cc88cc"];
 
 const EVENT_LABELS = {
   page_view:       "Viewed page",
@@ -241,6 +242,32 @@ export default function AdminAnalytics() {
                         <td style={{ padding: "0.35rem 0.5rem", textAlign: "right", color: GRAY, whiteSpace: "nowrap" }}>
                           {timeAgo(e.ts)}
                         </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </Card>
+
+            {/* Newly Registered Users */}
+            <Card title="Newly Registered Users">
+              {!data.newRegistrations || data.newRegistrations.length === 0 ? (
+                <p style={{ color: GRAY, fontSize: "0.9rem" }}>No new registrations in this period.</p>
+              ) : (
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.82rem" }}>
+                  <thead>
+                    <tr style={{ color: GRAY, borderBottom: `1px solid #333` }}>
+                      <th style={{ textAlign: "left", padding: "0.3rem 0.5rem" }}>Name</th>
+                      <th style={{ textAlign: "left", padding: "0.3rem 0.5rem" }}>Email</th>
+                      <th style={{ textAlign: "right", padding: "0.3rem 0.5rem" }}>Joined</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.newRegistrations.map((u, i) => (
+                      <tr key={i} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                        <td style={{ padding: "0.35rem 0.5rem", color: WHITE }}>{u.name}</td>
+                        <td style={{ padding: "0.35rem 0.5rem", color: GRAY }}>{u.email}</td>
+                        <td style={{ padding: "0.35rem 0.5rem", textAlign: "right", color: GRAY, whiteSpace: "nowrap" }}>{timeAgo(u.createdAt)}</td>
                       </tr>
                     ))}
                   </tbody>

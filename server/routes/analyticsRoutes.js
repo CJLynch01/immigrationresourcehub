@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const trackEvent = require("../utils/trackEvent");
 const AnalyticsEvent = require("../models/analyticsevent");
+const User = require("../models/user");
 const { verifyToken, isAdmin } = require("../middleware/auth");
 
 function getDevice(ua = "") {
@@ -43,6 +44,7 @@ function classifySection(path = "") {
   if (path.startsWith("/contact")) return "Contact";
   if (path.startsWith("/admin")) return "Admin";
   if (path.startsWith("/client")) return "Client";
+  if (path.startsWith("/register")) return "Register";
   return "Other";
 }
 
@@ -87,6 +89,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
       recentEvents,
       contactCurrent,
       contactPrev,
+      newRegistrations,
     ] = await Promise.all([
       AnalyticsEvent.countDocuments({ eventType: "page_view", ts: currRange }),
       AnalyticsEvent.countDocuments({ eventType: "page_view", ts: prevRange }),
@@ -130,6 +133,11 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
 
       AnalyticsEvent.countDocuments({ eventType: "contact_submit", ts: currRange }),
       AnalyticsEvent.countDocuments({ eventType: "contact_submit", ts: prevRange }),
+
+      User.find({ createdAt: currRange, role: "client" })
+        .sort({ createdAt: -1 })
+        .select("name email createdAt")
+        .lean(),
     ]);
 
     // Pivot traffic data into { date, Home, Services, Blog, Contact } rows
@@ -180,6 +188,11 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
       sectionViews: sectionViewsWithPct,
       deviceUsage,
       trafficOverTime,
+      newRegistrations: newRegistrations.map((u) => ({
+        name: u.name,
+        email: u.email,
+        createdAt: u.createdAt,
+      })),
       recentActivity: recentEvents.map((e) => ({
         userType: e.userType,
         eventType: e.eventType,
