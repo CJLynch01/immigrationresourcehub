@@ -1,9 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
+  const [notifCount, setNotifCount] = useState(0);
   const navigate = useNavigate();
 
   const closeMenu = () => { setOpen(false); setAdminOpen(false); };
@@ -13,6 +14,29 @@ export default function Navbar() {
     try { return JSON.parse(localStorage.getItem("user"))?.role === "admin"; }
     catch { return false; }
   })();
+
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    if (!isAdmin) return;
+    const token = localStorage.getItem("token");
+    const headers = { Authorization: `Bearer ${token}` };
+
+    async function fetchCounts() {
+      try {
+        const [msgs, contacts, clients] = await Promise.all([
+          fetch(`${API_BASE}/api/messages/unread-count`, { headers }).then(r => r.ok ? r.json() : {}),
+          fetch(`${API_BASE}/api/contact/unread-count`, { headers }).then(r => r.ok ? r.json() : {}),
+          fetch(`${API_BASE}/api/users/new-count`, { headers }).then(r => r.ok ? r.json() : {}),
+        ]);
+        setNotifCount((msgs.unreadCount || 0) + (contacts.unreadCount || 0) + (clients.newCount || 0));
+      } catch { /* ignore */ }
+    }
+
+    fetchCounts();
+    const interval = setInterval(fetchCounts, 60000);
+    return () => clearInterval(interval);
+  }, [isAdmin]);
 
   function handleLogout() {
     localStorage.removeItem("token");
@@ -91,6 +115,16 @@ export default function Navbar() {
               onClick={() => setAdminOpen((v) => !v)}
             >
               Admin ▾
+              {notifCount > 0 && (
+                <span style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  background: "crimson", color: "#fff", borderRadius: "50%",
+                  fontSize: "0.7rem", fontWeight: 700, minWidth: "18px", height: "18px",
+                  padding: "0 4px", marginLeft: "6px", lineHeight: 1,
+                }}>
+                  {notifCount}
+                </span>
+              )}
             </button>
             <div className="dropdown-content">
               <NavLink to="/admin" onClick={closeMenu}>

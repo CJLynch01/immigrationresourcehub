@@ -67,6 +67,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+// GET /api/contact/unread-count — admin only
+router.get("/unread-count", verifyToken, isAdmin, async (req, res) => {
+  try {
+    const count = await ContactSubmission.countDocuments({ isRead: false });
+    res.json({ unreadCount: count });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to count unread contacts." });
+  }
+});
+
 // GET /api/contact — admin only, view all submissions
 router.get("/", verifyToken, isAdmin, async (req, res) => {
   try {

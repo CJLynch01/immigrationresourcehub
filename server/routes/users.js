@@ -4,6 +4,16 @@ const User = require("../models/user.js");
 const { verifyToken, isAdmin } = require("../middleware/auth.js");
 const bcrypt = require("bcryptjs");
 
+router.get("/new-count", verifyToken, isAdmin, async (req, res) => {
+  try {
+    const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const count = await User.countDocuments({ role: "client", createdAt: { $gte: since } });
+    res.json({ newCount: count });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to count new clients." });
+  }
+});
+
 router.get("/clients", verifyToken, isAdmin, async (req, res) => {
   try {
     const clients = await User.find({ role: "client" }).select("_id name email createdAt");
