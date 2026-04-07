@@ -501,26 +501,29 @@ export default function Client() {
 
         <section className="section">
           <h2>✉️ Message Admin</h2>
-          <form onSubmit={handleSendMessage}>
-            <label htmlFor="msgSubject">Subject</label>
-            <input
-              type="text"
-              id="msgSubject"
-              required
-              value={msgSubject}
-              onChange={(e) => setMsgSubject(e.target.value)}
-              placeholder="e.g. Question about my application"
-            />
-            <label htmlFor="msgBody">Message</label>
-            <textarea
-              id="msgBody"
-              rows={4}
-              required
-              value={msgBody}
-              onChange={(e) => setMsgBody(e.target.value)}
-              placeholder="Type your message here..."
-              style={{ width: "100%", padding: "0.75rem", background: "#1c1c1e", color: "#f8f8f8", border: "1px solid #444", borderRadius: "5px", marginBottom: "1rem" }}
-            />
+          <form className="msg-form" onSubmit={handleSendMessage}>
+            <div className="msg-form__field">
+              <label htmlFor="msgSubject">Subject</label>
+              <input
+                type="text"
+                id="msgSubject"
+                required
+                value={msgSubject}
+                onChange={(e) => setMsgSubject(e.target.value)}
+                placeholder="e.g. Question about my application"
+              />
+            </div>
+            <div className="msg-form__field">
+              <label htmlFor="msgBody">Message</label>
+              <textarea
+                id="msgBody"
+                rows={4}
+                required
+                value={msgBody}
+                onChange={(e) => setMsgBody(e.target.value)}
+                placeholder="Type your message here..."
+              />
+            </div>
             {msgStatus && <p className={`form-message ${msgStatus === "Message sent!" ? "form-message--success" : "form-message--error"}`}>{msgStatus}</p>}
             <button type="submit" className="button">Send Message</button>
           </form>
